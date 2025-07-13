@@ -3,7 +3,7 @@
 class UserEntity {
   String uid;
   String firstName, lastName, email, phoneNumber, photoUrl, role;
-  DateTime createdAt;
+  String createdAt;
   final bool isVerified;
   UserEntity({
     required this.uid,

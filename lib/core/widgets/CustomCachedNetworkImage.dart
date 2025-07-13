@@ -8,11 +8,11 @@ class CustomCachedNetworkImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: imageUrl,
+      fit: BoxFit.cover,
+      height: 50,
+      width: 50,
       errorWidget: (context, url, error) {
-        return const Icon(
-          Icons.error,
-          color: Colors.red,
-        );
+        return const Icon(Icons.error, color: Colors.red);
       },
     );
   }

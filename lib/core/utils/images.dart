@@ -18,21 +18,9 @@ class Assets {
   /// assets/icons/Arrowleft.svg
   static const String assetsIconsArrowleft = "assets/icons/Arrowleft.svg";
 
-  /// Assets for assetsIconsBottomNavBarInActiveFavouriteIcon
-  /// assets/icons/BottomNavBarInActiveFavouriteIcon.svg
-  static const String assetsIconsBottomNavBarInActiveFavouriteIcon = "assets/icons/BottomNavBarInActiveFavouriteIcon.svg";
-
-  /// Assets for assetsIconsBottomNavBarInActiveHomeIcon
-  /// assets/icons/BottomNavBarInActiveHomeIcon.svg
-  static const String assetsIconsBottomNavBarInActiveHomeIcon = "assets/icons/BottomNavBarInActiveHomeIcon.svg";
-
-  /// Assets for assetsIconsBottomNavBarInActiveProfileIcon
-  /// assets/icons/BottomNavBarInActiveProfileIcon.svg
-  static const String assetsIconsBottomNavBarInActiveProfileIcon = "assets/icons/BottomNavBarInActiveProfileIcon.svg";
-
-  /// Assets for assetsIconsBottomNavBarInActiveTripsIcon
-  /// assets/icons/BottomNavBarInActiveTripsIcon.svg
-  static const String assetsIconsBottomNavBarInActiveTripsIcon = "assets/icons/BottomNavBarInActiveTripsIcon.svg";
+  /// Assets for assetsIconsBookingsIcon
+  /// assets/icons/BookingsIcon.svg
+  static const String assetsIconsBookingsIcon = "assets/icons/BookingsIcon.svg";
 
   /// Assets for assetsIconsCheckedIcon
   /// assets/icons/Checked_icon.svg
@@ -54,9 +42,17 @@ class Assets {
   /// assets/icons/GoogleIcon.svg
   static const String assetsIconsGoogleIcon = "assets/icons/GoogleIcon.svg";
 
+  /// Assets for assetsIconsHomeIcon
+  /// assets/icons/HomeIcon.svg
+  static const String assetsIconsHomeIcon = "assets/icons/HomeIcon.svg";
+
   /// Assets for assetsIconsLocationIcon
   /// assets/icons/locationIcon.svg
   static const String assetsIconsLocationIcon = "assets/icons/locationIcon.svg";
+
+  /// Assets for assetsIconsLogoutIcon
+  /// assets/icons/logoutIcon.svg
+  static const String assetsIconsLogoutIcon = "assets/icons/logoutIcon.svg";
 
   /// Assets for assetsIconsNotificationIcon
   /// assets/icons/notificationIcon.svg
@@ -66,17 +62,41 @@ class Assets {
   /// assets/icons/paypal.png
   static const String assetsIconsPaypal = "assets/icons/paypal.png";
 
+  /// Assets for assetsIconsPlacesIcon
+  /// assets/icons/PlacesIcon.svg
+  static const String assetsIconsPlacesIcon = "assets/icons/PlacesIcon.svg";
+
+  /// Assets for assetsIconsProfileIcon
+  /// assets/icons/ProfileIcon.svg
+  static const String assetsIconsProfileIcon = "assets/icons/ProfileIcon.svg";
+
   /// Assets for assetsIconsSearchIcon
   /// assets/icons/Search_icon.svg
   static const String assetsIconsSearchIcon = "assets/icons/Search_icon.svg";
+
+  /// Assets for assetsIconsSolidFavouriteIcon
+  /// assets/icons/SolidFavouriteIcon.svg
+  static const String assetsIconsSolidFavouriteIcon = "assets/icons/SolidFavouriteIcon.svg";
+
+  /// Assets for assetsIconsSolidUsersIcon
+  /// assets/icons/SolidUsersIcon.svg
+  static const String assetsIconsSolidUsersIcon = "assets/icons/SolidUsersIcon.svg";
 
   /// Assets for assetsIconsSolidfavouriteIcon
   /// assets/icons/Solidfavourite_Icon.svg
   static const String assetsIconsSolidfavouriteIcon = "assets/icons/Solidfavourite_Icon.svg";
 
+  /// Assets for assetsIconsTripsIcon
+  /// assets/icons/TripsIcon.svg
+  static const String assetsIconsTripsIcon = "assets/icons/TripsIcon.svg";
+
   /// Assets for assetsIconsUserIcon
   /// assets/icons/userIcon.png
   static const String assetsIconsUserIcon = "assets/icons/userIcon.png";
+
+  /// Assets for assetsIconsUsersIcon
+  /// assets/icons/UsersIcon.svg
+  static const String assetsIconsUsersIcon = "assets/icons/UsersIcon.svg";
 
   /// Assets for assetsIconsVodafone
   /// assets/icons/vodafone.png
@@ -109,9 +129,5 @@ class Assets {
   /// Assets for assetsImagesTestFavouritePlaceItemBackGround
   /// assets/images/Test_FavouritePlaceItemBackGround.png
   static const String assetsImagesTestFavouritePlaceItemBackGround = "assets/images/Test_FavouritePlaceItemBackGround.png";
-
-  /// Assets for assetsLottieCamelWalk
-  /// assets/lottie/camelWalk.json
-  static const String assetsLottieCamelWalk = "assets/lottie/camelWalk.json";
 }
 

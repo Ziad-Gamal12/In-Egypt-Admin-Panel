@@ -29,12 +29,12 @@ class AuthRepoImpl implements AuthRepo {
   }) async {
     try {
       User user = await authService.signInWithEmailAndPassword(email, password);
-      if (user.emailVerified) {
-        return await fetchUserAndStoreLocally(user.uid);
-      } else {
-        await user.sendEmailVerification();
-        return Left(ServerFailure(message: "تاكد من تفعيل البريد الالكتروني"));
-      }
+      //  if (user.emailVerified) {
+      return await fetchUserAndStoreLocally(user.uid);
+      // } else {
+      //   await user.sendEmailVerification();
+      //   return Left(ServerFailure(message: "تاكد من تفعيل البريد الالكتروني"));
+      // }
     } on CustomException catch (e) {
       log(e.message);
       return Left(ServerFailure(message: e.message));
@@ -55,11 +55,15 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   Future<void> storeUserLocally(Map<String, dynamic> userJson) async {
-    String userJsonString = jsonEncode(userJson);
-    await shared_preferences_Services.stringSetter(
-      key: Backendkeys.storeUserLocaly,
-      value: userJsonString,
-    );
+    try {
+      String userJsonString = jsonEncode(userJson);
+      await Hive_Services.stringSetter(
+        key: Backendkeys.storeUserLocaly,
+        value: userJsonString,
+      );
+    } catch (e) {
+      log(e.toString());
+    }
   }
 
   Future<Either<Failure, void>> fetchUserAndStoreLocally(String uid) async {

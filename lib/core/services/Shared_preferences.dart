@@ -1,32 +1,34 @@
 // ignore_for_file: file_names, camel_case_types
 
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-abstract class shared_preferences_Services {
-  static late SharedPreferences sharedPreferences;
+abstract class Hive_Services {
+  static late Box _box;
+
+  /// Initialize Hive and open the box
   static Future<void> init() async {
-    sharedPreferences = await SharedPreferences.getInstance();
+    _box = await Hive.openBox('app_storage');
   }
 
   static Future<void> boolSetter({
     required String key,
     required bool value,
   }) async {
-    await sharedPreferences.setBool(key, value);
+    await _box.put(key, value);
   }
 
-  static bool boolgetter({required String key}) {
-    return sharedPreferences.getBool(key) ?? false;
+  static bool boolGetter({required String key}) {
+    return _box.get(key, defaultValue: false);
   }
 
   static Future<void> stringSetter({
     required String key,
     required String value,
   }) async {
-    await sharedPreferences.setString(key, value);
+    await _box.put(key, value);
   }
 
   static String stringGetter({required String key}) {
-    return sharedPreferences.getString(key) ?? " ";
+    return _box.get(key, defaultValue: "");
   }
 }

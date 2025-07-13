@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:in_egypt_admin_panel/constant.dart';
 import 'package:in_egypt_admin_panel/core/services/BlocObserver.dart';
 import 'package:in_egypt_admin_panel/core/services/Shared_preferences.dart';
@@ -14,7 +15,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Future.wait([
     Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
-    shared_preferences_Services.init(),
+    Hive.initFlutter(),
+    Hive_Services.init(),
   ]);
   setup_Getit();
   Bloc.observer = Custom_Blocobserver();

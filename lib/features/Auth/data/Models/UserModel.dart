@@ -1,9 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:in_egypt_admin_panel/features/Auth/domain/Entities/UserEntity.dart';
 
 class UserModel {
   final String uid, firstName, lastName, email, phoneNumber, photoUrl, role;
-  final DateTime createdAt;
+  final String createdAt;
   final bool isVerified;
 
   UserModel({
@@ -28,7 +27,7 @@ class UserModel {
       phoneNumber: json['phoneNumber'] ?? '',
       photoUrl: json['photoUrl'] ?? '',
       role: json['role'] ?? '',
-      createdAt: (json['createdAt'] as Timestamp).toDate(),
+      createdAt: json['createdAt'],
     );
   }
   factory UserModel.fromEntity(UserEntity entity) {
