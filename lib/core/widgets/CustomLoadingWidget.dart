@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:in_egypt_admin_panel/core/utils/images.dart';
-import 'package:lottie/lottie.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class CustomLoadingWidget extends StatelessWidget {
   const CustomLoadingWidget({
@@ -19,22 +18,27 @@ class CustomLoadingWidget extends StatelessWidget {
               alignment: Alignment.center,
               children: [
                 child,
-                Positioned.fill(
-                  child: Container(color: Colors.yellowAccent.shade100),
-                ),
-                SizedBox(
-                  width: MediaQuery.sizeOf(context).width * .60,
-                  child: AspectRatio(
-                    aspectRatio: 1,
-                    child: LottieBuilder.asset(
-                      Assets.assetsLottieCamelWalk,
-                      fit: BoxFit.fill,
-                    ),
+                Positioned.fill(child: Container(color: Colors.amberAccent)),
+                Positioned(
+                  child: LoadingAnimationWidget.fourRotatingDots(
+                    size: getIndicatorSize(context: context),
+                    color: Colors.white,
                   ),
                 ),
               ],
             ),
           )
         : child;
+  }
+
+  double getIndicatorSize({required BuildContext context}) {
+    switch (MediaQuery.of(context).size.width) {
+      case 600:
+        return 50;
+      case 900:
+        return 100;
+      default:
+        return 150;
+    }
   }
 }

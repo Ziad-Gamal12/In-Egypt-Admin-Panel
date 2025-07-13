@@ -57,7 +57,7 @@ class Customteaxtfield extends StatelessWidget {
         labelText: labelText,
         labelStyle: AppTextStyles(
           context,
-        ).bold13.copyWith(color: const Color(0xffAEAEB2)),
+        ).regular14.copyWith(color: const Color(0xffAEAEB2)),
         prefixIcon: Icon(prefixIcon, size: 24, color: const Color(0xffAEAEB2)),
         suffixIcon: suffixIcon,
         border: initBorder,

@@ -21,9 +21,9 @@ class _SignInTextFieldsState extends State<SignInTextFields> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomEmailTextField(),
+        CustomEmailTextField(controller: widget.emailController),
         SizedBox(height: 20),
-        CustomPasswordTextField(),
+        CustomPasswordTextField(controller: widget.passwordController),
       ],
     );
   }

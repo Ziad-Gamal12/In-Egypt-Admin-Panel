@@ -1,9 +1,9 @@
 // ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
+import 'package:in_egypt_admin_panel/features/Auth/domain/Entities/UserEntity.dart';
 // ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
 
-import '../../../domain/Entities/UserEntity.dart';
 import '../../../domain/Repos/AuthRepo.dart';
 
 part 'sign_up_state.dart';

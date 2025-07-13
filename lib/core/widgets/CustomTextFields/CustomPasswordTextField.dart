@@ -33,10 +33,6 @@ class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
           return 'رجاء إدخال كلمة المرور';
         } else if (value.length < 8) {
           return 'يجب ان تكون كلمة المرور 8 حروف على الاقل';
-        } else if (!RegExp(
-          r'^(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S$',
-        ).hasMatch(value)) {
-          return 'يجب ان تحتوي كلمة المرور على حرف كبير وحرف صغير ورقم وحرف خاص';
         }
         return null;
       },

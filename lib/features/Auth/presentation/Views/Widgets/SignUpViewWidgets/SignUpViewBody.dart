@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:in_egypt_admin_panel/Features/Auth/domain/Entities/UserEntity.dart';
-import 'package:in_egypt_admin_panel/Features/Auth/presentation/Views/Widgets/SignUpViewWidgets/SignUpAgreementRow.dart';
-import 'package:in_egypt_admin_panel/Features/Auth/presentation/Views/Widgets/SignUpViewWidgets/SignUpButtonSection.dart';
-import 'package:in_egypt_admin_panel/Features/Auth/presentation/Views/Widgets/SignUpViewWidgets/SignUpConfirmPasswordField.dart';
-import 'package:in_egypt_admin_panel/Features/Auth/presentation/Views/Widgets/SignUpViewWidgets/SignUpEmailField.dart';
-import 'package:in_egypt_admin_panel/Features/Auth/presentation/Views/Widgets/SignUpViewWidgets/SignUpNameFields.dart';
-import 'package:in_egypt_admin_panel/Features/Auth/presentation/Views/Widgets/SignUpViewWidgets/SignUpPasswordField.dart';
-import 'package:in_egypt_admin_panel/Features/Auth/presentation/Views/Widgets/SignUpViewWidgets/SignUpPhoneField.dart';
-import 'package:in_egypt_admin_panel/Features/Auth/presentation/manager/sign_up_cubit/sign_up_cubit.dart';
 import 'package:in_egypt_admin_panel/constant.dart';
 import 'package:in_egypt_admin_panel/core/helpers/ShowSnackBar.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomLoadingWidget.dart';
+import 'package:in_egypt_admin_panel/features/Auth/domain/Entities/UserEntity.dart';
+import 'package:in_egypt_admin_panel/features/Auth/presentation/Views/Widgets/SignUpViewWidgets/SignUpAgreementRow.dart';
+import 'package:in_egypt_admin_panel/features/Auth/presentation/Views/Widgets/SignUpViewWidgets/SignUpButtonSection.dart';
+import 'package:in_egypt_admin_panel/features/Auth/presentation/Views/Widgets/SignUpViewWidgets/SignUpConfirmPasswordField.dart';
+import 'package:in_egypt_admin_panel/features/Auth/presentation/Views/Widgets/SignUpViewWidgets/SignUpEmailField.dart';
+import 'package:in_egypt_admin_panel/features/Auth/presentation/Views/Widgets/SignUpViewWidgets/SignUpNameFields.dart';
+import 'package:in_egypt_admin_panel/features/Auth/presentation/Views/Widgets/SignUpViewWidgets/SignUpPasswordField.dart';
+import 'package:in_egypt_admin_panel/features/Auth/presentation/Views/Widgets/SignUpViewWidgets/SignUpPhoneField.dart';
+import 'package:in_egypt_admin_panel/features/Auth/presentation/manager/sign_up_cubit/sign_up_cubit.dart';
 import 'package:provider/provider.dart';
 
 class SignUpViewBody extends StatefulWidget {
@@ -33,10 +33,11 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
     lastName: '',
     email: '',
     phoneNumber: '',
+    isVerified: false,
     createdAt: DateTime.now(),
     uid: '',
     photoUrl: '',
-    role: 'User',
+    role: 'Admin',
   );
   @override
   Widget build(BuildContext context) {
@@ -61,41 +62,37 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                 horizontal: kHorizentalPadding,
                 vertical: kVerticalPadding,
               ),
-              child: SingleChildScrollView(
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    children: [
-                      const SignUpNameFields(),
-                      const SizedBox(height: 20),
-                      const SignUpEmailField(),
-                      const SizedBox(height: 20),
-                      const SignUpPhoneField(),
-                      const SizedBox(height: 20),
-                      SignUpPasswordField(
-                        passwordController: passwordController,
-                      ),
-                      const SizedBox(height: 20),
-                      SignUpConfirmPasswordField(
-                        confirmPasswordController: confirmPasswordController,
-                      ),
-                      const SizedBox(height: 20),
-                      SignUpAgreementRow(
-                        onChanged: (value) {
-                          setState(() {
-                            isTermsAccepted = value ?? false;
-                          });
-                        },
-                      ),
-                      const Spacer(),
-                      SignUpButtonSection(
-                        isTermsAccepted: isTermsAccepted,
-                        passwordController: passwordController,
-                        confirmPasswordController: confirmPasswordController,
-                        formKey: formKey,
-                      ),
-                    ],
-                  ),
+              child: Form(
+                key: formKey,
+                child: ListView(
+                  children: [
+                    const SignUpNameFields(),
+                    const SizedBox(height: 20),
+                    const SignUpEmailField(),
+                    const SizedBox(height: 20),
+                    const SignUpPhoneField(),
+                    const SizedBox(height: 20),
+                    SignUpPasswordField(passwordController: passwordController),
+                    const SizedBox(height: 20),
+                    SignUpConfirmPasswordField(
+                      confirmPasswordController: confirmPasswordController,
+                    ),
+                    const SizedBox(height: 20),
+                    SignUpAgreementRow(
+                      onChanged: (value) {
+                        setState(() {
+                          isTermsAccepted = value ?? false;
+                        });
+                      },
+                    ),
+                    SizedBox(height: MediaQuery.sizeOf(context).height * 0.1),
+                    SignUpButtonSection(
+                      isTermsAccepted: isTermsAccepted,
+                      passwordController: passwordController,
+                      confirmPasswordController: confirmPasswordController,
+                      formKey: formKey,
+                    ),
+                  ],
                 ),
               ),
             ),

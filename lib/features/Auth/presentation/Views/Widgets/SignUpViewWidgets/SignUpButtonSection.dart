@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:in_egypt_admin_panel/Features/Auth/domain/Entities/UserEntity.dart';
-import 'package:in_egypt_admin_panel/Features/Auth/presentation/manager/sign_up_cubit/sign_up_cubit.dart';
+import 'package:go_router/go_router.dart';
 import 'package:in_egypt_admin_panel/constant.dart';
 import 'package:in_egypt_admin_panel/core/helpers/ShowSnackBar.dart';
 import 'package:in_egypt_admin_panel/core/utils/textStyles.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomButton.dart';
+import 'package:in_egypt_admin_panel/features/Auth/domain/Entities/UserEntity.dart';
+import 'package:in_egypt_admin_panel/features/Auth/presentation/manager/sign_up_cubit/sign_up_cubit.dart';
 import 'package:provider/provider.dart';
 
 class SignUpButtonSection extends StatelessWidget {
@@ -53,10 +54,17 @@ class SignUpButtonSection extends StatelessWidget {
           },
         ),
         const SizedBox(height: 20),
-        Text(
-          "لديك حساب بالفعل؟",
-          textAlign: TextAlign.center,
-          style: AppTextStyles(context).regular14.copyWith(color: Colors.grey),
+        InkWell(
+          onTap: () {
+            GoRouter.of(context).pop();
+          },
+          child: Text(
+            "لديك حساب بالفعل؟",
+            textAlign: TextAlign.center,
+            style: AppTextStyles(
+              context,
+            ).regular14.copyWith(color: Colors.grey),
+          ),
         ),
       ],
     );

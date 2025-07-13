@@ -1,13 +1,14 @@
 // ignore_for_file: file_names
 
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:in_egypt_admin_panel/core/Entities/FireStoreRequirmentsEntity.dart';
 import 'package:in_egypt_admin_panel/core/services/Shared_preferences.dart';
 import 'package:in_egypt_admin_panel/core/utils/BackEndkeys.dart';
-import 'package:in_egypt_admin_panel/features/Auth/data/Entities/UserModel.dart';
+import 'package:in_egypt_admin_panel/features/Auth/data/Models/UserModel.dart';
 import 'package:in_egypt_admin_panel/features/Auth/domain/Entities/UserEntity.dart';
 
 import '../../../../core/errors/Exceptioons.dart';
@@ -32,11 +33,13 @@ class AuthRepoImpl implements AuthRepo {
         return await fetchUserAndStoreLocally(user.uid);
       } else {
         await user.sendEmailVerification();
-        return Left(ServerFailure(message: "يرجى التحقق من البريد الإلكتروني"));
+        return Left(ServerFailure(message: "تاكد من تفعيل البريد الالكتروني"));
       }
     } on CustomException catch (e) {
+      log(e.message);
       return Left(ServerFailure(message: e.message));
     } catch (e) {
+      log(e.toString());
       return Left(ServerFailure(message: "حدث خطأ ما"));
     }
   }
@@ -68,60 +71,19 @@ class AuthRepoImpl implements AuthRepo {
         ),
       );
       if (json != null) {
-        await storeUserLocally(json);
-        return Right(null);
+        UserEntity userEntity = UserModel.fromJson(json).toEntity();
+        if (Backendkeys.userRole == userEntity.role) {
+          return left(ServerFailure(message: "هذا المستخدم ليس لديه صلاحية"));
+        } else {
+          await storeUserLocally(json);
+          return Right(null);
+        }
       } else {
         return Left(ServerFailure(message: "لم يتم العثور على المستخدم"));
       }
     } on CustomException catch (e) {
       return Left(ServerFailure(message: e.message));
     } catch (e) {
-      return Left(ServerFailure(message: "حدث خطأ ما"));
-    }
-  }
-
-  @override
-  Future<Either<Failure, void>> signInWithGoogle() async {
-    bool isExists = false;
-    User? user;
-    try {
-      user = await authService.signinWithGoogle();
-      isExists = await databaseservice.isDataExists(
-        key: Backendkeys.usersCollection,
-        docId: user.uid,
-      );
-      if (isExists) {
-        return await fetchUserAndStoreLocally(user.uid);
-      } else {
-        return await storeUserDataInFireStore(
-          userjson: UserModel.fromEntity(
-            UserEntity(
-              uid: user.uid,
-              phoneNumber: user.phoneNumber ?? "",
-              firstName: user.displayName ?? "",
-              createdAt: DateTime.now(),
-              photoUrl: user.photoURL ?? "",
-              role: "User",
-              lastName: "",
-              email: user.email ?? "",
-            ),
-          ).toJson(),
-          uid: user.uid,
-        );
-      }
-    } on CustomException catch (e) {
-      if (isExists == false) {
-        deleteUser(user);
-      } else {
-        await authService.signout();
-      }
-      return Left(ServerFailure(message: e.message));
-    } catch (e) {
-      if (isExists == false) {
-        deleteUser(user);
-      } else {
-        await authService.signout();
-      }
       return Left(ServerFailure(message: "حدث خطأ ما"));
     }
   }
@@ -163,8 +125,8 @@ class AuthRepoImpl implements AuthRepo {
       await Future.wait([
         storeUserDataInFireStore(userjson: userModel.toJson(), uid: user.uid),
         user.sendEmailVerification(),
-        authService.signout(),
       ]);
+      await authService.signout();
       return Right(null);
     } on CustomException catch (e) {
       deleteUser(user);

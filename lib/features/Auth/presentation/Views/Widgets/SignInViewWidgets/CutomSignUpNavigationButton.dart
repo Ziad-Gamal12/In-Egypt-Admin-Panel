@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:in_egypt_admin_panel/Features/Auth/presentation/Views/SignUpView.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomButton.dart';
+import 'package:in_egypt_admin_panel/features/Auth/presentation/Views/SignUpView.dart';
 
 class CutomSignUpNavigationButton extends StatelessWidget {
   const CutomSignUpNavigationButton({super.key});

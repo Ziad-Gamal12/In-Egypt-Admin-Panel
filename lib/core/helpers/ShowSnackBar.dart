@@ -1,7 +1,7 @@
 // ignore_for_file: file_names, non_constant_identifier_names
 
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
+import 'package:in_egypt_admin_panel/core/utils/textStyles.dart';
 
 ShowSnackBar({
   required BuildContext context,
@@ -24,13 +24,15 @@ void showErrorSnackBar({
 }) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
+      width: MediaQuery.sizeOf(context).width * .5,
+
       elevation: 0,
       behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.transparent,
-      content: AwesomeSnackbarContent(
-        title: "خطأ",
-        message: message,
-        contentType: ContentType.failure,
+      backgroundColor: Colors.red,
+      content: Text(
+        message,
+        textAlign: TextAlign.center,
+        style: AppTextStyles(context).semiBold16.copyWith(color: Colors.white),
       ),
     ),
   );
@@ -43,12 +45,15 @@ void showWarningSnackBar({
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       elevation: 0,
+      width: MediaQuery.sizeOf(context).width * .5,
+
       behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.transparent,
-      content: AwesomeSnackbarContent(
-        title: "تحذير",
-        message: message,
-        contentType: ContentType.warning,
+      backgroundColor: Colors.orangeAccent,
+      content: Text(
+        message,
+        textAlign: TextAlign.center,
+
+        style: AppTextStyles(context).semiBold16.copyWith(color: Colors.white),
       ),
     ),
   );
@@ -60,13 +65,14 @@ void showSuccessSnackBar({
 }) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
+      width: MediaQuery.sizeOf(context).width * .5,
       elevation: 0,
       behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.transparent,
-      content: AwesomeSnackbarContent(
-        title: "نجاح",
-        message: message,
-        contentType: ContentType.success,
+      backgroundColor: Colors.green,
+      content: Text(
+        message,
+        textAlign: TextAlign.center,
+        style: AppTextStyles(context).semiBold16.copyWith(color: Colors.white),
       ),
     ),
   );
