@@ -34,6 +34,7 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
     email: '',
     phoneNumber: '',
     isVerified: false,
+    isBlocked: true,
     createdAt:
         "${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}",
     uid: '',

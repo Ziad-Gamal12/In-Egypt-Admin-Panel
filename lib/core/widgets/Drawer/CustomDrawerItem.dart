@@ -21,11 +21,14 @@ class CustomDrawerItem extends StatelessWidget {
       ),
       child: Row(
         children: [
-          SvgPicture.asset(
-            drawerItemEntity.iconPath,
-            color: isActive ? Colors.black : Colors.white,
-            height: 20,
-            width: 20,
+          Flexible(
+            fit: FlexFit.loose,
+            child: SvgPicture.asset(
+              drawerItemEntity.iconPath,
+              color: isActive ? Colors.black : Colors.white,
+              height: 20,
+              width: 20,
+            ),
           ),
           const SizedBox(width: 8),
           Text(

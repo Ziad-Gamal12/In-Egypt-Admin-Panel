@@ -6,15 +6,19 @@ import 'package:in_egypt_admin_panel/core/widgets/Drawer/CustomDrawerItem.dart';
 import 'package:in_egypt_admin_panel/core/widgets/Drawer/CustomDrawerUserinfo.dart';
 
 class CustomDrawerContent extends StatefulWidget {
-  const CustomDrawerContent({super.key, required this.currentIndexChanged});
+  const CustomDrawerContent({
+    super.key,
+    required this.currentIndex,
+    required this.currentIndexChanged,
+  });
   final ValueChanged<int> currentIndexChanged;
+  final int currentIndex;
+
   @override
   State<CustomDrawerContent> createState() => _CustomDrawerContentState();
 }
 
 class _CustomDrawerContentState extends State<CustomDrawerContent> {
-  int currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,6 +31,7 @@ class _CustomDrawerContentState extends State<CustomDrawerContent> {
           CustomDrawerUserinfo(),
           SizedBox(height: 20),
           CustomDrawerContentActionsItems(
+            currentIndex: widget.currentIndex,
             currentIndexChanged: widget.currentIndexChanged,
           ),
           Spacer(),

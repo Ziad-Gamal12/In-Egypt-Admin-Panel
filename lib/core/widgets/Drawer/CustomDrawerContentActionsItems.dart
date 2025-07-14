@@ -4,11 +4,12 @@ import 'package:in_egypt_admin_panel/core/Entities/CustomDrawerItemEntity.dart';
 import 'package:in_egypt_admin_panel/core/widgets/Drawer/CustomDrawerItem.dart';
 
 class CustomDrawerContentActionsItems extends StatefulWidget {
-  const CustomDrawerContentActionsItems({
+  CustomDrawerContentActionsItems({
     super.key,
     required this.currentIndexChanged,
+    required this.currentIndex,
   });
-
+  int currentIndex;
   final ValueChanged<int> currentIndexChanged;
 
   @override
@@ -18,8 +19,6 @@ class CustomDrawerContentActionsItems extends StatefulWidget {
 
 class _CustomDrawerContentActionsItemsState
     extends State<CustomDrawerContentActionsItems> {
-  int currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -32,14 +31,14 @@ class _CustomDrawerContentActionsItemsState
               child: InkWell(
                 onTap: () {
                   setState(() {
-                    currentIndex = e.key;
+                    widget.currentIndex = e.key;
                   });
-                  widget.currentIndexChanged(currentIndex);
+                  widget.currentIndexChanged(widget.currentIndex);
                 },
                 child:
                     CustomDrawerItem(
                           drawerItemEntity: e.value,
-                          isActive: e.key == currentIndex,
+                          isActive: e.key == widget.currentIndex,
                         )
                         .animate(delay: Duration(milliseconds: e.key * 200))
                         .moveX(begin: -30, duration: 500.ms)

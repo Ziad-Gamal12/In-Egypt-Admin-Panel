@@ -53,6 +53,7 @@ dependencies:
   provider: ^6.1.5
   shared_preferences: ^2.5.3
   svg_flutter: ^0.0.1
+  syncfusion_flutter_datagrid: ^30.1.39
 
 dev_dependencies:
   flutter_launcher_icons: "^0.14.4"

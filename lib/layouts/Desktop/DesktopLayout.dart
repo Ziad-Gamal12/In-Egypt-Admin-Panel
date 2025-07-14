@@ -27,6 +27,7 @@ class _DesktopLayoutState extends State<DesktopLayout> {
         children: [
           Expanded(
             child: CustomDrawerContent(
+              currentIndex: currentIndex,
               currentIndexChanged: (value) {
                 setState(() {
                   currentIndex = value;

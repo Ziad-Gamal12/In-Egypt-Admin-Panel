@@ -28,6 +28,7 @@ class _MobileAndTabletLayoutState extends State<MobileAndTabletLayout> {
     return Scaffold(
       key: scaffoldKey,
       endDrawer: CustomDrawer(
+        currentIndex: currentIndex,
         currentIndexChanged: (val) {
           setState(() {
             currentIndex = val;

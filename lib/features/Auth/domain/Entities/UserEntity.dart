@@ -4,10 +4,12 @@ class UserEntity {
   String uid;
   String firstName, lastName, email, phoneNumber, photoUrl, role;
   String createdAt;
+  final bool isBlocked;
   final bool isVerified;
   UserEntity({
     required this.uid,
     required this.firstName,
+    required this.isBlocked,
     required this.isVerified,
     required this.lastName,
     required this.email,
