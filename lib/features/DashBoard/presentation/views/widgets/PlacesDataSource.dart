@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/domain/Entities/PlacesTabelItemEntity.dart';
+import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class PlacesDataSource extends DataGridSource {
-  PlacesDataSource({required List<PlacesTabelItemEntity> places}) {
+  PlacesDataSource({required List<PlaceEntity> places}) {
     _places = places
         .map<DataGridRow>(
           (e) => DataGridRow(
@@ -32,7 +32,12 @@ class PlacesDataSource extends DataGridSource {
               ? Alignment.centerRight
               : Alignment.centerLeft,
           padding: EdgeInsets.all(8.0),
-          child: Text(dataGridCell.value.toString()),
+          child: Center(
+            child: Text(
+              dataGridCell.value.toString(),
+              textAlign: TextAlign.center,
+            ),
+          ),
         );
       }).toList(),
     );

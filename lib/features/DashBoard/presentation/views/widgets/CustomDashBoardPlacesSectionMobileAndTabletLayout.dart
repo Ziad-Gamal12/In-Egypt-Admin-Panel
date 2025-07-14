@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomBookingsMobileAndTabletListView.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashBoardPlacesSectionHeader.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/PlacesTable.dart';
 
-class CustomDashBoardPlacesSectionDesktopLayout extends StatelessWidget {
-  const CustomDashBoardPlacesSectionDesktopLayout({super.key});
+class CustomDashBoardPlacesSectionMobileAndTabletLayout
+    extends StatelessWidget {
+  const CustomDashBoardPlacesSectionMobileAndTabletLayout({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class CustomDashBoardPlacesSectionDesktopLayout extends StatelessWidget {
       children: [
         CustomDashBoardPlacesSectionHeader(),
         SizedBox(height: 20),
-        Expanded(child: PlacesTabel()),
+        Expanded(child: CustomBookingsMobileAndTabletListView()),
       ],
     );
   }

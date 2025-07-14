@@ -14,19 +14,19 @@ class CustomDashBoardPlacesSectionHeader extends StatelessWidget {
           fit: FlexFit.loose,
           child: SvgPicture.asset(
             Assets.assetsIconsPlacesIcon,
-            height: 40,
-            width: 40,
+            height: 30,
+            width: 30,
           ),
         ),
         const SizedBox(width: 20),
         Expanded(
           child: Text(
-            "نبذة عن الأماكن",
+            "الأماكن",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles(
               context,
-            ).semiBold20.copyWith(color: Colors.black),
+            ).semiBold24.copyWith(color: Colors.black),
           ),
         ),
       ],

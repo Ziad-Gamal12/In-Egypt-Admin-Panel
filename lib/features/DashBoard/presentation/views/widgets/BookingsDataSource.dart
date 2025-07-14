@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/domain/Entities/BookingsTabelItemEntity.dart';
+import 'package:in_egypt_admin_panel/core/Entities/BookingEntity.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class Bookingsdatasource extends DataGridSource {
-  Bookingsdatasource({required List<BookingsTabelItemEntity> bookings}) {
+  Bookingsdatasource({required List<BookingEntity> bookings}) {
     _bookings = bookings
         .map<DataGridRow>(
           (e) => DataGridRow(
             cells: [
               DataGridCell<String>(columnName: 'Id', value: e.id),
-              DataGridCell<String>(columnName: 'User Name', value: e.userName),
-              DataGridCell<String>(columnName: 'Date', value: e.date),
-              DataGridCell<String>(columnName: 'Duration', value: e.duration),
+              DataGridCell<String>(
+                columnName: 'User Name',
+                value: e.user.firstName,
+              ),
+              DataGridCell<String>(
+                columnName: 'Date',
+                value: "${e.startAt.day}/${e.startAt.month}/${e.startAt.year}",
+              ),
+              DataGridCell<double>(
+                columnName: 'Duration',
+                value: e.daysDuration,
+              ),
             ],
           ),
         )
@@ -32,7 +41,12 @@ class Bookingsdatasource extends DataGridSource {
               ? Alignment.centerRight
               : Alignment.centerLeft,
           padding: EdgeInsets.all(8.0),
-          child: Text(dataGridCell.value.toString()),
+          child: Center(
+            child: Text(
+              dataGridCell.value.toString(),
+              textAlign: TextAlign.center,
+            ),
+          ),
         );
       }).toList(),
     );

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/layouts/Desktop/DesktopLayout.dart';
 import 'package:in_egypt_admin_panel/layouts/MobileAndTablet/MobileAndTabletLayout.dart';
@@ -16,7 +18,8 @@ class _CustomAdminResponsiceLayoutState
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constrains) {
-        if (constrains.maxWidth < 1024) {
+        log("---------------------${constrains.maxWidth.toString()}");
+        if (constrains.maxWidth < 907) {
           return MobileAndTabletLayout();
         } else {
           return DesktopLayout();

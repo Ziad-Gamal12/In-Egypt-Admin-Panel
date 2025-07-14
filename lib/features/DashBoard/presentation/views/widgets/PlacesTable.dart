@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/domain/Entities/PlacesTabelItemEntity.dart';
+import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
+import 'package:in_egypt_admin_panel/core/utils/Variables.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomGridItemLabel.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/PlacesDataSource.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -12,50 +13,15 @@ class PlacesTabel extends StatefulWidget {
 }
 
 class _PlacesTabelState extends State<PlacesTabel> {
-  List<PlacesTabelItemEntity> places = <PlacesTabelItemEntity>[];
+  List<PlaceEntity> places = <PlaceEntity>[];
 
   late PlacesDataSource placesDataSource;
 
   @override
   void initState() {
     super.initState();
-    places = getplaces();
+    places = Variables.testPlacesList;
     placesDataSource = PlacesDataSource(places: places);
-  }
-
-  List<PlacesTabelItemEntity> getplaces() {
-    return [
-      PlacesTabelItemEntity(
-        id: "123551",
-        name: 'أهرامات الجيزة',
-        location: "الجيزة",
-        category: "تاريخية",
-      ),
-      PlacesTabelItemEntity(
-        id: "123551",
-        name: 'أهرامات الجيزة',
-        location: "الجيزة",
-        category: "تاريخية",
-      ),
-      PlacesTabelItemEntity(
-        id: "123551",
-        name: 'أهرامات الجيزة',
-        location: "الجيزة",
-        category: "تاريخية",
-      ),
-      PlacesTabelItemEntity(
-        id: "123551",
-        name: 'أهرامات الجيزة',
-        location: "الجيزة",
-        category: "تاريخية",
-      ),
-      PlacesTabelItemEntity(
-        id: "123551",
-        name: 'أهرامات الجيزة',
-        location: "الجيزة",
-        category: "تاريخية",
-      ),
-    ];
   }
 
   @override

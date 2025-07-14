@@ -14,8 +14,8 @@ class CustomDashBoardBookingsSectionHeader extends StatelessWidget {
           fit: FlexFit.loose,
           child: SvgPicture.asset(
             Assets.assetsIconsBookingsIcon,
-            height: 40,
-            width: 40,
+            height: 30,
+            width: 30,
           ),
         ),
         const SizedBox(width: 20),
@@ -26,7 +26,7 @@ class CustomDashBoardBookingsSectionHeader extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles(
               context,
-            ).semiBold20.copyWith(color: Colors.black),
+            ).semiBold24.copyWith(color: Colors.black),
           ),
         ),
       ],

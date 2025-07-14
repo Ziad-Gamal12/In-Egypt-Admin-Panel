@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/constant.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashBoardCard.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashBoardInfoRow.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashboardBookingsSection.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashboardPlacesSection.dart';
+import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/layouts/DashboardDesktopLayout.dart';
+import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/layouts/DashboardMobileAndTabletLayout.dart';
 
 class DashBaordViewBody extends StatelessWidget {
   const DashBaordViewBody({super.key});
@@ -15,25 +13,25 @@ class DashBaordViewBody extends StatelessWidget {
         horizontal: kHorizentalPadding,
         vertical: kVerticalPadding,
       ),
-      child: Column(
-        children: [
-          CustomDashBoardInfoRow(),
-          Divider(height: 40, color: Colors.grey.shade400),
-          Expanded(
-            child: Customdashboardcard(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(child: CustomDashBoardPlacesSection()),
-                  const SizedBox(width: 20),
-                  Expanded(child: CustomDashBoardBookingsSection()),
-                ],
-              ),
-            ),
-          ),
-        ],
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return getDashboardlayoutDesign(
+            maxWidth: constraints.maxWidth,
+            context: context,
+          );
+        },
       ),
     );
+  }
+
+  Widget getDashboardlayoutDesign({
+    required double maxWidth,
+    required BuildContext context,
+  }) {
+    if (maxWidth <= 715 || MediaQuery.of(context).size.width < 907) {
+      return Dashboardmobileandtabletlayout();
+    } else {
+      return Dashboarddesktoplayout();
+    }
   }
 }

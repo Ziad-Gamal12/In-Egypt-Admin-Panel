@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/domain/Entities/BookingsTabelItemEntity.dart';
+import 'package:in_egypt_admin_panel/core/Entities/BookingEntity.dart';
+import 'package:in_egypt_admin_panel/core/utils/Variables.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/BookingsDataSource.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomGridItemLabel.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -12,50 +13,15 @@ class BookingsTabel extends StatefulWidget {
 }
 
 class _BookingsTabelState extends State<BookingsTabel> {
-  List<BookingsTabelItemEntity> bookings = <BookingsTabelItemEntity>[];
+  List<BookingEntity> bookings = <BookingEntity>[];
 
   late Bookingsdatasource placesDataSource;
 
   @override
   void initState() {
     super.initState();
-    bookings = getBookings();
+    bookings = Variables.testBookingsList;
     placesDataSource = Bookingsdatasource(bookings: bookings);
-  }
-
-  List<BookingsTabelItemEntity> getBookings() {
-    return [
-      BookingsTabelItemEntity(
-        id: "123551",
-        userName: "محمد صلاح",
-        date: "2023-01-01",
-        duration: "2يوم",
-      ),
-      BookingsTabelItemEntity(
-        id: "123551",
-        userName: "محمد صلاح",
-        date: "2023-01-01",
-        duration: "2يوم",
-      ),
-      BookingsTabelItemEntity(
-        id: "123551",
-        userName: "محمد صلاح",
-        date: "2023-01-01",
-        duration: "2يوم",
-      ),
-      BookingsTabelItemEntity(
-        id: "123551",
-        userName: "محمد صلاح",
-        date: "2023-01-01",
-        duration: "2يوم",
-      ),
-      BookingsTabelItemEntity(
-        id: "123551",
-        userName: "محمد صلاح",
-        date: "2023-01-01",
-        duration: "2يوم",
-      ),
-    ];
   }
 
   @override
@@ -79,8 +45,8 @@ class _BookingsTabelState extends State<BookingsTabel> {
             label: CustomGridItemLabel(label: 'الموقع'),
           ),
           GridColumn(
-            columnName: 'Category',
-            label: CustomGridItemLabel(label: 'التصنيف'),
+            columnName: 'Duration',
+            label: CustomGridItemLabel(label: 'المدة'),
           ),
         ],
       ),

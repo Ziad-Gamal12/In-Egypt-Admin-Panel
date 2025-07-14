@@ -9,7 +9,7 @@ class Customdashboardcard extends StatelessWidget {
       alignment: Alignment.center,
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.grey.shade200,
+        color: Colors.grey.shade100,
         borderRadius: BorderRadius.circular(10),
       ),
       child: child,
