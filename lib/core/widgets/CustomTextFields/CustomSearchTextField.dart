@@ -21,7 +21,14 @@ class CustomSearchTextField extends StatelessWidget {
         hintStyle: AppTextStyles(
           context,
         ).regular14.copyWith(color: const Color(0xffBABABA)),
-        suffixIcon: Icon(FontAwesomeIcons.magnifyingGlass, color: Colors.black),
+        suffixIcon: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Icon(
+            FontAwesomeIcons.magnifyingGlass,
+            color: Colors.black,
+            size: 20,
+          ),
+        ),
         border: border,
         focusedBorder: border,
         enabledBorder: border,

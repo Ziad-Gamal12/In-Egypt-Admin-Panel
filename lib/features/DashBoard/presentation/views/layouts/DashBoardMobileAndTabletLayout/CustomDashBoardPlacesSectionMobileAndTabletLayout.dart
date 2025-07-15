@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomBookingsMobileAndTabletListView.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashBoardPlacesSectionHeader.dart';
+import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/layouts/DashBoardMobileAndTabletLayout/CustomBookingsMobileAndTabletListView.dart';
+import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/layouts/DashBoardMobileAndTabletLayout/CustomDashBoardPlacesSectionHeader.dart';
 
 class CustomDashBoardPlacesSectionMobileAndTabletLayout
     extends StatelessWidget {

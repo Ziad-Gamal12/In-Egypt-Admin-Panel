@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/constant.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/layouts/DashboardDesktopLayout.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/layouts/DashboardMobileAndTabletLayout.dart';
+import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/layouts/DashBoardDesktopLayout/DashboardDesktopLayout.dart';
+import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/layouts/DashBoardMobileAndTabletLayout/DashboardMobileAndTabletLayout.dart';
 
 class DashBaordViewBody extends StatelessWidget {
   const DashBaordViewBody({super.key});

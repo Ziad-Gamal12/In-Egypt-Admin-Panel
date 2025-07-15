@@ -35,13 +35,18 @@ class Custombutton extends StatelessWidget {
       ),
       onPressed: onPressed,
       color: color,
-      child:
-          child ??
-          Text(
-            text,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles(context).semiBold16.copyWith(color: textColor),
-          ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child:
+            child ??
+            Text(
+              text,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles(
+                context,
+              ).semiBold16.copyWith(color: textColor),
+            ),
+      ),
     );
   }
 }

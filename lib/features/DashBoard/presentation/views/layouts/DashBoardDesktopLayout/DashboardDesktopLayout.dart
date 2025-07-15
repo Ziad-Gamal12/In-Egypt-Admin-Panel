@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/core/utils/textStyles.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/BookingsTabel.dart';
+import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/layouts/DashBoardDesktopLayout/BookingsTabel.dart';
+import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/layouts/DashBoardDesktopLayout/PlacesTable.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashBoardCard.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashBoardInfoRow.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/PlacesTable.dart';
 
 class Dashboarddesktoplayout extends StatelessWidget {
   const Dashboarddesktoplayout({super.key});

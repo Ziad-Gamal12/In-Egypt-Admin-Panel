@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/core/Entities/BookingEntity.dart';
 import 'package:in_egypt_admin_panel/core/utils/Variables.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/BookingsDataSource.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomGridItemLabel.dart';
+import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/layouts/DashBoardDesktopLayout/BookingsDataSource.dart';
+import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/layouts/DashBoardDesktopLayout/CustomGridItemLabel.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class BookingsTabel extends StatefulWidget {

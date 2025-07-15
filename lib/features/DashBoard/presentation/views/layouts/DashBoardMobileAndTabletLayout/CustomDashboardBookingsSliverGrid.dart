@@ -22,7 +22,7 @@ class CustomDashboardBookingsSliverGrid extends StatelessWidget {
   int getGridCrossAxisCount({required double maxWidth}) {
     if (maxWidth <= 600) {
       return 2;
-    } else if (maxWidth <= 850) {
+    } else if (maxWidth <= 860) {
       return 3;
     } else {
       return 4;
