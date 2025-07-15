@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/constant.dart';
+import 'package:in_egypt_admin_panel/core/widgets/CustomSearchAndFilterWidget.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/CustomAddPlaceButton.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/CustomPlacesHeader.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/CustomPlacesSliverGrid.dart';
-import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/CustomSearchAndFilterPlacesWidget.dart';
 
 class ManagePlacesViewBody extends StatelessWidget {
   const ManagePlacesViewBody({super.key});
@@ -25,7 +25,7 @@ class ManagePlacesViewBody extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CustomSearchAndFilterPlacesWidget(),
+                      CustomSearchAndFilterWidget(),
                       SizedBox(height: 20),
                       CustomPlacesHeader(),
                       SizedBox(height: 20),

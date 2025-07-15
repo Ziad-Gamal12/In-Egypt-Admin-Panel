@@ -15,7 +15,7 @@ class BookingTotalPrice extends StatelessWidget {
         const SizedBox(width: 10),
         Text(
           "$price جنيه",
-          style: AppTextStyles(context).regular14.copyWith(color: Colors.red),
+          style: AppTextStyles(context).semiBold14.copyWith(color: Colors.red),
         ),
       ],
     );

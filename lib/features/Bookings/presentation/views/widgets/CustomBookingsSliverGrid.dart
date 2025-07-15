@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/core/helpers/GetGridItemCountsAndAspect.dart';
-import 'package:in_egypt_admin_panel/core/widgets/PlaceWidgets/CustomPlaceVerticalDesignItem.dart';
+import 'package:in_egypt_admin_panel/core/utils/Variables.dart';
+import 'package:in_egypt_admin_panel/core/widgets/BookingWidgets/CustomBookingItem.dart';
 
-class CustomPlacesSliverGrid extends StatelessWidget {
-  const CustomPlacesSliverGrid({super.key, required this.maxWidth});
+class CustomBookingsSliverGrid extends StatelessWidget {
+  const CustomBookingsSliverGrid({super.key, required this.maxWidth});
   final double maxWidth;
   @override
   Widget build(BuildContext context) {
@@ -14,8 +15,9 @@ class CustomPlacesSliverGrid extends StatelessWidget {
         mainAxisSpacing: 20,
         childAspectRatio: getItemAspectRatio(maxWidth),
       ),
+      itemCount: Variables.testBookingsList.length,
       itemBuilder: (context, index) {
-        return CustomPlaceVerticalDesignItem(isFavourite: false);
+        return CustomBookingItem(booking: Variables.testBookingsList[index]);
       },
     );
   }
