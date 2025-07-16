@@ -10,19 +10,15 @@ class CustomSearchAndFilterWidget extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          flex: 16,
+          flex: 17,
           child: CustomSearchTextField(controller: TextEditingController()),
         ),
         SizedBox(width: 20),
-        Expanded(
-          child: AspectRatio(
-            aspectRatio: 2 / 3,
-            child: FittedBox(
-              child: IconButton(
-                onPressed: () {},
-                icon: Icon(FontAwesomeIcons.barsStaggered, color: Colors.black),
-              ),
-            ),
+        FittedBox(
+          child: IconButton(
+            iconSize: 30,
+            onPressed: () {},
+            icon: Icon(FontAwesomeIcons.barsStaggered, color: Colors.black),
           ),
         ),
       ],

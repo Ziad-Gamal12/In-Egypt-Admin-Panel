@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:in_egypt_admin_panel/core/helpers/GetGridItemCountsAndAspect.dart';
 import 'package:in_egypt_admin_panel/core/utils/Variables.dart';
 import 'package:in_egypt_admin_panel/core/widgets/BookingWidgets/CustomBookingItem.dart';
 
@@ -20,5 +19,27 @@ class CustomBookingsSliverGrid extends StatelessWidget {
         return CustomBookingItem(booking: Variables.testBookingsList[index]);
       },
     );
+  }
+
+  double getItemAspectRatio(double maxWidth) {
+    int crossAxisCount = getCrossAxisCount(maxWidth);
+    double spacing = 20;
+    double totalSpacing = spacing * (crossAxisCount - 1);
+    double itemWidth = (maxWidth - totalSpacing) / crossAxisCount;
+
+    double itemHeight = itemWidth * getAspectRatioHightprecentage(maxWidth);
+    return itemWidth / itemHeight;
+  }
+
+  double getAspectRatioHightprecentage(double maxWidth) {
+    if (maxWidth >= 600) return 1.5;
+    return 1.4;
+  }
+
+  int getCrossAxisCount(double maxWidth) {
+    if (maxWidth >= 1200) return 5;
+    if (maxWidth >= 900) return 4;
+    if (maxWidth >= 600) return 3;
+    return 2; // For phones
   }
 }

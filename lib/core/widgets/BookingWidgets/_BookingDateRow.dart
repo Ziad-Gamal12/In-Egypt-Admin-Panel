@@ -10,19 +10,36 @@ class BookingDateRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const Icon(
-          FontAwesomeIcons.calendarDays,
-          size: 15,
-          color: Colors.black,
-        ),
-        const SizedBox(width: 10),
-        Text(
-          "${start.day}/${start.month} - ${end.day}/${end.month}",
-          style: AppTextStyles(context).regular14.copyWith(color: Colors.black),
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Icon(
+            FontAwesomeIcons.calendarDays,
+            size: 20,
+            color: Colors.black,
+          ),
+          const SizedBox(width: 10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "من ${start.day}-${start.month}-${start.year}",
+                style: AppTextStyles(
+                  context,
+                ).regular14.copyWith(color: Colors.black),
+              ),
+              Text(
+                "الى ${end.day}-${end.month}-${end.year} ",
+                style: AppTextStyles(
+                  context,
+                ).regular14.copyWith(color: Colors.black),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

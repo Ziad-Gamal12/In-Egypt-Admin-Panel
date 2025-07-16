@@ -9,15 +9,32 @@ class BookingGuestCount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const Icon(FontAwesomeIcons.users, size: 15, color: Colors.black),
-        const SizedBox(width: 10),
-        Text(
-          "$count",
-          style: AppTextStyles(context).regular14.copyWith(color: Colors.black),
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Row(
+        children: [
+          const Icon(FontAwesomeIcons.users, size: 20, color: Colors.black),
+          const SizedBox(width: 10),
+          Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: "عدد الزوار: ",
+                  style: AppTextStyles(
+                    context,
+                  ).regular14.copyWith(color: Colors.black),
+                ),
+                TextSpan(
+                  text: "$count",
+                  style: AppTextStyles(
+                    context,
+                  ).regular14.copyWith(color: Colors.black),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

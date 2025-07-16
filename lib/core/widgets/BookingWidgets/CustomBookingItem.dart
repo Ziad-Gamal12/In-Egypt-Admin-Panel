@@ -5,7 +5,7 @@ import 'package:in_egypt_admin_panel/core/widgets/BookingWidgets/_BookingGuestCo
 import 'package:in_egypt_admin_panel/core/widgets/BookingWidgets/_BookingPaymentMethod.dart';
 import 'package:in_egypt_admin_panel/core/widgets/BookingWidgets/_BookingStatusBadge.dart';
 import 'package:in_egypt_admin_panel/core/widgets/BookingWidgets/_BookingTotalPrice.dart';
-import 'package:in_egypt_admin_panel/core/widgets/BookingWidgets/_BookingUserName.dart';
+import 'package:in_egypt_admin_panel/core/widgets/BookingWidgets/_BookingUserInfo.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomScaleAnimatedWidget.dart';
 
 // Main Booking Card Widget
@@ -24,41 +24,48 @@ class _CustomBookingItemState extends State<CustomBookingItem> {
       child: Container(
         decoration: BoxDecoration(
           color: Colors.grey.shade50,
+          border: Border.all(color: getborderColor(widget.booking.status)),
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    BookingUserName(
-                      userName:
-                          "${widget.booking.user.firstName} ${widget.booking.user.lastName}",
-                    ),
-                    const SizedBox(height: 10),
-                    BookingDateRow(
-                      start: widget.booking.startAt,
-                      end: widget.booking.endAt,
-                    ),
-                    const SizedBox(height: 10),
-
-                    BookingGuestCount(count: widget.booking.numberOfGuests),
-                    const SizedBox(height: 10),
-                    BookingPaymentMethod(method: widget.booking.paymentMethod),
-                    const Spacer(),
-                    BookingTotalPrice(price: widget.booking.totalPrice),
-                  ],
-                ),
+            BookingUserInfo(userEntity: widget.booking.user),
+            Divider(height: 1, color: Colors.grey.shade400),
+            BookingDateRow(
+              start: widget.booking.startAt,
+              end: widget.booking.endAt,
+            ),
+            Divider(height: 1, color: Colors.grey.shade400),
+            BookingGuestCount(count: widget.booking.numberOfGuests),
+            Divider(height: 1, color: Colors.grey.shade400),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: [
+                  BookingTotalPrice(price: widget.booking.totalPrice),
+                  SizedBox(width: 5),
+                  BookingPaymentMethod(method: widget.booking.paymentMethod),
+                ],
               ),
             ),
-            SizedBox(width: 10),
+            const Spacer(),
             BookingStatusBadge(status: widget.booking.status),
           ],
         ),
       ),
     );
+  }
+
+  Color getborderColor(String status) {
+    if (status == "pending") {
+      return Colors.black;
+    } else if (status == "approved") {
+      return Colors.green;
+    } else if (status == "rejected") {
+      return Colors.red;
+    } else {
+      return Colors.black;
+    }
   }
 }

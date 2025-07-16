@@ -1,6 +1,7 @@
 import 'package:in_egypt_admin_panel/core/Entities/BookingEntity.dart';
 import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 import 'package:in_egypt_admin_panel/core/helpers/getUserData.dart';
+import 'package:in_egypt_admin_panel/features/Auth/domain/Entities/UserEntity.dart';
 
 class Variables {
   static List<BookingEntity> testBookingsList = [
@@ -233,6 +234,68 @@ class Variables {
       updatedAt: DateTime.now(),
       rating: 4.5,
       ticketPrice: 345,
+    ),
+  ];
+  static List<UserEntity> testUsers = [
+    UserEntity(
+      uid: 'u1',
+      firstName: 'Dave',
+      lastName: 'Smith',
+      email: 'dave.smith@example.com',
+      phoneNumber: '01123456789',
+      photoUrl: 'https://example.com/images/dave.jpg',
+      role: 'Tourist',
+      createdAt: '2024-06-01T10:30:00Z',
+      isBlocked: false,
+      isVerified: true,
+    ),
+    UserEntity(
+      uid: 'u2',
+      firstName: 'Sarah',
+      lastName: 'Brown',
+      email: 'sarah.brown@example.com',
+      phoneNumber: '01234567890',
+      photoUrl: 'https://example.com/images/sarah.jpg',
+      role: 'Guide',
+      createdAt: '2024-06-10T15:45:00Z',
+      isBlocked: false,
+      isVerified: false,
+    ),
+    UserEntity(
+      uid: 'u3',
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'john.doe@example.com',
+      phoneNumber: '01098765432',
+      photoUrl: 'https://example.com/images/john.jpg',
+      role: 'Tourist',
+      createdAt: '2024-06-20T08:20:00Z',
+      isBlocked: true,
+      isVerified: true,
+    ),
+    UserEntity(
+      uid: 'u4',
+      firstName: 'Nour',
+      lastName: 'Ali',
+      email: 'nour.ali@example.com',
+      phoneNumber: '01522334455',
+      photoUrl: 'https://example.com/images/nour.jpg',
+      role: 'Admin',
+      createdAt: '2024-07-01T12:00:00Z',
+      isBlocked: false,
+      isVerified: true,
+    ),
+    UserEntity(
+      uid: 'u5',
+      firstName: 'Mostafa',
+      lastName: 'Youssef',
+      email: 'mostafa.y@example.com',
+      phoneNumber: '01011223344',
+      photoUrl: 'https://example.com/images/mostafa.jpg',
+      role: 'Guide',
+      createdAt: '2024-07-10T18:00:00Z',
+      isBlocked: true,
+      isVerified: false,
     ),
   ];
 }

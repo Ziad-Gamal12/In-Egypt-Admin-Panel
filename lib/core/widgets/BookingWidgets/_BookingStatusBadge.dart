@@ -9,20 +9,19 @@ class BookingStatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: double.infinity,
-      alignment: Alignment.centerRight,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-
-      color: getBadgeColor(status),
-
-      child: RotatedBox(
-        quarterTurns: -1,
-        child: Text(
-          getBadgeText(status),
-          style: AppTextStyles(
-            context,
-          ).semiBold16.copyWith(color: Colors.white),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(10),
+          bottomRight: Radius.circular(10),
         ),
+        color: getBadgeColor(status),
+      ),
+      height: 40,
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+      child: Text(
+        getBadgeText(status),
+        style: AppTextStyles(context).semiBold14.copyWith(color: Colors.white),
       ),
     );
   }

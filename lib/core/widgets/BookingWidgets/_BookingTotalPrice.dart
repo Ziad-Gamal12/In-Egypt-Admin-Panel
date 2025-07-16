@@ -11,7 +11,7 @@ class BookingTotalPrice extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Icon(FontAwesomeIcons.sackDollar, size: 15, color: Colors.black),
+        const Icon(FontAwesomeIcons.sackDollar, size: 20, color: Colors.black),
         const SizedBox(width: 10),
         Text(
           "$price جنيه",

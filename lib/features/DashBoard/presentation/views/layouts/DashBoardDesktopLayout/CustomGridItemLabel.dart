@@ -10,6 +10,8 @@ class CustomGridItemLabel extends StatelessWidget {
       child: Text(
         label,
         textAlign: TextAlign.end,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
         style: AppTextStyles(context).semiBold11.copyWith(color: Colors.black),
       ),
     );
