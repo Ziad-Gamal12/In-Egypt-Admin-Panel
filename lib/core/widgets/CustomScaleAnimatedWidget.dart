@@ -16,7 +16,7 @@ class _CustomScaleAnimatedWidgetState extends State<CustomScaleAnimatedWidget> {
       onEnter: (_) => setState(() => isHovered = true),
       onExit: (_) => setState(() => isHovered = false),
       child: AnimatedScale(
-        scale: isHovered ? 1.08 : 1.0,
+        scale: isHovered ? 1.05 : 1.0,
         duration: const Duration(milliseconds: 200),
         child: widget.child,
       ),

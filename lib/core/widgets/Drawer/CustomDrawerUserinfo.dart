@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/constant.dart';
 import 'package:in_egypt_admin_panel/core/helpers/getUserData.dart';
 import 'package:in_egypt_admin_panel/core/utils/textStyles.dart';
-import 'package:in_egypt_admin_panel/core/widgets/CustomCachedNetworkImage.dart';
+import 'package:in_egypt_admin_panel/core/widgets/CustomUserCirclurWIdget.dart';
 
 class CustomDrawerUserinfo extends StatelessWidget {
   const CustomDrawerUserinfo({super.key});
@@ -11,14 +11,7 @@ class CustomDrawerUserinfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: CustomCachedNetworkImage(
-            imageUrl: getUserData().photoUrl == ""
-                ? "https://cdn-icons-png.flaticon.com/128/16683/16683419.png"
-                : getUserData().photoUrl,
-          ),
-        ),
+        CustomUserCirclurWidget(imageUrl: getUserData().photoUrl),
         SizedBox(width: 10),
         Column(
           mainAxisAlignment: MainAxisAlignment.start,

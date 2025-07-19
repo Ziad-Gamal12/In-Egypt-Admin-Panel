@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_egypt_admin_panel/features/Users/presentation/manager/UsersCubit/UsersCubit.dart';
-import 'package:in_egypt_admin_panel/features/Users/presentation/views/layouts/UsersDesktopLayout/Widgets/UsersContentBodyDesktopLayout.dart';
+import 'package:in_egypt_admin_panel/features/Users/presentation/views/layouts/UsersMobileAndTabletLayout/Widgets/CustomUsersContentBody.dart';
 import 'package:in_egypt_admin_panel/features/Users/presentation/views/widgets/SelectedUser.dart';
 
-class UsersDesktopLayout extends StatefulWidget {
-  const UsersDesktopLayout({super.key});
+class UsersMobileAndTabletLayout extends StatelessWidget {
+  const UsersMobileAndTabletLayout({super.key});
 
-  @override
-  State<UsersDesktopLayout> createState() => _UsersDesktopLayoutState();
-}
-
-class _UsersDesktopLayoutState extends State<UsersDesktopLayout> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UsersCubit, UsersState>(
@@ -19,12 +14,12 @@ class _UsersDesktopLayoutState extends State<UsersDesktopLayout> {
         if (state is UsersOnTap) {
           return Row(
             children: [
-              Expanded(flex: 3, child: UsersContentBodyDesktopLayout()),
-              Expanded(child: SelectedUser(user: state.userEntity)),
+              Expanded(flex: 3, child: CustomUsersContentBody()),
+              Expanded(flex: 2, child: SelectedUser(user: state.userEntity)),
             ],
           );
         } else {
-          return UsersContentBodyDesktopLayout();
+          return CustomUsersContentBody();
         }
       },
     );

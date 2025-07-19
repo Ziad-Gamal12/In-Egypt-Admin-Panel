@@ -1,8 +1,9 @@
 // ignore_for_file: unused_element, file_names
 
 import 'package:flutter/material.dart';
+import 'package:in_egypt_admin_panel/core/helpers/getUserData.dart';
 import 'package:in_egypt_admin_panel/core/utils/textStyles.dart';
-import 'package:in_egypt_admin_panel/core/widgets/CustomCachedNetworkImage.dart';
+import 'package:in_egypt_admin_panel/core/widgets/CustomUserCirclurWIdget.dart';
 import 'package:in_egypt_admin_panel/features/Auth/domain/Entities/UserEntity.dart';
 
 class BookingUserInfo extends StatelessWidget {
@@ -22,14 +23,7 @@ class BookingUserInfo extends StatelessWidget {
         userEntity.email,
         style: AppTextStyles(context).regular10.copyWith(color: Colors.black),
       ),
-      leading: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: CustomCachedNetworkImage(
-          imageUrl: userEntity.photoUrl == ""
-              ? "https://cdn-icons-png.flaticon.com/128/16683/16683419.png"
-              : userEntity.photoUrl,
-        ),
-      ),
+      leading: CustomUserCirclurWidget(imageUrl: getUserData().photoUrl),
     );
   }
 }

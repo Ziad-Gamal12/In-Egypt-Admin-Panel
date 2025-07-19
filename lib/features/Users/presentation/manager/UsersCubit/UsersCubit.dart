@@ -4,14 +4,14 @@ import 'package:bloc/bloc.dart';
 import 'package:in_egypt_admin_panel/features/Auth/domain/Entities/UserEntity.dart';
 import 'package:meta/meta.dart';
 
-part 'users_table_state.dart';
+part 'UsersState.dart';
 
-class UsersTableCubit extends Cubit<UsersTableState> {
-  UsersTableCubit() : super(UsersTableInitial());
+class UsersCubit extends Cubit<UsersState> {
+  UsersCubit() : super(UsersInitial());
 
   void onCellTap({required UserEntity userEntity}) {
     {
-      emit(UsersTableOnCellTap(userEntity: userEntity));
+      emit(UsersOnTap(userEntity: userEntity));
     }
   }
 }

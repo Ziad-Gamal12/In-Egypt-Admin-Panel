@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_egypt_admin_panel/constant.dart';
-import 'package:in_egypt_admin_panel/features/Users/presentation/manager/users_table_cubit/users_table_cubit.dart';
+import 'package:in_egypt_admin_panel/features/Users/presentation/manager/UsersCubit/UsersCubit.dart';
 import 'package:in_egypt_admin_panel/features/Users/presentation/views/layouts/UsersDesktopLayout/UsersDesktopLayout.dart';
+import 'package:in_egypt_admin_panel/features/Users/presentation/views/layouts/UsersMobileAndTabletLayout/UsersMobileAndTabletLayout.dart';
 
 class UsersViewBody extends StatelessWidget {
   const UsersViewBody({super.key});
@@ -10,7 +11,7 @@ class UsersViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => UsersTableCubit(),
+      create: (context) => UsersCubit(),
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: kHorizentalPadding,
@@ -33,7 +34,7 @@ class UsersViewBody extends StatelessWidget {
     required BuildContext context,
   }) {
     if (maxWidth <= 715 || MediaQuery.of(context).size.width < 907) {
-      return SizedBox();
+      return UsersMobileAndTabletLayout();
     } else {
       return UsersDesktopLayout();
     }

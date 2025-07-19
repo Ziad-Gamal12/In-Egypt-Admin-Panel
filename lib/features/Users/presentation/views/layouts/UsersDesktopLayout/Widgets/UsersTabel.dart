@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/core/utils/Variables.dart';
 import 'package:in_egypt_admin_panel/features/Auth/domain/Entities/UserEntity.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/layouts/DashBoardDesktopLayout/CustomGridItemLabel.dart';
-import 'package:in_egypt_admin_panel/features/Users/presentation/manager/users_table_cubit/users_table_cubit.dart';
-import 'package:in_egypt_admin_panel/features/Users/presentation/views/layouts/UsersDesktopLayout/UsersDataSource.dart';
+import 'package:in_egypt_admin_panel/features/Users/presentation/manager/UsersCubit/UsersCubit.dart';
+import 'package:in_egypt_admin_panel/features/Users/presentation/views/layouts/UsersDesktopLayout/Widgets/UsersDataSource.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
@@ -16,9 +16,7 @@ class UsersTabel extends StatefulWidget {
 
 class _BookingsTabelState extends State<UsersTabel> {
   List<UserEntity> users = <UserEntity>[];
-
   late Usersdatasource usersdatasource;
-
   @override
   void initState() {
     super.initState();
@@ -32,7 +30,7 @@ class _BookingsTabelState extends State<UsersTabel> {
       width: double.infinity,
       child: SfDataGrid(
         onCellTap: (details) {
-          context.read<UsersTableCubit>().onCellTap(
+          context.read<UsersCubit>().onCellTap(
             userEntity: users[details.rowColumnIndex.rowIndex - 1],
           );
         },
