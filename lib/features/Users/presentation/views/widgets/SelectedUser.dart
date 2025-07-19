@@ -12,7 +12,6 @@ class SelectedUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
       padding: EdgeInsets.only(right: 16),
       child: SingleChildScrollView(
         child: Column(

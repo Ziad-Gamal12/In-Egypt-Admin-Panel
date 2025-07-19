@@ -15,11 +15,13 @@ class SignUpButtonSection extends StatelessWidget {
     required this.passwordController,
     required this.confirmPasswordController,
     required this.isTermsAccepted,
+    required this.role,
   });
   final GlobalKey<FormState> formKey;
   final TextEditingController passwordController;
   final TextEditingController confirmPasswordController;
   final bool isTermsAccepted;
+  final String role;
   @override
   Widget build(BuildContext context) {
     UserEntity userEntity = context.read<UserEntity>();
@@ -32,27 +34,36 @@ class SignUpButtonSection extends StatelessWidget {
           onPressed: () {
             if (formKey.currentState!.validate()) {
               if (passwordController.text == confirmPasswordController.text) {
-                if (isTermsAccepted) {
-                  formKey.currentState!.save();
-                  context.read<SignUpCubit>().signUpWithEmailAndPassword(
-                    userEntity: userEntity,
-                    password: passwordController.text,
-                  );
+                if (role != '') {
+                  userEntity.role = role;
+                  if (isTermsAccepted) {
+                    formKey.currentState!.save();
+                    context.read<SignUpCubit>().signUpWithEmailAndPassword(
+                      userEntity: userEntity,
+                      password: passwordController.text,
+                    );
+                  } else {
+                    showWarningSnackBar(
+                      context: context,
+                      message: "يرجى قبول الشروط والأحكام",
+                    );
+                  }
                 } else {
                   showWarningSnackBar(
                     context: context,
-                    message: "يرجى قبول الشروط والأحكام",
+                    message: "يرجى تحديد نوع الحساب",
                   );
                 }
-              } else {
-                showErrorSnackBar(
-                  context: context,
-                  message: "كلمة المرور وتأكيد كلمة المرور غير متطابقتين",
-                );
               }
+            } else {
+              showErrorSnackBar(
+                context: context,
+                message: "كلمة المرور وتأكيد كلمة المرور غير متطابقتين",
+              );
             }
           },
         ),
+
         const SizedBox(height: 20),
         InkWell(
           onTap: () {

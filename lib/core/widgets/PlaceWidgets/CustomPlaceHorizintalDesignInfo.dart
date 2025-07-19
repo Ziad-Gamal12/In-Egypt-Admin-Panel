@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/core/utils/textStyles.dart';
-import 'package:in_egypt_admin_panel/core/widgets/PlaceWidgets/CustomFavouritePlaceWidget.dart';
 import 'package:in_egypt_admin_panel/core/widgets/PlaceWidgets/CustomRatingStarsRow.dart';
 
 class CustomPlaceHorizintalDesignInfo extends StatelessWidget {
@@ -12,20 +11,13 @@ class CustomPlaceHorizintalDesignInfo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "أهرامات الجيزة",
-              style: AppTextStyles(
-                context,
-              ).semiBold16.copyWith(color: Colors.black),
-            ),
-            Spacer(),
-            CustomFavouritePlaceWidget(isFavourite: isFavorite),
-          ],
+        Text(
+          "أهرامات الجيزة",
+          style: AppTextStyles(
+            context,
+          ).semiBold16.copyWith(color: Colors.black),
         ),
+
         SizedBox(height: 10),
         Text(
           "\$245,00",

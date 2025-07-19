@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:glass/glass.dart';
 import 'package:in_egypt_admin_panel/core/utils/images.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomScaleAnimatedWidget.dart';
-import 'package:in_egypt_admin_panel/core/widgets/PlaceWidgets/CustomFavouritePlaceWidget.dart';
 import 'package:in_egypt_admin_panel/core/widgets/PlaceWidgets/CustomPlaceItemInfo.dart';
 
 class CustomPlaceVerticalDesignItem extends StatelessWidget {
@@ -14,6 +13,7 @@ class CustomPlaceVerticalDesignItem extends StatelessWidget {
       child: GestureDetector(
         onTap: () {},
         child: Container(
+          alignment: Alignment.bottomCenter,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: Colors.transparent,
@@ -28,21 +28,11 @@ class CustomPlaceVerticalDesignItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: CustomFavouritePlaceWidget(isFavourite: isFavourite),
-                ),
-              ),
               Spacer(),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: CustomPlaceItemInfo().asGlass(
-                  clipBorderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20),
-                  ),
+              CustomPlaceItemInfo().asGlass(
+                clipBorderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
                 ),
               ),
             ],

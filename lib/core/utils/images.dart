@@ -2,17 +2,13 @@
 class Assets {
   Assets._();
   
+  /// Assets for assetsIconsAdminIcon
+  /// assets/icons/AdminIcon.png
+  static const String assetsIconsAdminIcon = "assets/icons/AdminIcon.png";
+
   /// Assets for assetsIconsAppIcon
   /// assets/icons/AppIcon.png
   static const String assetsIconsAppIcon = "assets/icons/AppIcon.png";
-
-  /// Assets for assetsIconsAppleIcon
-  /// assets/icons/AppleIcon.svg
-  static const String assetsIconsAppleIcon = "assets/icons/AppleIcon.svg";
-
-  /// Assets for assetsIconsArrowLeftBack
-  /// assets/icons/arrowLeftBack.svg
-  static const String assetsIconsArrowLeftBack = "assets/icons/arrowLeftBack.svg";
 
   /// Assets for assetsIconsArrowleft
   /// assets/icons/Arrowleft.svg
@@ -22,25 +18,17 @@ class Assets {
   /// assets/icons/BookingsIcon.svg
   static const String assetsIconsBookingsIcon = "assets/icons/BookingsIcon.svg";
 
+  /// Assets for assetsIconsBookingsManagerIcon
+  /// assets/icons/BookingsManagerIcon.png
+  static const String assetsIconsBookingsManagerIcon = "assets/icons/BookingsManagerIcon.png";
+
   /// Assets for assetsIconsCheckedIcon
   /// assets/icons/Checked_icon.svg
   static const String assetsIconsCheckedIcon = "assets/icons/Checked_icon.svg";
 
-  /// Assets for assetsIconsCridteCard
-  /// assets/icons/cridteCard.png
-  static const String assetsIconsCridteCard = "assets/icons/cridteCard.png";
-
-  /// Assets for assetsIconsFacebookIcon
-  /// assets/icons/FacebookIcon.svg
-  static const String assetsIconsFacebookIcon = "assets/icons/FacebookIcon.svg";
-
   /// Assets for assetsIconsFavouriteIcon
   /// assets/icons/favouriteIcon.svg
   static const String assetsIconsFavouriteIcon = "assets/icons/favouriteIcon.svg";
-
-  /// Assets for assetsIconsGoogleIcon
-  /// assets/icons/GoogleIcon.svg
-  static const String assetsIconsGoogleIcon = "assets/icons/GoogleIcon.svg";
 
   /// Assets for assetsIconsHomeIcon
   /// assets/icons/HomeIcon.svg
@@ -54,41 +42,17 @@ class Assets {
   /// assets/icons/logoutIcon.svg
   static const String assetsIconsLogoutIcon = "assets/icons/logoutIcon.svg";
 
-  /// Assets for assetsIconsNotificationIcon
-  /// assets/icons/notificationIcon.svg
-  static const String assetsIconsNotificationIcon = "assets/icons/notificationIcon.svg";
-
-  /// Assets for assetsIconsPaypal
-  /// assets/icons/paypal.png
-  static const String assetsIconsPaypal = "assets/icons/paypal.png";
-
   /// Assets for assetsIconsPlacesIcon
   /// assets/icons/PlacesIcon.svg
   static const String assetsIconsPlacesIcon = "assets/icons/PlacesIcon.svg";
 
-  /// Assets for assetsIconsProfileIcon
-  /// assets/icons/ProfileIcon.svg
-  static const String assetsIconsProfileIcon = "assets/icons/ProfileIcon.svg";
+  /// Assets for assetsIconsPlacesManagerIcon
+  /// assets/icons/placesManagerIcon.png
+  static const String assetsIconsPlacesManagerIcon = "assets/icons/placesManagerIcon.png";
 
   /// Assets for assetsIconsSearchIcon
   /// assets/icons/Search_icon.svg
   static const String assetsIconsSearchIcon = "assets/icons/Search_icon.svg";
-
-  /// Assets for assetsIconsSolidFavouriteIcon
-  /// assets/icons/SolidFavouriteIcon.svg
-  static const String assetsIconsSolidFavouriteIcon = "assets/icons/SolidFavouriteIcon.svg";
-
-  /// Assets for assetsIconsSolidUsersIcon
-  /// assets/icons/SolidUsersIcon.svg
-  static const String assetsIconsSolidUsersIcon = "assets/icons/SolidUsersIcon.svg";
-
-  /// Assets for assetsIconsSolidfavouriteIcon
-  /// assets/icons/Solidfavourite_Icon.svg
-  static const String assetsIconsSolidfavouriteIcon = "assets/icons/Solidfavourite_Icon.svg";
-
-  /// Assets for assetsIconsTripsIcon
-  /// assets/icons/TripsIcon.svg
-  static const String assetsIconsTripsIcon = "assets/icons/TripsIcon.svg";
 
   /// Assets for assetsIconsUserIcon
   /// assets/icons/userIcon.png
@@ -98,17 +62,9 @@ class Assets {
   /// assets/icons/UsersIcon.svg
   static const String assetsIconsUsersIcon = "assets/icons/UsersIcon.svg";
 
-  /// Assets for assetsIconsVodafone
-  /// assets/icons/vodafone.png
-  static const String assetsIconsVodafone = "assets/icons/vodafone.png";
-
   /// Assets for assetsImagesAppLogo
   /// assets/images/AppLogo.svg
   static const String assetsImagesAppLogo = "assets/images/AppLogo.svg";
-
-  /// Assets for assetsImagesMyTripBackGround
-  /// assets/images/MyTripBackGround.svg
-  static const String assetsImagesMyTripBackGround = "assets/images/MyTripBackGround.svg";
 
   /// Assets for assetsImagesOnboardingDessert
   /// assets/images/onboardingDessert.jpg

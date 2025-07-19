@@ -6,4 +6,6 @@ class Backendkeys {
   static const storeUserLocaly = "UserData";
   static const userRole = "User";
   static const adminRole = "Admin";
+  static const placesManagerRole = "PlacesManager";
+  static const bookingsManagerRole = "BookingsManager";
 }

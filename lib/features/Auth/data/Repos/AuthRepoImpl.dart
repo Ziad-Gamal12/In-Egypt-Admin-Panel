@@ -29,12 +29,8 @@ class AuthRepoImpl implements AuthRepo {
   }) async {
     try {
       User user = await authService.signInWithEmailAndPassword(email, password);
-      //  if (user.emailVerified) {
+
       return await fetchUserAndStoreLocally(user.uid);
-      // } else {
-      //   await user.sendEmailVerification();
-      //   return Left(ServerFailure(message: "تاكد من تفعيل البريد الالكتروني"));
-      // }
     } on CustomException catch (e) {
       log(e.message);
       return Left(ServerFailure(message: e.message));
@@ -76,11 +72,21 @@ class AuthRepoImpl implements AuthRepo {
       );
       if (json != null) {
         UserEntity userEntity = UserModel.fromJson(json).toEntity();
-        if (Backendkeys.userRole == userEntity.role) {
-          return left(ServerFailure(message: "هذا المستخدم ليس لديه صلاحية"));
+        if (userEntity.isBlocked == false) {
+          if (userEntity.isVerified == true) {
+            if (Backendkeys.userRole == userEntity.role) {
+              return left(
+                ServerFailure(message: "هذا المستخدم ليس لديه صلاحية"),
+              );
+            } else {
+              await storeUserLocally(json);
+              return Right(null);
+            }
+          } else {
+            return Left(ServerFailure(message: "لم يتم التفعيل بعد"));
+          }
         } else {
-          await storeUserLocally(json);
-          return Right(null);
+          return Left(ServerFailure(message: "هذا المستخدم محظور"));
         }
       } else {
         return Left(ServerFailure(message: "لم يتم العثور على المستخدم"));
