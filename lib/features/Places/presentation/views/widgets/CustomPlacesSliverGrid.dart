@@ -1,22 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/core/widgets/PlaceWidgets/CustomPlaceVerticalDesignItem.dart';
+import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/PlaceDetailsWidgets/PlaceDetailsViewBody.dart';
 
-class CustomPlacesSliverGrid extends StatelessWidget {
-  const CustomPlacesSliverGrid({super.key, required this.maxWidth});
+class CustomPlacesSliverGrid extends StatefulWidget {
+  const CustomPlacesSliverGrid({
+    super.key,
+    required this.maxWidth,
+    required this.onSelected,
+  });
   final double maxWidth;
+  final ValueChanged<bool> onSelected;
+
+  @override
+  State<CustomPlacesSliverGrid> createState() => _CustomPlacesSliverGridState();
+}
+
+class _CustomPlacesSliverGridState extends State<CustomPlacesSliverGrid> {
+  bool isSelected = false;
   @override
   Widget build(BuildContext context) {
     return SliverGrid.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: getCrossAxisCount(maxWidth),
+        crossAxisCount: getCrossAxisCount(widget.maxWidth),
         crossAxisSpacing: 20,
         mainAxisSpacing: 20,
-        childAspectRatio: getItemAspectRatio(maxWidth),
+        childAspectRatio: getItemAspectRatio(widget.maxWidth),
       ),
       itemBuilder: (context, index) {
-        return CustomPlaceVerticalDesignItem(isFavourite: false);
+        return GestureDetector(
+          onTap: () {
+            placeItemOnTap(maxWidth: widget.maxWidth, context: context);
+          },
+          child: CustomPlaceVerticalDesignItem(),
+        );
       },
     );
+  }
+
+  void placeItemOnTap({
+    required double maxWidth,
+    required BuildContext context,
+  }) {
+    if (maxWidth <= 715 || MediaQuery.of(context).size.width < 907) {
+      showBottomSheet(
+        context: context,
+        builder: (_) {
+          return PlaceDetailsViewBody();
+        },
+      );
+    } else {
+      setState(() {
+        isSelected = !isSelected;
+      });
+      widget.onSelected(isSelected);
+    }
   }
 
   double getItemAspectRatio(double maxWidth) {
@@ -33,6 +70,7 @@ class CustomPlacesSliverGrid extends StatelessWidget {
     if (maxWidth >= 1200) return 5;
     if (maxWidth >= 900) return 4;
     if (maxWidth >= 600) return 3;
-    return 2; // For phones
+    if (maxWidth >= 300) return 2;
+    return 1; // For phones
   }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:in_egypt_admin_panel/core/Entities/PlaceReviewEntity.dart';
 
 class PlaceEntity {

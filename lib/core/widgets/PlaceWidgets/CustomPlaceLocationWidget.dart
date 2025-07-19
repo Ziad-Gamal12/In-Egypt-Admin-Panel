@@ -12,11 +12,11 @@ class CustomPlaceLocationWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SvgPicture.asset(Assets.assetsIconsLocationIcon),
+        SvgPicture.asset(Assets.assetsIconsLocationIcon, height: 20, width: 20),
         SizedBox(width: 5),
         Text(
           "الجيزه, مصر",
-          style: AppTextStyles(context).medium12.copyWith(color: Colors.white),
+          style: AppTextStyles(context).medium12.copyWith(color: Colors.black),
         ),
       ],
     );

@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/constant.dart';
-import 'package:in_egypt_admin_panel/core/widgets/CustomSearchAndFilterWidget.dart';
-import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/CustomAddPlaceButton.dart';
-import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/CustomPlacesHeader.dart';
-import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/CustomPlacesSliverGrid.dart';
+import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/ManagePlacesViewBodyContent.dart';
+import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/PlaceDetailsWidgets/PlaceDetailsViewBody.dart';
 
-class ManagePlacesViewBody extends StatelessWidget {
+class ManagePlacesViewBody extends StatefulWidget {
   const ManagePlacesViewBody({super.key});
 
+  @override
+  State<ManagePlacesViewBody> createState() => _ManagePlacesViewBodyState();
+}
+
+class _ManagePlacesViewBodyState extends State<ManagePlacesViewBody> {
+  bool isSelected = false;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -15,28 +19,22 @@ class ManagePlacesViewBody extends StatelessWidget {
         horizontal: kHorizentalPadding,
         vertical: kVerticalPadding,
       ),
-
-      child: Stack(
+      child: Row(
         children: [
-          LayoutBuilder(
-            builder: (context, constraints) => CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomSearchAndFilterWidget(),
-                      SizedBox(height: 20),
-                      CustomPlacesHeader(),
-                      SizedBox(height: 20),
-                    ],
-                  ),
-                ),
-                CustomPlacesSliverGrid(maxWidth: constraints.maxWidth),
-              ],
+          Expanded(
+            flex: 4,
+            child: ManagePlacesViewBodyContent(
+              onSelected: (value) {
+                setState(() {
+                  isSelected = value;
+                });
+              },
             ),
           ),
-          Positioned(left: 16, bottom: 16, child: CustomAddPlaceButton()),
+          if (isSelected)
+            Expanded(flex: 4, child: PlaceDetailsViewBody())
+          else
+            SizedBox(),
         ],
       ),
     );

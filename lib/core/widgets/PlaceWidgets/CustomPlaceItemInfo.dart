@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/core/utils/textStyles.dart';
-import 'package:in_egypt_admin_panel/core/widgets/PlaceWidgets/CustomPlaceLocationWidget.dart';
 import 'package:in_egypt_admin_panel/core/widgets/PlaceWidgets/CustomPlaceRatingWidget.dart';
 
 class CustomPlaceItemInfo extends StatelessWidget {
-  const CustomPlaceItemInfo({super.key});
-
+  CustomPlaceItemInfo({super.key, this.titleColor});
+  Color? titleColor;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -18,11 +17,9 @@ class CustomPlaceItemInfo extends StatelessWidget {
               "أهرامات الجيزة",
               style: AppTextStyles(
                 context,
-              ).semiBold20.copyWith(color: Colors.white),
+              ).semiBold20.copyWith(color: titleColor ?? Colors.white),
             ),
             SizedBox(height: 10),
-            CustomPlaceLocationWidget(),
-            SizedBox(height: 5),
             CustomPlaceRatingWidget(),
           ],
         ),

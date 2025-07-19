@@ -14,7 +14,7 @@ class CustomBookingsMobileAndTabletListView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: AspectRatio(
             aspectRatio: 1 / 1.2,
-            child: CustomPlaceVerticalDesignItem(isFavourite: false),
+            child: CustomPlaceVerticalDesignItem(),
           ),
         );
       },
