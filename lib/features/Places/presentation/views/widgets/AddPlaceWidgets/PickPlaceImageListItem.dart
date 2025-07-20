@@ -4,6 +4,7 @@ import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 import 'package:in_egypt_admin_panel/core/helpers/ShowSnackBar.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomCachedNetworkImage.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_cubit.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class PickPlaceImageListItem extends StatefulWidget {
   const PickPlaceImageListItem({
@@ -30,17 +31,22 @@ class _PickPlaceImageListItemState extends State<PickPlaceImageListItem> {
       },
       builder: (context, state) => AspectRatio(
         aspectRatio: 1,
-        child: Container(
-          padding: EdgeInsets.all(8),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: Colors.grey.shade50,
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: Colors.grey, width: 1),
+        child: Skeletonizer(
+          enabled: state is PlacesUploadPlaceImageLoading,
+          child: Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: Colors.grey.shade50,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Colors.grey, width: 1),
+            ),
+            child: state is PlacesUploadPlaceImageSuccess
+                ? ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: CustomCachedNetworkImage(imageUrl: state.url),
+                  )
+                : Icon(Icons.add_a_photo_outlined, color: Colors.black),
           ),
-          child: state is PlacesUploadPlaceImageSuccess
-              ? CustomCachedNetworkImage(imageUrl: state.url)
-              : Icon(Icons.add_a_photo_outlined, color: Colors.black),
         ),
       ),
     );

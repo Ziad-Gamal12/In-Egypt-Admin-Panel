@@ -11,9 +11,8 @@ class CustomCachedNetworkImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: imageUrl,
-      fit: BoxFit.cover,
-      height: 50,
-      width: 50,
+      fit: boxFit ?? BoxFit.cover,
+
       errorWidget: (context, url, error) {
         log(error.toString());
         return const Icon(Icons.error, color: Colors.red);

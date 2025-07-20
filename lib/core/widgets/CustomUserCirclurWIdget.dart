@@ -9,10 +9,14 @@ class CustomUserCirclurWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(40),
-      child: CustomCachedNetworkImage(
-        imageUrl: imageUrl == ""
-            ? "https://cdn-icons-png.flaticon.com/128/16683/16683419.png"
-            : imageUrl,
+      child: SizedBox(
+        height: 50,
+        width: 50,
+        child: CustomCachedNetworkImage(
+          imageUrl: imageUrl == ""
+              ? "https://cdn-icons-png.flaticon.com/128/16683/16683419.png"
+              : imageUrl,
+        ),
       ),
     );
   }
