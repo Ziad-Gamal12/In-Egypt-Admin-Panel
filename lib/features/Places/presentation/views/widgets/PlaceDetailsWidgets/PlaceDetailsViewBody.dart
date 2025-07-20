@@ -12,44 +12,62 @@ class PlaceDetailsViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: kVerticalPadding,
-        horizontal: kHorizentalPadding,
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        border: Border.all(color: Color(0xffF3F3F3), width: 1),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
+        color: Colors.white,
       ),
-      child: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Column(
-              children: [
-                CustomPlaceDetailsItemImage(),
-                CustomPlaceItemInfo(titleColor: Colors.black),
-                SizedBox(height: 16),
-                AboutPlaceSection(),
-                SizedBox(height: 20),
-                PlaceImagesSection(),
-                SizedBox(height: 20),
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: kMainColor, width: 1),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: kVerticalPadding,
+          horizontal: kHorizentalPadding,
+        ),
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 120),
+                    width: double.infinity,
+                    height: 2,
+                    color: Colors.grey,
                   ),
-                  child: AspectRatio(
-                    aspectRatio: 2 / 1,
-                    child: ClipRRect(
+                  SizedBox(height: 16),
+                  CustomPlaceDetailsItemImage(),
+                  CustomPlaceItemInfo(titleColor: Colors.black),
+                  SizedBox(height: 16),
+                  AboutPlaceSection(),
+                  SizedBox(height: 20),
+                  PlaceImagesSection(),
+                  SizedBox(height: 20),
+                  Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      child: CustomFlutterMap(),
+                      border: Border.all(color: kMainColor, width: 1),
+                    ),
+                    child: AspectRatio(
+                      aspectRatio: 2 / 1,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: CustomFlutterMap(),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 20),
-              ],
+                  SizedBox(height: 20),
+                ],
+              ),
             ),
-          ),
 
-          SliverToBoxAdapter(child: CustomPlaceDetailsActionButtons()),
-        ],
+            SliverToBoxAdapter(child: CustomPlaceDetailsActionButtons()),
+          ],
+        ),
       ),
     );
   }

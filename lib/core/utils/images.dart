@@ -6,6 +6,10 @@ class Assets {
   /// assets/icons/AdminIcon.png
   static const String assetsIconsAdminIcon = "assets/icons/AdminIcon.png";
 
+  /// Assets for assetsIconsAdnventurePlaceIcon
+  /// assets/icons/adnventurePlaceIcon.png
+  static const String assetsIconsAdnventurePlaceIcon = "assets/icons/adnventurePlaceIcon.png";
+
   /// Assets for assetsIconsAppIcon
   /// assets/icons/AppIcon.png
   static const String assetsIconsAppIcon = "assets/icons/AppIcon.png";
@@ -13,6 +17,10 @@ class Assets {
   /// Assets for assetsIconsArrowleft
   /// assets/icons/Arrowleft.svg
   static const String assetsIconsArrowleft = "assets/icons/Arrowleft.svg";
+
+  /// Assets for assetsIconsBeachPlaceIcon
+  /// assets/icons/BeachPlaceIcon.png
+  static const String assetsIconsBeachPlaceIcon = "assets/icons/BeachPlaceIcon.png";
 
   /// Assets for assetsIconsBookingsIcon
   /// assets/icons/BookingsIcon.svg
@@ -26,9 +34,21 @@ class Assets {
   /// assets/icons/Checked_icon.svg
   static const String assetsIconsCheckedIcon = "assets/icons/Checked_icon.svg";
 
+  /// Assets for assetsIconsCulturePlaceIcon
+  /// assets/icons/culturePlaceIcon.png
+  static const String assetsIconsCulturePlaceIcon = "assets/icons/culturePlaceIcon.png";
+
+  /// Assets for assetsIconsFamilyPlaceIcon
+  /// assets/icons/FamilyPlaceIcon.png
+  static const String assetsIconsFamilyPlaceIcon = "assets/icons/FamilyPlaceIcon.png";
+
   /// Assets for assetsIconsFavouriteIcon
   /// assets/icons/favouriteIcon.svg
   static const String assetsIconsFavouriteIcon = "assets/icons/favouriteIcon.svg";
+
+  /// Assets for assetsIconsHistoricalPlaceIcon
+  /// assets/icons/historicalPlaceIcon.png
+  static const String assetsIconsHistoricalPlaceIcon = "assets/icons/historicalPlaceIcon.png";
 
   /// Assets for assetsIconsHomeIcon
   /// assets/icons/HomeIcon.svg
@@ -42,6 +62,14 @@ class Assets {
   /// assets/icons/logoutIcon.svg
   static const String assetsIconsLogoutIcon = "assets/icons/logoutIcon.svg";
 
+  /// Assets for assetsIconsModernPlaceIcon
+  /// assets/icons/modernPlaceIcon.png
+  static const String assetsIconsModernPlaceIcon = "assets/icons/modernPlaceIcon.png";
+
+  /// Assets for assetsIconsMusuemePlaceIcon
+  /// assets/icons/musuemePlaceIcon.png
+  static const String assetsIconsMusuemePlaceIcon = "assets/icons/musuemePlaceIcon.png";
+
   /// Assets for assetsIconsPlacesIcon
   /// assets/icons/PlacesIcon.svg
   static const String assetsIconsPlacesIcon = "assets/icons/PlacesIcon.svg";
@@ -49,6 +77,18 @@ class Assets {
   /// Assets for assetsIconsPlacesManagerIcon
   /// assets/icons/placesManagerIcon.png
   static const String assetsIconsPlacesManagerIcon = "assets/icons/placesManagerIcon.png";
+
+  /// Assets for assetsIconsPublicParkPlaceIcon
+  /// assets/icons/public-parkPlaceIcon.png
+  static const String assetsIconsPublicParkPlaceIcon = "assets/icons/public-parkPlaceIcon.png";
+
+  /// Assets for assetsIconsReligiousPlaceIcon
+  /// assets/icons/ReligiousPlaceIcon.png
+  static const String assetsIconsReligiousPlaceIcon = "assets/icons/ReligiousPlaceIcon.png";
+
+  /// Assets for assetsIconsRestaurantPlaceIcon
+  /// assets/icons/restaurantPlaceIcon.png
+  static const String assetsIconsRestaurantPlaceIcon = "assets/icons/restaurantPlaceIcon.png";
 
   /// Assets for assetsIconsSearchIcon
   /// assets/icons/Search_icon.svg

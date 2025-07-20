@@ -5,8 +5,7 @@ import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/CustomPlacesSliverGrid.dart';
 
 class ManagePlacesViewBodyContent extends StatelessWidget {
-  const ManagePlacesViewBodyContent({super.key, required this.onSelected});
-  final ValueChanged<bool> onSelected;
+  const ManagePlacesViewBodyContent({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +25,7 @@ class ManagePlacesViewBodyContent extends StatelessWidget {
                   ],
                 ),
               ),
-              CustomPlacesSliverGrid(
-                maxWidth: constraints.maxWidth,
-                onSelected: onSelected,
-              ),
+              CustomPlacesSliverGrid(maxWidth: constraints.maxWidth),
             ],
           ),
           Positioned(left: 16, bottom: 16, child: CustomAddPlaceButton()),

@@ -3,20 +3,14 @@ import 'package:in_egypt_admin_panel/core/widgets/PlaceWidgets/CustomPlaceVertic
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/PlaceDetailsWidgets/PlaceDetailsViewBody.dart';
 
 class CustomPlacesSliverGrid extends StatefulWidget {
-  const CustomPlacesSliverGrid({
-    super.key,
-    required this.maxWidth,
-    required this.onSelected,
-  });
+  const CustomPlacesSliverGrid({super.key, required this.maxWidth});
   final double maxWidth;
-  final ValueChanged<bool> onSelected;
 
   @override
   State<CustomPlacesSliverGrid> createState() => _CustomPlacesSliverGridState();
 }
 
 class _CustomPlacesSliverGridState extends State<CustomPlacesSliverGrid> {
-  bool isSelected = false;
   @override
   Widget build(BuildContext context) {
     return SliverGrid.builder(
@@ -29,31 +23,17 @@ class _CustomPlacesSliverGridState extends State<CustomPlacesSliverGrid> {
       itemBuilder: (context, index) {
         return GestureDetector(
           onTap: () {
-            placeItemOnTap(maxWidth: widget.maxWidth, context: context);
+            showBottomSheet(
+              context: context,
+              builder: (_) {
+                return PlaceDetailsViewBody();
+              },
+            );
           },
           child: CustomPlaceVerticalDesignItem(),
         );
       },
     );
-  }
-
-  void placeItemOnTap({
-    required double maxWidth,
-    required BuildContext context,
-  }) {
-    if (maxWidth <= 715 || MediaQuery.of(context).size.width < 907) {
-      showBottomSheet(
-        context: context,
-        builder: (_) {
-          return PlaceDetailsViewBody();
-        },
-      );
-    } else {
-      setState(() {
-        isSelected = !isSelected;
-      });
-      widget.onSelected(isSelected);
-    }
   }
 
   double getItemAspectRatio(double maxWidth) {
@@ -70,7 +50,7 @@ class _CustomPlacesSliverGridState extends State<CustomPlacesSliverGrid> {
     if (maxWidth >= 1200) return 5;
     if (maxWidth >= 900) return 4;
     if (maxWidth >= 600) return 3;
-    if (maxWidth >= 300) return 2;
+    if (maxWidth >= 250) return 2;
     return 1; // For phones
   }
 }

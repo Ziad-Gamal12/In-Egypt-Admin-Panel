@@ -3,11 +3,11 @@
 import 'package:in_egypt_admin_panel/core/Entities/PlaceReviewEntity.dart';
 
 class PlaceEntity {
-  final String id, location, category, name, description;
-  final List<String> imagesURLs;
-  final double latitude, longitude;
-  final DateTime createdAt, updatedAt;
-  final double rating, ticketPrice;
+  String id, location, category, name, description;
+  List<String> images;
+  double latitude, longitude;
+  DateTime createdAt, updatedAt;
+  double rating, ticketPrice;
   List<PlaceReviewEntity>? placeReviewsEntity;
 
   PlaceEntity({
@@ -17,7 +17,7 @@ class PlaceEntity {
     required this.category,
     required this.name,
     required this.description,
-    required this.imagesURLs,
+    required this.images,
     required this.latitude,
     required this.longitude,
     required this.createdAt,

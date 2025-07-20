@@ -7,7 +7,7 @@ class CustomPlaceDetailsItemImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 4.5 / 3,
+      aspectRatio: 2 / 1,
       child: Container(
         alignment: Alignment.bottomCenter,
         width: double.infinity,
@@ -18,7 +18,7 @@ class CustomPlaceDetailsItemImage extends StatelessWidget {
             image: AssetImage(
               Assets.assetsImagesTestFavouritePlaceItemBackGround,
             ),
-            fit: BoxFit.cover,
+            fit: BoxFit.fitWidth,
           ),
         ),
       ),
