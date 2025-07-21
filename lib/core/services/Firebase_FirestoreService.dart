@@ -101,60 +101,8 @@ class FirebaseFirestoreservice implements Databaseservice {
           if (requirements.subDocId != null) {
             DocumentReference<Map<String, dynamic>> subDocRef =
                 currentCollection.doc(requirements.subDocId!);
-
-            if (requirements.subCollection2 != null) {
-              currentCollection = subDocRef.collection(
-                requirements.subCollection2!,
-              );
-
-              if (requirements.sub2DocId != null) {
-                DocumentReference<Map<String, dynamic>> sub2DocRef =
-                    currentCollection.doc(requirements.sub2DocId!);
-
-                if (requirements.subCollection3 != null) {
-                  currentCollection = sub2DocRef.collection(
-                    requirements.subCollection3!,
-                  );
-
-                  if (requirements.sub3DocId != null) {
-                    DocumentReference<Map<String, dynamic>> sub3DocRef =
-                        currentCollection.doc(requirements.sub3DocId!);
-
-                    if (requirements.subCollection4 != null) {
-                      currentCollection = sub3DocRef.collection(
-                        requirements.subCollection4!,
-                      );
-
-                      if (requirements.sub4DocId != null) {
-                        final sub4DocRef = currentCollection.doc(
-                          requirements.sub4DocId!,
-                        );
-                        final sub4DocSnapshot = await sub4DocRef.get();
-                        return sub4DocSnapshot.data();
-                      } else {
-                        final sub4Snapshot = await currentCollection.get();
-                        return sub4Snapshot.docs.map((e) => e.data()).toList();
-                      }
-                    } else {
-                      final sub3DocSnapshot = await sub3DocRef.get();
-                      return sub3DocSnapshot.data();
-                    }
-                  } else {
-                    final sub3Snapshot = await currentCollection.get();
-                    return sub3Snapshot.docs.map((e) => e.data()).toList();
-                  }
-                } else {
-                  final sub2DocSnapshot = await sub2DocRef.get();
-                  return sub2DocSnapshot.data();
-                }
-              } else {
-                final sub2Snapshot = await currentCollection.get();
-                return sub2Snapshot.docs.map((e) => e.data()).toList();
-              }
-            } else {
-              final subDocSnapshot = await subDocRef.get();
-              return subDocSnapshot.data();
-            }
+            final subDocSnapshot = await subDocRef.get();
+            return subDocSnapshot.data();
           } else {
             final subSnapshot = await currentCollection.get();
             return subSnapshot.docs.map((e) => e.data()).toList();
@@ -166,33 +114,20 @@ class FirebaseFirestoreservice implements Databaseservice {
       } else {
         Query queryData = currentCollection;
         if (query != null) {
-          if (query["isFree"] != null) {
-            queryData = queryData.where("price", isEqualTo: 0);
-          }
-          if (query["state"] != null) {
-            queryData = queryData.where("state", isEqualTo: query["state"]);
-          }
-          if (query["id"] != null) {
-            queryData = queryData.where("id", isEqualTo: query["id"]);
-          }
-          if (query["title"] != null) {
-            queryData = queryData.where("title", isEqualTo: query["title"]);
-          }
-          if (query["language"] != null) {
-            queryData = queryData.where(
-              "language",
-              isEqualTo: query["language"],
-            );
+          if (query["orderBy"] != null) {
+            queryData = queryData.orderBy(query["orderBy"], descending: true);
           }
           if (query["limit"] != null) {
             queryData = queryData.limit(query["limit"]);
           }
-          if (query["orderBy"] != null) {
-            queryData = queryData.orderBy(query["orderBy"], descending: true);
+
+          if (query["startAfter"] != null) {
+            queryData = queryData.startAfterDocument(query["startAfter"]);
           }
         }
 
         final querySnapshot = await queryData.get();
+
         return querySnapshot.docs.map((e) => e.data()).toList();
       }
     } on FirebaseException catch (e) {
@@ -259,26 +194,39 @@ class FirebaseFirestoreservice implements Databaseservice {
   }
 
   @override
-  Future<void> updateDate({
+  Future<void> updateData({
     required String collectionKey,
     required doc,
     required dynamic data,
-    required String field,
+    String? field,
     String? subCollectionKey,
     String? subDocId,
   }) async {
     try {
       if (subCollectionKey != null) {
-        await firestore
-            .collection(collectionKey)
-            .doc(doc)
-            .collection(subCollectionKey)
-            .doc(subDocId)
-            .update({field: data});
+        if (field == null) {
+          await firestore
+              .collection(collectionKey)
+              .doc(doc)
+              .collection(subCollectionKey)
+              .doc(subDocId)
+              .update(data);
+        } else {
+          await firestore
+              .collection(collectionKey)
+              .doc(doc)
+              .collection(subCollectionKey)
+              .doc(subDocId)
+              .update({field: data});
+        }
       } else {
-        await firestore.collection(collectionKey).doc(doc).update({
-          field: data,
-        });
+        if (field == null) {
+          await firestore.collection(collectionKey).doc(doc).update(data);
+        } else {
+          await firestore.collection(collectionKey).doc(doc).update({
+            field: data,
+          });
+        }
       }
     } on FirebaseException catch (e) {
       if (e.code == 'permission-denied') {

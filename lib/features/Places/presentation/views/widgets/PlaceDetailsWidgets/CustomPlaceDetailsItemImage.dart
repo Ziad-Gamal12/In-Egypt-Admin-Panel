@@ -1,26 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:in_egypt_admin_panel/core/utils/images.dart';
+import 'package:in_egypt_admin_panel/core/widgets/CustomCachedNetworkImage.dart';
 
 class CustomPlaceDetailsItemImage extends StatelessWidget {
-  const CustomPlaceDetailsItemImage({super.key});
-
+  const CustomPlaceDetailsItemImage({super.key, required this.imageUrl});
+  final String imageUrl;
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 2 / 1,
-      child: Container(
-        alignment: Alignment.bottomCenter,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.transparent,
-          image: DecorationImage(
-            image: AssetImage(
-              Assets.assetsImagesTestFavouritePlaceItemBackGround,
-            ),
-            fit: BoxFit.fitWidth,
-          ),
-        ),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: AspectRatio(
+        aspectRatio: 2 / 1,
+        child: FittedBox(child: CustomCachedNetworkImage(imageUrl: imageUrl)),
       ),
     );
   }

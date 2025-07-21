@@ -23,11 +23,11 @@ abstract class Databaseservice {
     required String feildValue,
   });
 
-  Future<void> updateDate({
+  Future<void> updateData({
     required String collectionKey,
     required doc,
     required dynamic data,
-    required String field,
+    String? field,
     String? subCollectionKey,
     String? subDocId,
   });

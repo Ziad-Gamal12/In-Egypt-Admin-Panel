@@ -5,8 +5,23 @@ import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/layou
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashBoardCard.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashBoardInfoRow.dart';
 
-class Dashboarddesktoplayout extends StatelessWidget {
+class Dashboarddesktoplayout extends StatefulWidget {
   const Dashboarddesktoplayout({super.key});
+
+  @override
+  State<Dashboarddesktoplayout> createState() => _DashboarddesktoplayoutState();
+}
+
+class _DashboarddesktoplayoutState extends State<Dashboarddesktoplayout> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

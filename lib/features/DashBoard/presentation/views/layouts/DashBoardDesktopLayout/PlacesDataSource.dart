@@ -3,41 +3,39 @@ import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class PlacesDataSource extends DataGridSource {
+  final List<DataGridRow> _places = [];
+
   PlacesDataSource({required List<PlaceEntity> places}) {
-    _places = places
-        .map<DataGridRow>(
-          (e) => DataGridRow(
-            cells: [
-              DataGridCell<String>(columnName: 'Id', value: e.id),
-              DataGridCell<String>(columnName: 'Name', value: e.name),
-              DataGridCell<String>(columnName: 'Location', value: e.location),
-              DataGridCell<String>(columnName: 'Category', value: e.category),
-            ],
-          ),
-        )
-        .toList();
+    updateData(places);
   }
-  List<DataGridRow> _places = [];
+
+  void updateData(List<PlaceEntity> newData) {
+    _places.addAll(
+      newData.map<DataGridRow>(
+        (e) => DataGridRow(
+          cells: [
+            DataGridCell<String>(columnName: 'Id', value: e.id),
+            DataGridCell<String>(columnName: 'Name', value: e.name),
+            DataGridCell<String>(columnName: 'Location', value: e.location),
+            DataGridCell<String>(columnName: 'Category', value: e.category),
+          ],
+        ),
+      ),
+    );
+    notifyListeners(); // Refreshes the grid
+  }
+
   @override
   List<DataGridRow> get rows => _places;
 
   @override
-  DataGridRowAdapter? buildRow(DataGridRow row) {
+  DataGridRowAdapter buildRow(DataGridRow row) {
     return DataGridRowAdapter(
-      cells: row.getCells().map<Widget>((dataGridCell) {
+      cells: row.getCells().map((cell) {
         return Container(
-          alignment:
-              (dataGridCell.columnName == 'Id' ||
-                  dataGridCell.columnName == 'Name')
-              ? Alignment.centerRight
-              : Alignment.centerLeft,
+          alignment: Alignment.center,
           padding: EdgeInsets.all(8.0),
-          child: Center(
-            child: Text(
-              dataGridCell.value.toString(),
-              textAlign: TextAlign.center,
-            ),
-          ),
+          child: Text(cell.value.toString()),
         );
       }).toList(),
     );

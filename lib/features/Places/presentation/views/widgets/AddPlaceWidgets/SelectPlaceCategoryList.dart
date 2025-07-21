@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
-import 'package:in_egypt_admin_panel/features/Places/domain/SelectPlaceCategoryEntity.dart';
+import 'package:in_egypt_admin_panel/features/Places/domain/Entities/SelectPlaceCategoryEntity.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddPlaceWidgets/SelectPlaceCategoryItem.dart';
 import 'package:provider/provider.dart';
 
 class SelectPlaceCategoryList extends StatefulWidget {
-  const SelectPlaceCategoryList({super.key});
-
+  const SelectPlaceCategoryList({super.key, required this.isEdit});
+  final bool isEdit;
   @override
   State<SelectPlaceCategoryList> createState() =>
       _SelectPlaceCategoryListState();
@@ -14,6 +14,16 @@ class SelectPlaceCategoryList extends StatefulWidget {
 
 class _SelectPlaceCategoryListState extends State<SelectPlaceCategoryList> {
   int selectedIndex = -1;
+  @override
+  void initState() {
+    if (widget.isEdit) {
+      selectedIndex = SelectPlaceCategoryEntity.placeCategories.indexWhere(
+        (element) => element.enTitle == context.read<PlaceEntity>().category,
+      );
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(

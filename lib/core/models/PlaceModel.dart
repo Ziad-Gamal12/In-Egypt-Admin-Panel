@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 
 class PlaceModel {
@@ -29,11 +30,11 @@ class PlaceModel {
       category: json['category'],
       name: json['name'],
       description: json['description'],
-      imagesURLs: json['imagesURLs'],
+      imagesURLs: (json['imagesURLs'] as List).map((e) => e as String).toList(),
       latitude: json['latitude'],
       longitude: json['longitude'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
+      createdAt: (json['createdAt'] as Timestamp).toDate(),
+      updatedAt: (json['updatedAt'] as Timestamp).toDate(),
       rating: json['rating'],
       ticketPrice: json['ticketPrice'],
     );

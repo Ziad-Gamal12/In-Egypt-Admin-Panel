@@ -3,8 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:in_egypt_admin_panel/core/utils/textStyles.dart';
 
 class AddPlaceHeader extends StatelessWidget {
-  const AddPlaceHeader({super.key});
-
+  const AddPlaceHeader({super.key, required this.isEdit});
+  final bool isEdit;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -17,7 +17,7 @@ class AddPlaceHeader extends StatelessWidget {
         ),
         Spacer(),
         Text(
-          "اضافة مكان",
+          isEdit == true ? "تعديل المكان" : "اضافة مكان",
           style: AppTextStyles(
             context,
           ).semiBold16.copyWith(color: Colors.black),

@@ -5,12 +5,17 @@ import 'package:in_egypt_admin_panel/constant.dart';
 import 'package:latlong2/latlong.dart';
 
 class CustomFlutterMap extends StatelessWidget {
-  const CustomFlutterMap({super.key});
+  const CustomFlutterMap({
+    super.key,
+    required this.latitude,
+    required this.longitude,
+  });
+  final double latitude, longitude;
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
       options: MapOptions(
-        initialCenter: LatLng(29.9792, 31.1342),
+        initialCenter: LatLng(latitude, longitude),
         initialZoom: 9.2,
       ),
       children: [

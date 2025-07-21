@@ -38,6 +38,14 @@ class Assets {
   /// assets/icons/culturePlaceIcon.png
   static const String assetsIconsCulturePlaceIcon = "assets/icons/culturePlaceIcon.png";
 
+  /// Assets for assetsIconsEmptyIcon
+  /// assets/icons/EmptyIcon.png
+  static const String assetsIconsEmptyIcon = "assets/icons/EmptyIcon.png";
+
+  /// Assets for assetsIconsError
+  /// assets/icons/error.png
+  static const String assetsIconsError = "assets/icons/error.png";
+
   /// Assets for assetsIconsFamilyPlaceIcon
   /// assets/icons/FamilyPlaceIcon.png
   static const String assetsIconsFamilyPlaceIcon = "assets/icons/FamilyPlaceIcon.png";

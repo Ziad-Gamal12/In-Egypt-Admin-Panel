@@ -4,32 +4,43 @@ import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 import 'package:in_egypt_admin_panel/core/services/PickerAssetsService.dart';
 import 'package:in_egypt_admin_panel/core/services/StorageService.dart';
 import 'package:in_egypt_admin_panel/core/services/get_it_Service.dart';
+import 'package:in_egypt_admin_panel/features/Places/domain/Repos/PlacesRepo.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_cubit.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddPlaceWidgets/AddPlaceBodyContent.dart';
 import 'package:provider/provider.dart';
 
-class AddPlaceBody extends StatefulWidget {
-  const AddPlaceBody({super.key});
-
+class AddAndEditPlaceBody extends StatefulWidget {
+  const AddAndEditPlaceBody({super.key, this.place, required this.isEdit});
+  final PlaceEntity? place;
+  final bool isEdit;
   @override
-  State<AddPlaceBody> createState() => _AddPlaceBodyState();
+  State<AddAndEditPlaceBody> createState() => _AddAndEditPlaceBodyState();
 }
 
-class _AddPlaceBodyState extends State<AddPlaceBody> {
-  PlaceEntity place = PlaceEntity(
-    id: '',
-    location: '',
-    category: '',
-    name: '',
-    description: '',
-    images: [''],
-    latitude: 0,
-    longitude: 0,
-    createdAt: DateTime.now(),
-    updatedAt: DateTime.now(),
-    rating: 0,
-    ticketPrice: 0,
-  );
+class _AddAndEditPlaceBodyState extends State<AddAndEditPlaceBody> {
+  late PlaceEntity place;
+  @override
+  void initState() {
+    if (widget.place != null) {
+      place = widget.place!;
+    } else {
+      place = PlaceEntity(
+        id: '',
+        location: '',
+        category: '',
+        name: '',
+        description: '',
+        images: [],
+        latitude: 0,
+        longitude: 0,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+        rating: 0,
+        ticketPrice: 0,
+      );
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +48,12 @@ class _AddPlaceBodyState extends State<AddPlaceBody> {
       create: (context) => PlacesCubit(
         pickerassetsservice: getIt.get<Pickerassetsservice>(),
         storageService: getIt.get<StorageService>(),
+        placesRepo: getIt.get<PlacesRepo>(),
       ),
-      child: Provider.value(value: place, child: AddPlaceBodyContent()),
+      child: Provider.value(
+        value: place,
+        child: AddPlaceBodyContent(isEdit: widget.isEdit),
+      ),
     );
   }
 }

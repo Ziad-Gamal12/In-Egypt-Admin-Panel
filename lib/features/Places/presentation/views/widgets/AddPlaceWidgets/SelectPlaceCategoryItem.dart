@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/constant.dart';
 import 'package:in_egypt_admin_panel/core/utils/textStyles.dart';
-import 'package:in_egypt_admin_panel/features/Places/domain/SelectPlaceCategoryEntity.dart';
+import 'package:in_egypt_admin_panel/features/Places/domain/Entities/SelectPlaceCategoryEntity.dart';
 
 class SelectPlaceCategoryItem extends StatelessWidget {
   const SelectPlaceCategoryItem({

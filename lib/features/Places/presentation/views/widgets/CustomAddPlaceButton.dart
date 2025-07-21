@@ -12,7 +12,7 @@ class CustomAddPlaceButton extends StatelessWidget {
         showBottomSheet(
           context: context,
           builder: (_) {
-            return AddPlaceBody();
+            return AddAndEditPlaceBody(place: null, isEdit: false);
           },
         );
       },

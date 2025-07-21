@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 import 'package:in_egypt_admin_panel/core/widgets/PlaceWidgets/CustomPlaceVerticalDesignItem.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/PlaceDetailsWidgets/PlaceDetailsViewBody.dart';
 
 class CustomPlacesSliverGrid extends StatefulWidget {
-  const CustomPlacesSliverGrid({super.key, required this.maxWidth});
+  const CustomPlacesSliverGrid({
+    super.key,
+    required this.maxWidth,
+    required this.places,
+  });
   final double maxWidth;
-
+  final List<PlaceEntity> places;
   @override
   State<CustomPlacesSliverGrid> createState() => _CustomPlacesSliverGridState();
 }
@@ -14,6 +19,7 @@ class _CustomPlacesSliverGridState extends State<CustomPlacesSliverGrid> {
   @override
   Widget build(BuildContext context) {
     return SliverGrid.builder(
+      itemCount: widget.places.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: getCrossAxisCount(widget.maxWidth),
         crossAxisSpacing: 20,
@@ -26,11 +32,11 @@ class _CustomPlacesSliverGridState extends State<CustomPlacesSliverGrid> {
             showBottomSheet(
               context: context,
               builder: (_) {
-                return PlaceDetailsViewBody();
+                return PlaceDetailsViewBody(place: widget.places[index]);
               },
             );
           },
-          child: CustomPlaceVerticalDesignItem(),
+          child: CustomPlaceVerticalDesignItem(place: widget.places[index]),
         );
       },
     );

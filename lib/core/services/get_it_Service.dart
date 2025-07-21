@@ -9,6 +9,8 @@ import 'package:in_egypt_admin_panel/core/services/StorageService.dart';
 import 'package:in_egypt_admin_panel/core/services/firebaseStorageService.dart';
 import 'package:in_egypt_admin_panel/features/Auth/data/Repos/AuthRepoImpl.dart';
 import 'package:in_egypt_admin_panel/features/Auth/domain/Repos/AuthRepo.dart';
+import 'package:in_egypt_admin_panel/features/Places/data/repos/PlacesRepoImpl.dart';
+import 'package:in_egypt_admin_panel/features/Places/domain/Repos/PlacesRepo.dart';
 
 final getIt = GetIt.instance;
 
@@ -25,5 +27,8 @@ void setup_Getit() {
       authService: getIt<firebaseAuthService>(),
       databaseservice: getIt<Databaseservice>(),
     ),
+  );
+  getIt.registerSingleton<PlacesRepo>(
+    PlacesRepoImpl(databaseservice: getIt<Databaseservice>()),
   );
 }
