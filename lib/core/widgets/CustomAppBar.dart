@@ -11,9 +11,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   AppBar build(BuildContext context) {
     return AppBar(
       leadingWidth: 40,
-      elevation: 0,
+      elevation: 2,
+      shape: Border.all(color: Colors.grey.shade200, width: 1),
       scrolledUnderElevation: 0,
       surfaceTintColor: Colors.transparent,
+
       backgroundColor: Colors.white,
       title: Text(
         appBartitle,

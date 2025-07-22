@@ -62,7 +62,9 @@ class _AddPlaceBodyContentState extends State<AddPlaceBodyContent> {
                   AddPlaceTextFields(isEdit: widget.isEdit),
                   SizedBox(height: 20),
                   state is PlacesAddPlaceLoading
-                      ? CircularProgressIndicator(color: kMainColor)
+                      ? Center(
+                          child: CircularProgressIndicator(color: kMainColor),
+                        )
                       : AddPlaceActionButton(
                           formKey: formKey,
                           isEdit: widget.isEdit,

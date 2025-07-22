@@ -12,29 +12,32 @@ class SelectUserRole extends StatefulWidget {
 
 class _SelectUserRoleState extends State<SelectUserRole> {
   int? currentIndex;
+  List<PickUserRoleOptionsEntity> options =
+      PickUserRoleOptionsEntity.getOptions();
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: PickUserRoleOptionsEntity.getOptions()
-          .asMap()
-          .entries
-          .map<Widget>((e) {
-            return Expanded(
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    currentIndex = e.key;
-                  });
-                  widget.roleChanaged(getSelectedRole(index: e.key));
-                },
-                child: CustomSelectUserRoleItem(
-                  isSelected: e.key == currentIndex,
-                  e: e.value,
-                ),
+    return SizedBox(
+      height: 80,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: options.length,
+        itemBuilder: (context, index) {
+          return Expanded(
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  currentIndex = index;
+                });
+                widget.roleChanaged(getSelectedRole(index: index));
+              },
+              child: CustomSelectUserRoleItem(
+                isSelected: currentIndex == index,
+                e: options[index],
               ),
-            );
-          })
-          .toList(),
+            ),
+          );
+        },
+      ),
     );
   }
 }
