@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
@@ -95,21 +93,16 @@ class PlacesCubit extends Cubit<PlacesState> {
     }
   }
 
-  void getPlaces() async {
-    try {
-      emit(PlacesGetPlacesLoading());
-      final result = await placesRepo.getPlaces();
-      result.fold(
-        (failure) {
-          emit(PlacesGetPlacesFailure(errmessage: failure.message));
-        },
-        (places) {
-          emit(PlacesGetPlacesSuccess(places: places));
-        },
-      );
-    } catch (e) {
-      log(e.toString());
-      emit(PlacesGetPlacesFailure(errmessage: "خطأ في جلب المكانات"));
-    }
+  getPlaces() async {
+    emit(PlacesGetPlacesLoading());
+    final result = await placesRepo.getPlaces();
+    result.fold(
+      (failure) {
+        emit(PlacesGetPlacesFailure(errmessage: failure.message));
+      },
+      (places) {
+        emit(PlacesGetPlacesSuccess(places: places));
+      },
+    );
   }
 }

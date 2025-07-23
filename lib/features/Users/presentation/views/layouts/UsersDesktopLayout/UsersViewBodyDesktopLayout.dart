@@ -16,19 +16,22 @@ class _UsersViewBodyDesktopLayoutState
     extends State<UsersViewBodyDesktopLayout> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UsersCubit, UsersState>(
-      builder: (context, state) {
-        if (state is UsersOnTap) {
-          return Row(
-            children: [
-              Expanded(flex: 3, child: UsersContentBodyDesktopLayout()),
-              Expanded(child: SelectedUser(user: state.userEntity)),
-            ],
-          );
-        } else {
-          return UsersContentBodyDesktopLayout();
-        }
-      },
+    return BlocProvider(
+      create: (context) => UsersCubit(),
+      child: BlocBuilder<UsersCubit, UsersState>(
+        builder: (context, state) {
+          if (state is UsersOnTap) {
+            return Row(
+              children: [
+                Expanded(flex: 3, child: UsersContentBodyDesktopLayout()),
+                Expanded(child: SelectedUser(user: state.userEntity)),
+              ],
+            );
+          } else {
+            return UsersContentBodyDesktopLayout();
+          }
+        },
+      ),
     );
   }
 }

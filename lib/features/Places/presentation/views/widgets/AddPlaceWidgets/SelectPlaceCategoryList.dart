@@ -17,9 +17,13 @@ class _SelectPlaceCategoryListState extends State<SelectPlaceCategoryList> {
   @override
   void initState() {
     if (widget.isEdit) {
-      selectedIndex = SelectPlaceCategoryEntity.placeCategories.indexWhere(
-        (element) => element.enTitle == context.read<PlaceEntity>().category,
-      );
+      try {
+        selectedIndex = SelectPlaceCategoryEntity.placeCategories.indexWhere(
+          (element) => element.enTitle == context.read<PlaceEntity>().category,
+        );
+      } catch (e) {
+        selectedIndex = -1;
+      }
     }
     super.initState();
   }

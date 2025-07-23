@@ -20,25 +20,32 @@ class ManagePlacesViewBodyContent extends StatefulWidget {
 
 class _ManagePlacesViewBodyContentState
     extends State<ManagePlacesViewBodyContent> {
-  List<PlaceEntity> places = [];
   ScrollController scrollController = ScrollController();
+  List<PlaceEntity> places = [];
   @override
   void initState() {
+    super.initState();
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
         context.read<PlacesCubit>().getPlaces();
       }
     });
-    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    scrollController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PlacesCubit, PlacesState>(
       listener: (context, state) {
-        if (state is PlacesGetPlacesSuccess) {
+        if (state is PlacesGetPlacesSuccess && state.places.isNotEmpty) {
           places.addAll(state.places);
+          setState(() {});
         }
       },
       builder: (context, state) {

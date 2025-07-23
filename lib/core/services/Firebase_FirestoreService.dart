@@ -131,8 +131,11 @@ class FirebaseFirestoreservice implements Databaseservice {
         final querySnapshot = await queryData.get();
         if (query != null &&
             query["isPaginate"] != null &&
-            query["isPaginate"] == true) {
+            query["isPaginate"] == true &&
+            querySnapshot.docs.isNotEmpty) {
           lastDoc = querySnapshot.docs.last;
+        } else {
+          lastDoc = null;
         }
         return querySnapshot.docs.map((e) => e.data()).toList();
       }

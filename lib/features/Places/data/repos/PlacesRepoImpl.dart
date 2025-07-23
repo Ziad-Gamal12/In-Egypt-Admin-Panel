@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:in_egypt_admin_panel/core/Entities/FireStoreRequirmentsEntity.dart';
 import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
@@ -81,14 +83,17 @@ class PlacesRepoImpl implements PlacesRepo {
         requirements: FireStoreRequirmentsEntity(
           collection: Backendkeys.placesCollection,
         ),
-        query: {"orderBy": "createdAt", "limit": 20, "isPaginate": true},
+        query: {"orderBy": "createdAt", "limit": 10, "isPaginate": true},
       );
-      return right(
-        places.map((e) => PlaceModel.fromJson(e).toEntity()).toList(),
-      );
+      List<PlaceEntity> placesEntity = places
+          .map((e) => PlaceModel.fromJson(e).toEntity())
+          .toList();
+      return right(placesEntity);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e) {
+    } catch (e, s) {
+      log("getPlaces Exception: ${e.toString()}");
+      log("getPlaces StackTrace: ${s.toString()}");
       return left(ServerFailure(message: e.toString()));
     }
   }

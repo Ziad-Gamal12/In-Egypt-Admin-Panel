@@ -5,7 +5,8 @@ import 'package:in_egypt_admin_panel/core/services/PickerAssetsService.dart';
 import 'package:in_egypt_admin_panel/core/services/StorageService.dart';
 import 'package:in_egypt_admin_panel/core/services/get_it_Service.dart';
 import 'package:in_egypt_admin_panel/features/Places/domain/Repos/PlacesRepo.dart';
-import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_cubit.dart';
+import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_cubit.dart'
+    show PlacesCubit;
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/ManagePlacesViewBodyContent.dart';
 
 class ManagePlacesViewBody extends StatefulWidget {
@@ -23,7 +24,7 @@ class _ManagePlacesViewBodyState extends State<ManagePlacesViewBody> {
         pickerassetsservice: getIt.get<Pickerassetsservice>(),
         storageService: getIt.get<StorageService>(),
         placesRepo: getIt.get<PlacesRepo>(),
-      ),
+      )..getPlaces(),
       child: Padding(
         padding: EdgeInsetsGeometry.symmetric(
           horizontal: kHorizentalPadding,
