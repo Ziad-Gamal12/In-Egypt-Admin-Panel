@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_egypt_admin_panel/constant.dart';
 import 'package:in_egypt_admin_panel/features/Users/presentation/manager/UsersCubit/UsersCubit.dart';
-import 'package:in_egypt_admin_panel/features/Users/presentation/views/layouts/UsersDesktopLayout/UsersDesktopLayout.dart';
-import 'package:in_egypt_admin_panel/features/Users/presentation/views/layouts/UsersMobileAndTabletLayout/UsersMobileAndTabletLayout.dart';
+import 'package:in_egypt_admin_panel/features/Users/presentation/views/layouts/UsersDesktopLayout/UsersViewBodyDesktopLayout.dart';
+import 'package:in_egypt_admin_panel/features/Users/presentation/views/layouts/UsersMobileAndTabletLayout/UsersViewBodyMobileAndTabletLayout.dart';
 
 class UsersViewBody extends StatelessWidget {
   const UsersViewBody({super.key});
@@ -34,9 +34,9 @@ class UsersViewBody extends StatelessWidget {
     required BuildContext context,
   }) {
     if (maxWidth <= 715 || MediaQuery.of(context).size.width < 907) {
-      return UsersMobileAndTabletLayout();
+      return UsersViewBodyMobileAndTabletLayout();
     } else {
-      return UsersDesktopLayout();
+      return UsersViewBodyDesktopLayout();
     }
   }
 }

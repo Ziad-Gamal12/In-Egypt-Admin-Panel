@@ -81,8 +81,7 @@ class PlacesRepoImpl implements PlacesRepo {
         requirements: FireStoreRequirmentsEntity(
           collection: Backendkeys.placesCollection,
         ),
-
-        query: {"orderBy": "createdAt"},
+        query: {"orderBy": "createdAt", "limit": 20, "isPaginate": true},
       );
       return right(
         places.map((e) => PlaceModel.fromJson(e).toEntity()).toList(),

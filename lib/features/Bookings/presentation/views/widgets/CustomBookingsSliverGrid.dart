@@ -32,7 +32,7 @@ class CustomBookingsSliverGrid extends StatelessWidget {
   }
 
   double getAspectRatioHightprecentage(double maxWidth) {
-    if (maxWidth >= 600) return 1.5;
+    if (maxWidth >= 600) return 1.52;
     return 1.4;
   }
 

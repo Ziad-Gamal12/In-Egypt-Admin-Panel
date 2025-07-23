@@ -11,7 +11,7 @@ import 'package:in_egypt_admin_panel/features/Auth/presentation/Views/Widgets/Si
 import 'package:in_egypt_admin_panel/features/Auth/presentation/Views/Widgets/SignInViewWidgets/ForgetPasswordText.dart';
 import 'package:in_egypt_admin_panel/features/Auth/presentation/Views/Widgets/SignInViewWidgets/SignInTextFields.dart';
 import 'package:in_egypt_admin_panel/features/Auth/presentation/manager/sign_in_cubit/sign_in_cubit.dart';
-import 'package:in_egypt_admin_panel/layouts/CustomAdminResponsiveLayout.dart';
+import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/ResponsiveDashBaoardView.dart';
 
 class CustomSignInViewBody extends StatefulWidget {
   const CustomSignInViewBody({super.key});
@@ -29,7 +29,7 @@ class _CustomSignInViewBodyState extends State<CustomSignInViewBody> {
     return BlocConsumer<SignInCubit, SignInState>(
       listener: (context, state) {
         if (state is SignInSuccess) {
-          GoRouter.of(context).go(CustomAdminResponsiceLayout.routeName);
+          GoRouter.of(context).go(ResponsiveDashBaoardView.routeName);
         } else if (state is SignInFailure) {
           showErrorSnackBar(context: context, message: state.errorMessage);
         }

@@ -9,9 +9,9 @@ class CustomErrorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Image.asset(Assets.assetsIconsError),
+        Image.asset(Assets.assetsIconsError, height: 150, width: 150),
         const SizedBox(height: 20),
         Text(
           message,

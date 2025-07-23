@@ -4,14 +4,16 @@ import 'package:in_egypt_admin_panel/features/Users/presentation/manager/UsersCu
 import 'package:in_egypt_admin_panel/features/Users/presentation/views/layouts/UsersDesktopLayout/Widgets/UsersContentBodyDesktopLayout.dart';
 import 'package:in_egypt_admin_panel/features/Users/presentation/views/widgets/SelectedUser.dart';
 
-class UsersDesktopLayout extends StatefulWidget {
-  const UsersDesktopLayout({super.key});
+class UsersViewBodyDesktopLayout extends StatefulWidget {
+  const UsersViewBodyDesktopLayout({super.key});
 
   @override
-  State<UsersDesktopLayout> createState() => _UsersDesktopLayoutState();
+  State<UsersViewBodyDesktopLayout> createState() =>
+      _UsersViewBodyDesktopLayoutState();
 }
 
-class _UsersDesktopLayoutState extends State<UsersDesktopLayout> {
+class _UsersViewBodyDesktopLayoutState
+    extends State<UsersViewBodyDesktopLayout> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UsersCubit, UsersState>(

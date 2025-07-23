@@ -84,6 +84,7 @@ class FirebaseFirestoreservice implements Databaseservice {
     }
   }
 
+  DocumentSnapshot<Object?>? lastDoc;
   @override
   Future getData({
     required FireStoreRequirmentsEntity requirements,
@@ -120,14 +121,19 @@ class FirebaseFirestoreservice implements Databaseservice {
           if (query["limit"] != null) {
             queryData = queryData.limit(query["limit"]);
           }
-
-          if (query["startAfter"] != null) {
-            queryData = queryData.startAfterDocument(query["startAfter"]);
+          if (query["isPaginate"] != null &&
+              query["isPaginate"] == true &&
+              lastDoc != null) {
+            queryData = queryData.startAfterDocument(lastDoc!);
           }
         }
 
         final querySnapshot = await queryData.get();
-
+        if (query != null &&
+            query["isPaginate"] != null &&
+            query["isPaginate"] == true) {
+          lastDoc = querySnapshot.docs.last;
+        }
         return querySnapshot.docs.map((e) => e.data()).toList();
       }
     } on FirebaseException catch (e) {

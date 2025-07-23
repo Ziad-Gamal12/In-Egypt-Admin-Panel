@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomErrorWidget.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomSearchAndFilterWidget.dart';
 import 'package:in_egypt_admin_panel/core/widgets/EmptyWidget.dart';
@@ -19,54 +20,38 @@ class ManagePlacesViewBodyContent extends StatefulWidget {
 
 class _ManagePlacesViewBodyContentState
     extends State<ManagePlacesViewBodyContent> {
+  List<PlaceEntity> places = [];
+  ScrollController scrollController = ScrollController();
   @override
   void initState() {
-    context.read<PlacesCubit>().getPlaces();
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        context.read<PlacesCubit>().getPlaces();
+      }
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PlacesCubit, PlacesState>(
+    return BlocConsumer<PlacesCubit, PlacesState>(
+      listener: (context, state) {
+        if (state is PlacesGetPlacesSuccess) {
+          places.addAll(state.places);
+        }
+      },
       builder: (context, state) {
         if (state is PlacesGetPlacesFailure) {
-          return CustomErrorWidget(message: state.errmessage);
-        } else if (state is PlacesGetPlacesSuccess) {
+          return Center(child: CustomErrorWidget(message: state.errmessage));
+        } else {
           return LayoutBuilder(
             builder: (context, constraints) => Stack(
               children: [
-                CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomSearchAndFilterWidget(),
-                          SizedBox(height: 20),
-                          CustomPlacesHeader(),
-                          SizedBox(height: 20),
-                        ],
-                      ),
-                    ),
-                    state.places.isEmpty
-                        ? SliverToBoxAdapter(child: EmptyWidget())
-                        : CustomPlacesSliverGrid(
-                            maxWidth: constraints.maxWidth,
-                            places: state.places,
-                          ),
-                  ],
-                ),
-                Positioned(left: 16, bottom: 16, child: CustomAddPlaceButton()),
-              ],
-            ),
-          );
-        } else if (state is PlacesGetPlacesLoading) {
-          return Skeletonizer(
-            enabled: true,
-            child: LayoutBuilder(
-              builder: (context, constraints) => Stack(
-                children: [
-                  CustomScrollView(
+                Skeletonizer(
+                  enabled: state is PlacesGetPlacesLoading,
+                  child: CustomScrollView(
+                    controller: scrollController,
                     slivers: [
                       SliverToBoxAdapter(
                         child: Column(
@@ -79,23 +64,20 @@ class _ManagePlacesViewBodyContentState
                           ],
                         ),
                       ),
-                      CustomPlacesSliverGrid(
-                        maxWidth: constraints.maxWidth,
-                        places: [],
-                      ),
+                      if (places.isEmpty)
+                        SliverToBoxAdapter(child: EmptyWidget())
+                      else
+                        CustomPlacesSliverGrid(
+                          maxWidth: constraints.maxWidth,
+                          places: places,
+                        ),
                     ],
                   ),
-                  Positioned(
-                    left: 16,
-                    bottom: 16,
-                    child: CustomAddPlaceButton(),
-                  ),
-                ],
-              ),
+                ),
+                Positioned(left: 16, bottom: 16, child: CustomAddPlaceButton()),
+              ],
             ),
           );
-        } else {
-          return SizedBox();
         }
       },
     );
