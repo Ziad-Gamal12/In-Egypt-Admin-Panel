@@ -6,5 +6,7 @@ abstract class PlacesRepo {
   Future<Either<Failure, void>> addPlace({required PlaceEntity placeEntity});
   Future<Either<Failure, void>> deletePlace({required String placeId});
   Future<Either<Failure, void>> updatePlace({required PlaceEntity placeEntity});
-  Future<Either<Failure, List<PlaceEntity>>> getPlaces();
+  Future<Either<Failure, List<PlaceEntity>>> getPlaces({
+    required bool isPaginated,
+  });
 }

@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:in_egypt_admin_panel/core/Entities/FireStorePaginateResponse.dart';
 import 'package:in_egypt_admin_panel/core/Entities/FireStoreRequirmentsEntity.dart';
 
 abstract class Databaseservice {
@@ -7,7 +8,7 @@ abstract class Databaseservice {
     required Map<String, dynamic> data,
     required FireStoreRequirmentsEntity requirements,
   });
-  Future getData({
+  Future<FireStorePaginateResponse> getData({
     required FireStoreRequirmentsEntity requirements,
     Map<String, dynamic>? query,
   });

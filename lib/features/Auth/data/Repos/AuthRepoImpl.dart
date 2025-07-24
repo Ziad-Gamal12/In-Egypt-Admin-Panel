@@ -64,12 +64,14 @@ class AuthRepoImpl implements AuthRepo {
 
   Future<Either<Failure, void>> fetchUserAndStoreLocally(String uid) async {
     try {
-      final json = await databaseservice.getData(
+      final response = await databaseservice.getData(
         requirements: FireStoreRequirmentsEntity(
           collection: Backendkeys.usersCollection,
           docId: uid,
         ),
       );
+
+      Map<String, dynamic>? json = response.docData;
       if (json != null) {
         UserEntity userEntity = UserModel.fromJson(json).toEntity();
         if (userEntity.isBlocked == false) {

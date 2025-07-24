@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
+import 'package:in_egypt_admin_panel/core/Entities/FireStorePaginateResponse.dart';
 import 'package:in_egypt_admin_panel/core/Entities/FireStoreRequirmentsEntity.dart';
 import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 import 'package:in_egypt_admin_panel/core/errors/Exceptioons.dart';
@@ -76,15 +77,29 @@ class PlacesRepoImpl implements PlacesRepo {
     }
   }
 
+  Map<String, dynamic> query = {
+    "orderBy": "createdAt",
+    "limit": 10,
+    "startAfter": null,
+  };
+
   @override
-  Future<Either<Failure, List<PlaceEntity>>> getPlaces() async {
+  Future<Either<Failure, List<PlaceEntity>>> getPlaces({
+    required bool isPaginated,
+  }) async {
     try {
-      List places = await databaseservice.getData(
+      log(query.toString());
+      FireStorePaginateResponse response = await databaseservice.getData(
         requirements: FireStoreRequirmentsEntity(
           collection: Backendkeys.placesCollection,
         ),
-        query: {"orderBy": "createdAt", "limit": 10, "isPaginate": true},
+        query: query,
       );
+      log(response.lastDocumentSnapshot.toString());
+      List places = response.listData ?? [];
+      if (isPaginated) {
+        query["startAfter"] = response.lastDocumentSnapshot;
+      }
       List<PlaceEntity> placesEntity = places
           .map((e) => PlaceModel.fromJson(e).toEntity())
           .toList();

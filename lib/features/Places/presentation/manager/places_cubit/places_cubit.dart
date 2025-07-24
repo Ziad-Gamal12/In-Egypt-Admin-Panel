@@ -6,9 +6,7 @@ import 'package:in_egypt_admin_panel/core/errors/Exceptioons.dart';
 import 'package:in_egypt_admin_panel/core/services/PickerAssetsService.dart';
 import 'package:in_egypt_admin_panel/core/services/StorageService.dart';
 import 'package:in_egypt_admin_panel/features/Places/domain/Repos/PlacesRepo.dart';
-import 'package:meta/meta.dart';
-
-part 'places_state.dart';
+import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_state.dart';
 
 class PlacesCubit extends Cubit<PlacesState> {
   PlacesCubit({
@@ -93,9 +91,9 @@ class PlacesCubit extends Cubit<PlacesState> {
     }
   }
 
-  getPlaces() async {
+  getPlaces({required bool isPaginated}) async {
     emit(PlacesGetPlacesLoading());
-    final result = await placesRepo.getPlaces();
+    final result = await placesRepo.getPlaces(isPaginated: isPaginated);
     result.fold(
       (failure) {
         emit(PlacesGetPlacesFailure(errmessage: failure.message));

@@ -1,7 +1,6 @@
-part of 'places_cubit.dart';
+import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 
-@immutable
-sealed class PlacesState {}
+abstract class PlacesState {}
 
 final class PlacesInitial extends PlacesState {}
 

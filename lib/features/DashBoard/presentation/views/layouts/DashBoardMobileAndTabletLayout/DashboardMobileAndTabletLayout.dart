@@ -20,7 +20,7 @@ class _DashboardmobileandtabletlayoutState
   @override
   void initState() {
     super.initState();
-    context.read<DashboardCubit>().getPlaces();
+    context.read<DashboardCubit>().getPlaces(isPaginated: false);
   }
 
   @override

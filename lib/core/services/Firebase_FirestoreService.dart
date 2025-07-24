@@ -3,6 +3,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:in_egypt_admin_panel/core/Entities/FireStorePaginateResponse.dart';
 import 'package:in_egypt_admin_panel/core/Entities/FireStoreRequirmentsEntity.dart';
 import 'package:in_egypt_admin_panel/core/errors/Exceptioons.dart';
 import 'package:in_egypt_admin_panel/core/services/DataBaseService.dart';
@@ -84,9 +85,8 @@ class FirebaseFirestoreservice implements Databaseservice {
     }
   }
 
-  DocumentSnapshot<Object?>? lastDoc;
   @override
-  Future getData({
+  Future<FireStorePaginateResponse> getData({
     required FireStoreRequirmentsEntity requirements,
     Map<String, dynamic>? query,
   }) async {
@@ -103,14 +103,17 @@ class FirebaseFirestoreservice implements Databaseservice {
             DocumentReference<Map<String, dynamic>> subDocRef =
                 currentCollection.doc(requirements.subDocId!);
             final subDocSnapshot = await subDocRef.get();
-            return subDocSnapshot.data();
+
+            return FireStorePaginateResponse(docData: subDocSnapshot.data());
           } else {
             final subSnapshot = await currentCollection.get();
-            return subSnapshot.docs.map((e) => e.data()).toList();
+            return FireStorePaginateResponse(
+              listData: subSnapshot.docs.map((e) => e.data()).toList(),
+            );
           }
         } else {
           final docSnapshot = await docRef.get();
-          return docSnapshot.data();
+          return FireStorePaginateResponse(docData: docSnapshot.data());
         }
       } else {
         Query queryData = currentCollection;
@@ -121,23 +124,18 @@ class FirebaseFirestoreservice implements Databaseservice {
           if (query["limit"] != null) {
             queryData = queryData.limit(query["limit"]);
           }
-          if (query["isPaginate"] != null &&
-              query["isPaginate"] == true &&
-              lastDoc != null) {
-            queryData = queryData.startAfterDocument(lastDoc!);
+          if (query["startAfter"] != null) {
+            queryData = queryData.startAfterDocument(query["startAfter"]);
           }
         }
-
         final querySnapshot = await queryData.get();
-        if (query != null &&
-            query["isPaginate"] != null &&
-            query["isPaginate"] == true &&
-            querySnapshot.docs.isNotEmpty) {
-          lastDoc = querySnapshot.docs.last;
-        } else {
-          lastDoc = null;
-        }
-        return querySnapshot.docs.map((e) => e.data()).toList();
+
+        return FireStorePaginateResponse(
+          lastDocumentSnapshot: querySnapshot.docs.isNotEmpty
+              ? querySnapshot.docs.last
+              : null,
+          listData: querySnapshot.docs.map((e) => e.data()).toList(),
+        );
       }
     } on FirebaseException catch (e) {
       switch (e.code) {

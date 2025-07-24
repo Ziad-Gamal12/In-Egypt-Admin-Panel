@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
@@ -5,6 +7,7 @@ import 'package:in_egypt_admin_panel/core/widgets/CustomErrorWidget.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomSearchAndFilterWidget.dart';
 import 'package:in_egypt_admin_panel/core/widgets/EmptyWidget.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_cubit.dart';
+import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_state.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/CustomAddPlaceButton.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/CustomPlacesHeader.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/CustomPlacesSliverGrid.dart';
@@ -22,14 +25,18 @@ class _ManagePlacesViewBodyContentState
     extends State<ManagePlacesViewBodyContent> {
   ScrollController scrollController = ScrollController();
   List<PlaceEntity> places = [];
+
   @override
   void initState() {
     super.initState();
-    scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
-        context.read<PlacesCubit>().getPlaces();
-      }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<PlacesCubit>().getPlaces(isPaginated: false);
+      scrollController.addListener(() {
+        if (scrollController.position.pixels ==
+            scrollController.position.maxScrollExtent) {
+          context.read<PlacesCubit>().getPlaces(isPaginated: true);
+        }
+      });
     });
   }
 
@@ -43,7 +50,8 @@ class _ManagePlacesViewBodyContentState
   Widget build(BuildContext context) {
     return BlocConsumer<PlacesCubit, PlacesState>(
       listener: (context, state) {
-        if (state is PlacesGetPlacesSuccess && state.places.isNotEmpty) {
+        if (state is PlacesGetPlacesSuccess) {
+          log(state.places.length.toString());
           places.addAll(state.places);
           setState(() {});
         }
