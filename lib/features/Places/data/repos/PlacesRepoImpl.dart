@@ -103,17 +103,20 @@ class PlacesRepoImpl implements PlacesRepo {
         query: query,
       );
 
-      List places = response.listData ?? [];
-      isPaginated ? lastDocumentSnapshot = response.lastDocumentSnapshot : null;
+      final placesData = response.listData ?? [];
 
-      List<PlaceEntity> placesEntity = places
+      if (placesData.isNotEmpty && response.lastDocumentSnapshot != null) {
+        lastDocumentSnapshot = response.lastDocumentSnapshot;
+      }
+
+      List<PlaceEntity> placesEntity = placesData
           .map((e) => PlaceModel.fromJson(e).toEntity())
           .toList();
+
+      bool hasMore = placesData.length == query["limit"];
+
       return right(
-        GetplacesResponseEntity(
-          places: placesEntity,
-          hasMore: response.hasMore ?? false,
-        ),
+        GetplacesResponseEntity(places: placesEntity, hasMore: hasMore),
       );
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));

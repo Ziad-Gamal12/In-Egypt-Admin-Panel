@@ -50,10 +50,9 @@ class _ManagePlacesViewBodyContentState
     return BlocConsumer<PlacesCubit, PlacesState>(
       listener: (context, state) {
         if (state is PlacesGetPlacesSuccess) {
+          if (!isLoadMore && state.responseEntity.hasMore) return;
           places.addAll(state.responseEntity.places);
-          if (state.responseEntity.places.length < 10) {
-            isLoadMore = state.responseEntity.hasMore;
-          }
+          isLoadMore = state.responseEntity.hasMore;
           setState(() {});
         }
       },
