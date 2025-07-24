@@ -1,10 +1,9 @@
 import 'package:bloc/bloc.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 import 'package:in_egypt_admin_panel/core/Entities/imagePickerResult.dart';
 import 'package:in_egypt_admin_panel/core/errors/Exceptioons.dart';
-import 'package:in_egypt_admin_panel/core/services/PickerAssetsService.dart';
 import 'package:in_egypt_admin_panel/core/services/StorageService.dart';
+import 'package:in_egypt_admin_panel/core/services/picker_assets_interface.dart';
 import 'package:in_egypt_admin_panel/features/Places/domain/Repos/PlacesRepo.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_state.dart';
 
@@ -14,42 +13,44 @@ class PlacesCubit extends Cubit<PlacesState> {
     required this.storageService,
     required this.placesRepo,
   }) : super(PlacesInitial());
-  final Pickerassetsservice pickerassetsservice;
+  final PickerAssetsInterface pickerassetsservice;
   final StorageService storageService;
   final PlacesRepo placesRepo;
-  void uploadPlaceImage() async {
+  void pickPlaceImages() async {
+    emit(PlacesPickPlaceImagesLoading());
     try {
-      emit(PlacesUploadPlaceImageLoading());
-      imagePickerResult? imagepickerResult = await pickerassetsservice.getImage(
-        source: ImageSource.gallery,
-      );
-      if (imagepickerResult == null) {
-        emit(PlacesUploadPlaceImageFailure(errmessage: "الصورة غير موجودة"));
-      } else {
-        try {
-          String url = await storageService.uploadFile(
-            imagepickerresult: imagepickerResult,
-          );
-          emit(PlacesUploadPlaceImageSuccess(url: url));
-        } on CustomException catch (e) {
-          emit(PlacesUploadPlaceImageFailure(errmessage: e.message));
-        }
-      }
+      ImagePickerResult imagepickerResult = await pickerassetsservice
+          .pickMultiImages();
+      emit(PlacesPickPlaceImagesSuccess(result: imagepickerResult));
+    } on CustomException catch (e) {
+      emit(PlacesPickPlaceImagesFailure(errmessage: e.message));
     } catch (e) {
-      emit(PlacesUploadPlaceImageFailure(errmessage: "خطأ في تحميل الصورة"));
+      emit(PlacesPickPlaceImagesFailure(errmessage: "خطأ في تحميل الصور"));
     }
   }
 
-  void addPlace({required PlaceEntity placeEntity}) async {
+  void addPlace({
+    required PlaceEntity placeEntity,
+    required List images,
+  }) async {
     try {
       emit(PlacesAddPlaceLoading());
-      final result = await placesRepo.addPlace(placeEntity: placeEntity);
+      final result = await placesRepo.uploadPlaceImages(images: images);
       result.fold(
         (failure) {
           emit(PlacesAddPlaceFailure(errmessage: failure.message));
         },
-        (success) {
-          emit(PlacesAddPlaceSuccess());
+        (images) async {
+          placeEntity.images.addAll(images);
+          final result = await placesRepo.addPlace(placeEntity: placeEntity);
+          result.fold(
+            (failure) {
+              emit(PlacesAddPlaceFailure(errmessage: failure.message));
+            },
+            (success) {
+              emit(PlacesAddPlaceSuccess());
+            },
+          );
         },
       );
     } catch (e) {
@@ -57,16 +58,28 @@ class PlacesCubit extends Cubit<PlacesState> {
     }
   }
 
-  void updatePlace({required PlaceEntity placeEntity}) async {
+  void updatePlace({
+    required PlaceEntity placeEntity,
+    required List images,
+  }) async {
     try {
       emit(PlacesUpdatePlaceLoading());
-      final result = await placesRepo.updatePlace(placeEntity: placeEntity);
+      final result = await placesRepo.uploadPlaceImages(images: images);
       result.fold(
         (failure) {
           emit(PlacesUpdatePlaceFailure(errmessage: failure.message));
         },
-        (success) {
-          emit(PlacesUpdatePlaceSuccess());
+        (images) async {
+          placeEntity.images.addAll(images);
+          final result = await placesRepo.updatePlace(placeEntity: placeEntity);
+          result.fold(
+            (failure) {
+              emit(PlacesUpdatePlaceFailure(errmessage: failure.message));
+            },
+            (success) {
+              emit(PlacesUpdatePlaceSuccess());
+            },
+          );
         },
       );
     } catch (e) {
@@ -77,6 +90,7 @@ class PlacesCubit extends Cubit<PlacesState> {
   void deletePlace({required String placeId}) async {
     try {
       emit(PlacesDeletePlaceLoading());
+
       final result = await placesRepo.deletePlace(placeId: placeId);
       result.fold(
         (failure) {
@@ -93,13 +107,14 @@ class PlacesCubit extends Cubit<PlacesState> {
 
   getPlaces({required bool isPaginated}) async {
     emit(PlacesGetPlacesLoading());
+
     final result = await placesRepo.getPlaces(isPaginated: isPaginated);
     result.fold(
       (failure) {
         emit(PlacesGetPlacesFailure(errmessage: failure.message));
       },
       (places) {
-        emit(PlacesGetPlacesSuccess(places: places));
+        emit(PlacesGetPlacesSuccess(responseEntity: places));
       },
     );
   }

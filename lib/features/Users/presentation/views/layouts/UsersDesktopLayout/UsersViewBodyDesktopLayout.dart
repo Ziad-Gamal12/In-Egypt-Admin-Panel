@@ -22,6 +22,8 @@ class _UsersViewBodyDesktopLayoutState
         builder: (context, state) {
           if (state is UsersOnTap) {
             return Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Expanded(flex: 3, child: UsersContentBodyDesktopLayout()),
                 Expanded(child: SelectedUser(user: state.userEntity)),

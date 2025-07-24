@@ -16,8 +16,8 @@ class DashboardCubit extends Cubit<DashboardState> {
         (failure) {
           emit(DashboardGetPlacesFailure(errmessage: failure.message));
         },
-        (places) {
-          emit(DashboardGetPlacesSuccess(places: places));
+        (response) {
+          emit(DashboardGetPlacesSuccess(places: response.places));
         },
       );
     } catch (e) {

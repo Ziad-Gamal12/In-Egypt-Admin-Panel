@@ -17,6 +17,9 @@ class CustomPlaceItemInfo extends StatelessWidget {
           children: [
             Text(
               place.name,
+              textAlign: TextAlign.start,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: AppTextStyles(
                 context,
               ).semiBold20.copyWith(color: titleColor ?? Colors.white),

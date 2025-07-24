@@ -1,13 +1,13 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:in_egypt_admin_panel/core/widgets/CustomCachedNetworkImage.dart';
-import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_cubit.dart';
-import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_state.dart';
-import 'package:skeletonizer/skeletonizer.dart';
+import 'package:in_egypt_admin_panel/core/Entities/imagePickerResult.dart';
+import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddPlaceWidgets/DisplayImagePlaceListItem.dart';
 
 class PickPlaceImageListItem extends StatefulWidget {
-  PickPlaceImageListItem({super.key, required this.imageUrl});
-  String imageUrl;
+  PickPlaceImageListItem({super.key, required this.image});
+  dynamic image;
   @override
   State<PickPlaceImageListItem> createState() => _PickPlaceImageListItemState();
 }
@@ -15,44 +15,42 @@ class PickPlaceImageListItem extends StatefulWidget {
 class _PickPlaceImageListItemState extends State<PickPlaceImageListItem> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PlacesCubit, PlacesState>(
-      builder: (context, state) {
-        return Skeletonizer(
-          enabled: state is PlacesUploadPlaceImageLoading,
-          child: AspectRatio(
-            aspectRatio: 1,
-            child: GestureDetector(
-              onTap: () {
-                context.read<PlacesCubit>().uploadPlaceImage();
-              },
-              child: getChild(imageUrl: widget.imageUrl),
-            ),
-          ),
+    if (widget.image != null) {
+      if (widget.image is String) {
+        return DisplayImagePlaceListItem(url: widget.image);
+      } else if (widget.image is ImagePickerResult) {
+        if ((widget.image as ImagePickerResult).bytes != null &&
+            (widget.image as ImagePickerResult).bytes!.isNotEmpty) {
+          List<Uint8List> bytes = (widget.image as ImagePickerResult).bytes!;
+          return ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) =>
+                DisplayImagePlaceListItem(bytes: bytes[index]),
+            itemCount: bytes.length,
+            scrollDirection: Axis.horizontal,
+          );
+        } else if ((widget.image as ImagePickerResult).files != null &&
+            (widget.image as ImagePickerResult).files!.isNotEmpty) {
+          List<File> files = (widget.image as ImagePickerResult).files!;
+          return ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) =>
+                DisplayImagePlaceListItem(file: files[index]),
+            itemCount: files.length,
+            scrollDirection: Axis.horizontal,
+          );
+        } else {
+          return DisplayImagePlaceListItem();
+        }
+      } else {
+        return Center(
+          child: Icon(Icons.question_mark, color: Colors.orange.shade600),
         );
-      },
-    );
-  }
-
-  Widget getChild({required String imageUrl}) {
-    if (imageUrl.isNotEmpty) {
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: CustomCachedNetworkImage(
-          imageUrl: imageUrl,
-          boxFit: BoxFit.cover,
-        ),
-      );
+      }
     } else {
-      return Container(
-        decoration: BoxDecoration(
-          color: Colors.grey.shade50,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.grey, width: 1),
-        ),
-        child: Center(
-          child: Icon(Icons.add_a_photo_outlined, color: Colors.black),
-        ),
-      );
+      return Center(child: Icon(Icons.error, color: Colors.red));
     }
   }
 }

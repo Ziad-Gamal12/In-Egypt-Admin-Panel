@@ -10,7 +10,10 @@ class CustomPlaceDetailsItemImage extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       child: AspectRatio(
         aspectRatio: 2 / 1,
-        child: FittedBox(child: CustomCachedNetworkImage(imageUrl: imageUrl)),
+        child: CustomCachedNetworkImage(
+          imageUrl: imageUrl,
+          boxFit: BoxFit.fitWidth,
+        ),
       ),
     );
   }

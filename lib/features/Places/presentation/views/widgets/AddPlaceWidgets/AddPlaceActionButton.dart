@@ -16,35 +16,46 @@ class AddPlaceActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PlaceEntity place = context.read<PlaceEntity>();
+    List images = context.read<List>();
     return Custombutton(
       text: isEdit ? "تعديل" : "اضافة",
       color: isEdit ? Colors.amber : Colors.green,
       textColor: Colors.white,
       onPressed: () {
-        if (formKey.currentState != null) {
-          if (formKey.currentState!.validate()) {
-            formKey.currentState!.save();
-            if (place.category != '') {
-              if (place.images.isNotEmpty) {
-                if (isEdit) {
-                  place.updatedAt = DateTime.now();
-                  context.read<PlacesCubit>().updatePlace(placeEntity: place);
+        try {
+          if (formKey.currentState != null) {
+            if (formKey.currentState!.validate()) {
+              formKey.currentState!.save();
+              if (place.category != '') {
+                if (images.isNotEmpty) {
+                  if (isEdit) {
+                    place.updatedAt = DateTime.now();
+                    context.read<PlacesCubit>().updatePlace(
+                      placeEntity: place,
+                      images: images,
+                    );
+                  } else {
+                    context.read<PlacesCubit>().addPlace(
+                      placeEntity: place,
+                      images: images,
+                    );
+                  }
                 } else {
-                  context.read<PlacesCubit>().addPlace(placeEntity: place);
+                  showWarningSnackBar(
+                    context: context,
+                    message: "يرجى تحديد صورة المكان",
+                  );
                 }
               } else {
                 showWarningSnackBar(
                   context: context,
-                  message: "يرجى تحديد صورة المكان",
+                  message: "يرجى تحديد نوع المكان",
                 );
               }
-            } else {
-              showWarningSnackBar(
-                context: context,
-                message: "يرجى تحديد نوع المكان",
-              );
             }
           }
+        } on Exception catch (e) {
+          showWarningSnackBar(context: context, message: e.toString());
         }
       },
     );

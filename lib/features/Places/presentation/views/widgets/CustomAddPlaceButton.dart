@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/constant.dart';
-import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddPlaceWidgets/AddPlaceBody.dart';
+import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddPlaceWidgets/AddAndEditPlaceBody.dart';
 
 class CustomAddPlaceButton extends StatelessWidget {
   const CustomAddPlaceButton({super.key});

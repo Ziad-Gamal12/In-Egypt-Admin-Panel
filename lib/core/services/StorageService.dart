@@ -1,8 +1,13 @@
 // ignore_for_file: file_names
 
-import 'package:in_egypt_admin_panel/core/Entities/imagePickerResult.dart';
+import 'dart:io';
+import 'dart:typed_data';
 
 abstract class StorageService {
-  Future<String> uploadFile({required imagePickerResult imagepickerresult});
+  Future<String> uploadFile({
+    File? file,
+    required String fileName,
+    Uint8List? bytes,
+  });
   Future<void> deleteFile({required String url});
 }

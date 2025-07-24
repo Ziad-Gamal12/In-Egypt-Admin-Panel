@@ -19,6 +19,8 @@ class UsersViewBodyMobileAndTabletLayout extends StatelessWidget {
         builder: (context, state) {
           if (state is UsersOnTap) {
             return Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Expanded(flex: 3, child: CustomUsersContentBody()),
                 Expanded(flex: 2, child: SelectedUser(user: state.userEntity)),

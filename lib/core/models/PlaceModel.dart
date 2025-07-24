@@ -35,8 +35,8 @@ class PlaceModel {
       longitude: json['longitude'],
       createdAt: (json['createdAt'] as Timestamp).toDate(),
       updatedAt: (json['updatedAt'] as Timestamp).toDate(),
-      rating: json['rating'],
-      ticketPrice: json['ticketPrice'],
+      rating: (json['rating'] as num).toDouble(),
+      ticketPrice: (json['ticketPrice'] as num).toDouble(),
     );
   }
   factory PlaceModel.fromEntity(PlaceEntity placeEntity) {

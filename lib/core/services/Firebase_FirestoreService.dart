@@ -131,6 +131,7 @@ class FirebaseFirestoreservice implements Databaseservice {
         final querySnapshot = await queryData.get();
 
         return FireStorePaginateResponse(
+          hasMore: querySnapshot.docs.length == query?["limit"],
           lastDocumentSnapshot: querySnapshot.docs.isNotEmpty
               ? querySnapshot.docs.last
               : null,

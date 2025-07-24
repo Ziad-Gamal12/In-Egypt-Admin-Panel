@@ -3,9 +3,9 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-class imagePickerResult {
-  File? file;
-  Uint8List? bytes;
-  final String fileName;
-  imagePickerResult({this.file, this.bytes, required this.fileName});
+class ImagePickerResult {
+  List<File>? files;
+  List<Uint8List>? bytes;
+  final List<String> fileNames;
+  ImagePickerResult({this.files, this.bytes, required this.fileNames});
 }

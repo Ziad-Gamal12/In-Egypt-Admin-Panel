@@ -28,7 +28,7 @@ class CustomFlutterMap extends StatelessWidget {
             Marker(
               width: 40,
               height: 40,
-              point: LatLng(29.9792, 31.1342),
+              point: LatLng(latitude, longitude),
               child: Icon(
                 FontAwesomeIcons.locationDot,
                 color: kMainColor,

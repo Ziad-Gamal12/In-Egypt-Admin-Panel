@@ -54,7 +54,14 @@ class PlaceDetailsViewBodyContent extends StatelessWidget {
                       color: Colors.grey,
                     ),
                     SizedBox(height: 16),
-                    CustomPlaceDetailsItemImage(imageUrl: place.images[0]),
+
+                    SizedBox(
+                      width: double.infinity,
+                      child: CustomPlaceDetailsItemImage(
+                        imageUrl: place.images[0],
+                      ),
+                    ),
+
                     CustomPlaceItemInfo(titleColor: Colors.black, place: place),
                     SizedBox(height: 16),
                     AboutPlaceSection(description: place.description),

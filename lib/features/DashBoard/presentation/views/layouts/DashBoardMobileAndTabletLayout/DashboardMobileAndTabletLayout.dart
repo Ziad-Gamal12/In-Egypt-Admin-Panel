@@ -43,7 +43,7 @@ class _DashboardmobileandtabletlayoutState
             ),
             SliverToBoxAdapter(
               child: SizedBox(
-                height: MediaQuery.of(context).size.height * .5,
+                height: MediaQuery.of(context).size.height * .4,
                 child: CustomDashBoardPlacesSectionMobileAndTabletLayout(),
               ),
             ),

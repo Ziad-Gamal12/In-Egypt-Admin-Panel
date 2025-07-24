@@ -1,19 +1,20 @@
-import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
+import 'package:in_egypt_admin_panel/core/Entities/imagePickerResult.dart';
+import 'package:in_egypt_admin_panel/features/Places/domain/Entities/GetplacesResponseEntity.dart';
 
 abstract class PlacesState {}
 
 final class PlacesInitial extends PlacesState {}
 
-final class PlacesUploadPlaceImageLoading extends PlacesState {}
+final class PlacesPickPlaceImagesLoading extends PlacesState {}
 
-final class PlacesUploadPlaceImageSuccess extends PlacesState {
-  final String url;
-  PlacesUploadPlaceImageSuccess({required this.url});
+final class PlacesPickPlaceImagesSuccess extends PlacesState {
+  final ImagePickerResult result;
+  PlacesPickPlaceImagesSuccess({required this.result});
 }
 
-final class PlacesUploadPlaceImageFailure extends PlacesState {
+final class PlacesPickPlaceImagesFailure extends PlacesState {
   final String errmessage;
-  PlacesUploadPlaceImageFailure({required this.errmessage});
+  PlacesPickPlaceImagesFailure({required this.errmessage});
 }
 
 final class PlacesAddPlaceSuccess extends PlacesState {}
@@ -35,8 +36,8 @@ final class PlacesUpdatePlaceFailure extends PlacesState {
 final class PlacesUpdatePlaceLoading extends PlacesState {}
 
 final class PlacesGetPlacesSuccess extends PlacesState {
-  final List<PlaceEntity> places;
-  PlacesGetPlacesSuccess({required this.places});
+  final GetplacesResponseEntity responseEntity;
+  PlacesGetPlacesSuccess({required this.responseEntity});
 }
 
 final class PlacesGetPlacesFailure extends PlacesState {

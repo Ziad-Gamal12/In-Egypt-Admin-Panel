@@ -13,14 +13,14 @@ import 'package:in_egypt_admin_panel/generated/l10n.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Future.wait([
-    Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
-    Hive.initFlutter(),
-    Hive_Services.init(),
-  ]);
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Hive.initFlutter();
+  await Hive_Services.init();
+
   setup_Getit();
   Bloc.observer = Custom_Blocobserver();
-  runApp(const InEgyptAdminPanel());
+  runApp(InEgyptAdminPanel());
 }
 
 class InEgyptAdminPanel extends StatelessWidget {

@@ -40,6 +40,8 @@ class CustomBookingsSliverGrid extends StatelessWidget {
     if (maxWidth >= 1200) return 5;
     if (maxWidth >= 900) return 4;
     if (maxWidth >= 600) return 3;
-    return 2; // For phones
+    if (maxWidth >= 360) return 2;
+
+    return 1; // For phones
   }
 }

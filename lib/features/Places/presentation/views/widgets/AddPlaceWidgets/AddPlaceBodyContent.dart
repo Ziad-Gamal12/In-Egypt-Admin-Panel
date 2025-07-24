@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_egypt_admin_panel/constant.dart';
+import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
+import 'package:in_egypt_admin_panel/core/Entities/imagePickerResult.dart';
 import 'package:in_egypt_admin_panel/core/helpers/ShowSnackBar.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_cubit.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_state.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddPlaceWidgets/AddPlaceActionButton.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddPlaceWidgets/AddPlaceHeader.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddPlaceWidgets/AddPlaceTextFields.dart';
+import 'package:provider/provider.dart';
 
 class AddPlaceBodyContent extends StatefulWidget {
   const AddPlaceBodyContent({super.key, required this.isEdit});
@@ -17,6 +20,20 @@ class AddPlaceBodyContent extends StatefulWidget {
 
 class _AddPlaceBodyContentState extends State<AddPlaceBodyContent> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  List placeImages = [
+    ImagePickerResult(fileNames: [""]),
+  ];
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (context.read<PlaceEntity>().images.isNotEmpty) {
+        placeImages.addAll(context.read<PlaceEntity>().images);
+        setState(() {});
+      }
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PlacesCubit, PlacesState>(
@@ -32,6 +49,7 @@ class _AddPlaceBodyContentState extends State<AddPlaceBodyContent> {
             context: context,
             message: "تم تعديل المكان بنجاح",
           );
+          Navigator.pop(context);
         } else if (state is PlacesUpdatePlaceFailure) {
           showErrorSnackBar(context: context, message: state.errmessage);
         } else if (state is PlacesAddPlaceFailure) {
@@ -56,21 +74,25 @@ class _AddPlaceBodyContentState extends State<AddPlaceBodyContent> {
             ),
             child: Form(
               key: formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  AddPlaceHeader(isEdit: widget.isEdit),
-                  AddPlaceTextFields(isEdit: widget.isEdit),
-                  SizedBox(height: 20),
-                  state is PlacesAddPlaceLoading
-                      ? Center(
-                          child: CircularProgressIndicator(color: kMainColor),
-                        )
-                      : AddPlaceActionButton(
-                          formKey: formKey,
-                          isEdit: widget.isEdit,
-                        ),
-                ],
+              child: Provider.value(
+                value: placeImages,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AddPlaceHeader(isEdit: widget.isEdit),
+                    AddPlaceTextFields(isEdit: widget.isEdit),
+                    SizedBox(height: 20),
+                    state is PlacesAddPlaceLoading ||
+                            state is PlacesUpdatePlaceLoading
+                        ? Center(
+                            child: CircularProgressIndicator(color: kMainColor),
+                          )
+                        : AddPlaceActionButton(
+                            formKey: formKey,
+                            isEdit: widget.isEdit,
+                          ),
+                  ],
+                ),
               ),
             ),
           ),

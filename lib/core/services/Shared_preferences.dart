@@ -5,7 +5,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 abstract class Hive_Services {
   static late Box _box;
 
-  /// Initialize Hive and open the box
   static Future<void> init() async {
     _box = await Hive.openBox('app_storage');
   }

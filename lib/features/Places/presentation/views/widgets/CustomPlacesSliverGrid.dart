@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 import 'package:in_egypt_admin_panel/core/widgets/PlaceWidgets/CustomPlaceVerticalDesignItem.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/PlaceDetailsWidgets/PlaceDetailsViewBody.dart';
@@ -36,7 +37,9 @@ class _CustomPlacesSliverGridState extends State<CustomPlacesSliverGrid> {
               },
             );
           },
-          child: CustomPlaceVerticalDesignItem(place: widget.places[index]),
+          child: CustomPlaceVerticalDesignItem(
+            place: widget.places[index],
+          ).animate().fadeIn(duration: 300.ms, delay: (index * 100).ms),
         );
       },
     );

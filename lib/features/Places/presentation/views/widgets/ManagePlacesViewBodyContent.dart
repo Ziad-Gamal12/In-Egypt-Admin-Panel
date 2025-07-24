@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
@@ -25,7 +23,7 @@ class _ManagePlacesViewBodyContentState
     extends State<ManagePlacesViewBodyContent> {
   ScrollController scrollController = ScrollController();
   List<PlaceEntity> places = [];
-
+  bool isLoadMore = true;
   @override
   void initState() {
     super.initState();
@@ -33,7 +31,8 @@ class _ManagePlacesViewBodyContentState
       context.read<PlacesCubit>().getPlaces(isPaginated: false);
       scrollController.addListener(() {
         if (scrollController.position.pixels ==
-            scrollController.position.maxScrollExtent) {
+                scrollController.position.maxScrollExtent &&
+            isLoadMore) {
           context.read<PlacesCubit>().getPlaces(isPaginated: true);
         }
       });
@@ -51,8 +50,10 @@ class _ManagePlacesViewBodyContentState
     return BlocConsumer<PlacesCubit, PlacesState>(
       listener: (context, state) {
         if (state is PlacesGetPlacesSuccess) {
-          log(state.places.length.toString());
-          places.addAll(state.places);
+          places.addAll(state.responseEntity.places);
+          if (state.responseEntity.places.length < 10) {
+            isLoadMore = state.responseEntity.hasMore;
+          }
           setState(() {});
         }
       },

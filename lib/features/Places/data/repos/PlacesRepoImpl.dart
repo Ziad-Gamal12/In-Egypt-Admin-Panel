@@ -1,19 +1,26 @@
 import 'dart:developer';
+import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:in_egypt_admin_panel/core/Entities/FireStorePaginateResponse.dart';
 import 'package:in_egypt_admin_panel/core/Entities/FireStoreRequirmentsEntity.dart';
 import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
+import 'package:in_egypt_admin_panel/core/Entities/imagePickerResult.dart';
 import 'package:in_egypt_admin_panel/core/errors/Exceptioons.dart';
 import 'package:in_egypt_admin_panel/core/errors/Failures.dart';
 import 'package:in_egypt_admin_panel/core/models/PlaceModel.dart';
 import 'package:in_egypt_admin_panel/core/services/DataBaseService.dart';
+import 'package:in_egypt_admin_panel/core/services/StorageService.dart';
 import 'package:in_egypt_admin_panel/core/utils/BackEndkeys.dart';
+import 'package:in_egypt_admin_panel/features/Places/domain/Entities/GetplacesResponseEntity.dart';
 import 'package:in_egypt_admin_panel/features/Places/domain/Repos/PlacesRepo.dart';
 
 class PlacesRepoImpl implements PlacesRepo {
   final Databaseservice databaseservice;
-  PlacesRepoImpl({required this.databaseservice});
+  final StorageService storageService;
+  PlacesRepoImpl({required this.storageService, required this.databaseservice});
   @override
   Future<Either<Failure, void>> addPlace({
     required PlaceEntity placeEntity,
@@ -82,28 +89,32 @@ class PlacesRepoImpl implements PlacesRepo {
     "limit": 10,
     "startAfter": null,
   };
-
+  DocumentSnapshot<Object?>? lastDocumentSnapshot;
   @override
-  Future<Either<Failure, List<PlaceEntity>>> getPlaces({
+  Future<Either<Failure, GetplacesResponseEntity>> getPlaces({
     required bool isPaginated,
   }) async {
     try {
-      log(query.toString());
+      if (isPaginated) query["startAfter"] = lastDocumentSnapshot;
       FireStorePaginateResponse response = await databaseservice.getData(
         requirements: FireStoreRequirmentsEntity(
           collection: Backendkeys.placesCollection,
         ),
         query: query,
       );
-      log(response.lastDocumentSnapshot.toString());
+
       List places = response.listData ?? [];
-      if (isPaginated) {
-        query["startAfter"] = response.lastDocumentSnapshot;
-      }
+      isPaginated ? lastDocumentSnapshot = response.lastDocumentSnapshot : null;
+
       List<PlaceEntity> placesEntity = places
           .map((e) => PlaceModel.fromJson(e).toEntity())
           .toList();
-      return right(placesEntity);
+      return right(
+        GetplacesResponseEntity(
+          places: placesEntity,
+          hasMore: response.hasMore ?? false,
+        ),
+      );
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
@@ -111,5 +122,74 @@ class PlacesRepoImpl implements PlacesRepo {
       log("getPlaces StackTrace: ${s.toString()}");
       return left(ServerFailure(message: e.toString()));
     }
+  }
+
+  @override
+  Future<Either<Failure, List<String>>> uploadPlaceImages({
+    required List images,
+  }) async {
+    try {
+      List<String> urls = [];
+      if (images.isNotEmpty) {
+        for (final image in images.where((e) => e != null)) {
+          if (image != null) {
+            if (image is ImagePickerResult) {
+              if (image.files != null && image.files!.isNotEmpty) {
+                List<File> files = image.files!;
+                List<String> filesUrls = await uplaodImagesFile(
+                  fileNames: image.fileNames,
+                  files: files,
+                );
+                urls.addAll(filesUrls);
+              } else if (image.bytes != null && image.bytes!.isNotEmpty) {
+                List<Uint8List> bytes = image.bytes!;
+                List<String> bytesUrls = await uploadImagesUnit8List(
+                  fileNames: image.fileNames,
+                  files: bytes,
+                );
+                urls.addAll(bytesUrls);
+              }
+            }
+          }
+        }
+        return right(urls);
+      } else {
+        return right([]);
+      }
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      return left(ServerFailure(message: e.toString()));
+    }
+  }
+
+  Future<List<String>> uplaodImagesFile({
+    required List<File> files,
+    required List<String> fileNames,
+  }) async {
+    List<String> urls = [];
+    for (int i = 0; i < files.length; i++) {
+      String url = await storageService.uploadFile(
+        file: files[i],
+        fileName: fileNames[i],
+      );
+      urls.add(url);
+    }
+    return urls;
+  }
+
+  Future<List<String>> uploadImagesUnit8List({
+    required List<Uint8List> files,
+    required List<String> fileNames,
+  }) async {
+    List<String> urls = [];
+    for (int i = 0; i < files.length; i++) {
+      String url = await storageService.uploadFile(
+        bytes: files[i],
+        fileName: fileNames[i],
+      );
+      urls.add(url);
+    }
+    return urls;
   }
 }
