@@ -3,16 +3,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_egypt_admin_panel/core/helpers/ShowSnackBar.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_cubit.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_state.dart';
-import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddPlaceWidgets/PickPlaceImageListItem.dart';
+import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddAndEditPlaceWidgets/PickPlaceImageListItem.dart';
 
-class AddPlaceImageList extends StatefulWidget {
-  const AddPlaceImageList({super.key});
+class AddAndEditPlaceImageList extends StatefulWidget {
+  const AddAndEditPlaceImageList({super.key});
 
   @override
-  State<AddPlaceImageList> createState() => _AddPlaceImageListState();
+  State<AddAndEditPlaceImageList> createState() =>
+      _AddAndEditPlaceImageListState();
 }
 
-class _AddPlaceImageListState extends State<AddPlaceImageList> {
+class _AddAndEditPlaceImageListState extends State<AddAndEditPlaceImageList> {
   @override
   Widget build(BuildContext context) {
     List placeImages = context.read<List>();

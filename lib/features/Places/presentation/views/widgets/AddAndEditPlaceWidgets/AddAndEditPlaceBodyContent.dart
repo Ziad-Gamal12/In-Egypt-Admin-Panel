@@ -6,19 +6,21 @@ import 'package:in_egypt_admin_panel/core/Entities/imagePickerResult.dart';
 import 'package:in_egypt_admin_panel/core/helpers/ShowSnackBar.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_cubit.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_state.dart';
-import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddPlaceWidgets/AddPlaceActionButton.dart';
-import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddPlaceWidgets/AddPlaceHeader.dart';
-import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddPlaceWidgets/AddPlaceTextFields.dart';
+import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddAndEditPlaceWidgets/AddAndEditPlaceActionButton.dart';
+import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddAndEditPlaceWidgets/AddAndEditPlaceHeader.dart';
+import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddAndEditPlaceWidgets/AddPlaceTextFields.dart';
 import 'package:provider/provider.dart';
 
-class AddPlaceBodyContent extends StatefulWidget {
-  const AddPlaceBodyContent({super.key, required this.isEdit});
+class AddAndEditPlaceBodyContent extends StatefulWidget {
+  const AddAndEditPlaceBodyContent({super.key, required this.isEdit});
   final bool isEdit;
   @override
-  State<AddPlaceBodyContent> createState() => _AddPlaceBodyContentState();
+  State<AddAndEditPlaceBodyContent> createState() =>
+      _AddAndEditPlaceBodyContentState();
 }
 
-class _AddPlaceBodyContentState extends State<AddPlaceBodyContent> {
+class _AddAndEditPlaceBodyContentState
+    extends State<AddAndEditPlaceBodyContent> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   List placeImages = [
     ImagePickerResult(fileNames: [""]),
@@ -79,18 +81,13 @@ class _AddPlaceBodyContentState extends State<AddPlaceBodyContent> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    AddPlaceHeader(isEdit: widget.isEdit),
+                    AddAndEditPlaceHeader(isEdit: widget.isEdit),
                     AddPlaceTextFields(isEdit: widget.isEdit),
                     SizedBox(height: 20),
-                    state is PlacesAddPlaceLoading ||
-                            state is PlacesUpdatePlaceLoading
-                        ? Center(
-                            child: CircularProgressIndicator(color: kMainColor),
-                          )
-                        : AddPlaceActionButton(
-                            formKey: formKey,
-                            isEdit: widget.isEdit,
-                          ),
+                    AddAndEditPlaceActionButton(
+                      formKey: formKey,
+                      isEdit: widget.isEdit,
+                    ),
                   ],
                 ),
               ),

@@ -118,4 +118,8 @@ class PlacesCubit extends Cubit<PlacesState> {
       },
     );
   }
+
+  void selectPlaceMainImage({required String url}) {
+    emit(PlacesSelectPlaceMainImageSuccess(imageUrl: url));
+  }
 }

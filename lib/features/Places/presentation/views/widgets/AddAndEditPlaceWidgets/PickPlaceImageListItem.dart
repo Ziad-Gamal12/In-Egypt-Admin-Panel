@@ -1,9 +1,11 @@
+// ignore_for_file: must_be_immutable, file_names
+
 import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/core/Entities/imagePickerResult.dart';
-import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddPlaceWidgets/DisplayImagePlaceListItem.dart';
+import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddAndEditPlaceWidgets/DisplayImagePlaceListItem.dart';
 
 class PickPlaceImageListItem extends StatefulWidget {
   PickPlaceImageListItem({super.key, required this.image});

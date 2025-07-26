@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:in_egypt_admin_panel/core/utils/textStyles.dart';
 
-class AddPlaceHeader extends StatelessWidget {
-  const AddPlaceHeader({super.key, required this.isEdit});
+class AddAndEditPlaceHeader extends StatelessWidget {
+  const AddAndEditPlaceHeader({super.key, required this.isEdit});
   final bool isEdit;
   @override
   Widget build(BuildContext context) {

@@ -12,7 +12,11 @@ class CustomCachedNetworkImage extends StatelessWidget {
     return CachedNetworkImage(
       imageUrl: imageUrl,
       fit: boxFit ?? BoxFit.cover,
-
+      placeholder: (context, url) {
+        return const Center(
+          child: CircularProgressIndicator(color: Colors.amber),
+        );
+      },
       errorWidget: (context, url, error) {
         log(error.toString());
         return const Icon(Icons.error, color: Colors.red);

@@ -6,7 +6,7 @@ import 'package:in_egypt_admin_panel/core/services/get_it_Service.dart';
 import 'package:in_egypt_admin_panel/core/services/picker_assets_interface.dart';
 import 'package:in_egypt_admin_panel/features/Places/domain/Repos/PlacesRepo.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_cubit.dart';
-import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddPlaceWidgets/AddPlaceBodyContent.dart';
+import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddAndEditPlaceWidgets/AddAndEditPlaceBodyContent.dart';
 import 'package:provider/provider.dart';
 
 class AddAndEditPlaceBody extends StatefulWidget {
@@ -52,7 +52,7 @@ class _AddAndEditPlaceBodyState extends State<AddAndEditPlaceBody> {
       ),
       child: Provider.value(
         value: place,
-        child: AddPlaceBodyContent(isEdit: widget.isEdit),
+        child: AddAndEditPlaceBodyContent(isEdit: widget.isEdit),
       ),
     );
   }

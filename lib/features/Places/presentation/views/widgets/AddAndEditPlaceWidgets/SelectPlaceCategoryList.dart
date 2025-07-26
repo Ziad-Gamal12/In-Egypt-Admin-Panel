@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 import 'package:in_egypt_admin_panel/features/Places/domain/Entities/SelectPlaceCategoryEntity.dart';
-import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddPlaceWidgets/SelectPlaceCategoryItem.dart';
+import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddAndEditPlaceWidgets/SelectPlaceCategoryItem.dart';
 import 'package:provider/provider.dart';
 
 class SelectPlaceCategoryList extends StatefulWidget {

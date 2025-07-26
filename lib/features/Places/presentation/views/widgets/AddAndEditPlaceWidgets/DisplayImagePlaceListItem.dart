@@ -27,12 +27,14 @@ class DisplayImagePlaceListItem extends StatelessWidget {
               },
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 10),
-
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.grey.shade200,
                 ),
-                child: buildImage(),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: buildImage(),
+                ),
               ),
             ),
           ),

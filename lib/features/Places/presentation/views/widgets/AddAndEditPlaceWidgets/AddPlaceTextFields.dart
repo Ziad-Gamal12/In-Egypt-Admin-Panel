@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomTextFields/CustomTeaxtField.dart';
-import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddPlaceWidgets/AddPlaceImageList.dart';
-import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddPlaceWidgets/SelectPlaceCategoryList.dart';
+import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddAndEditPlaceWidgets/AddPlaceImageList.dart';
+import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/AddAndEditPlaceWidgets/SelectPlaceCategoryList.dart';
 import 'package:provider/provider.dart';
 
 class AddPlaceTextFields extends StatefulWidget {
@@ -171,7 +171,7 @@ class _AddPlaceTextFieldsState extends State<AddPlaceTextFields> {
         SizedBox(height: 10),
         SelectPlaceCategoryList(isEdit: widget.isEdit),
         SizedBox(height: 10),
-        AddPlaceImageList(),
+        AddAndEditPlaceImageList(),
       ],
     );
   }

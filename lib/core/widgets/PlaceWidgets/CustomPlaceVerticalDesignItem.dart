@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:glass/glass.dart';
 import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomCachedNetworkImage.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomScaleAnimatedWidget.dart';
@@ -39,12 +38,7 @@ class _CustomPlaceVerticalDesignItemState
               bottom: 0,
               left: 0,
               right: 0,
-              child: CustomPlaceItemInfo(place: widget.place).asGlass(
-                clipBorderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
-                ),
-              ),
+              child: CustomPlaceItemInfo(place: widget.place),
             ),
           ],
         ),

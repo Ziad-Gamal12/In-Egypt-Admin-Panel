@@ -1,25 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 import 'package:in_egypt_admin_panel/core/utils/textStyles.dart';
+import 'package:in_egypt_admin_panel/core/widgets/PlaceWidgets/CustomPlaceLocationWidget.dart';
 import 'package:in_egypt_admin_panel/core/widgets/PlaceWidgets/CustomPlaceRatingWidget.dart';
 
-class CustomPlaceItemInfo extends StatelessWidget {
-  CustomPlaceItemInfo({super.key, this.titleColor, required this.place});
-  Color? titleColor;
+class CustomPlaceTitleAndRatingAndLocation extends StatelessWidget {
+  const CustomPlaceTitleAndRatingAndLocation({super.key, required this.place});
   final PlaceEntity place;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.black,
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(20),
-          bottomRight: Radius.circular(20),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        child: Column(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
@@ -29,13 +23,17 @@ class CustomPlaceItemInfo extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles(
                 context,
-              ).semiBold16.copyWith(color: titleColor ?? Colors.white),
+              ).semiBold16.copyWith(color: Colors.black),
             ),
             SizedBox(height: 5),
-            CustomPlaceRatingWidget(rating: place.rating),
+            CustomPlaceLocationWidget(location: place.location),
           ],
         ),
-      ),
+        CustomPlaceRatingWidget(
+          rating: place.rating,
+          ratingColor: Colors.black,
+        ),
+      ],
     );
   }
 }

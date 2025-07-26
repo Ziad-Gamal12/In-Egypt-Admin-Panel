@@ -55,3 +55,9 @@ final class PlacesDeletePlaceFailure extends PlacesState {
 }
 
 final class PlacesDeletePlaceLoading extends PlacesState {}
+
+//Select displayed Place main image States
+final class PlacesSelectPlaceMainImageSuccess extends PlacesState {
+  final String imageUrl;
+  PlacesSelectPlaceMainImageSuccess({required this.imageUrl});
+}

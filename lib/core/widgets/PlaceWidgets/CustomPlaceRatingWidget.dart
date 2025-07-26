@@ -3,8 +3,9 @@ import 'package:in_egypt_admin_panel/core/utils/textStyles.dart';
 import 'package:in_egypt_admin_panel/core/widgets/PlaceWidgets/CustomRatingStarsRow.dart';
 
 class CustomPlaceRatingWidget extends StatelessWidget {
-  const CustomPlaceRatingWidget({super.key, required this.rating});
+  CustomPlaceRatingWidget({super.key, required this.rating, this.ratingColor});
   final double rating;
+  Color? ratingColor;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -13,7 +14,9 @@ class CustomPlaceRatingWidget extends StatelessWidget {
         SizedBox(width: 5),
         Text(
           "$rating",
-          style: AppTextStyles(context).medium12.copyWith(color: Colors.white),
+          style: AppTextStyles(
+            context,
+          ).medium12.copyWith(color: ratingColor ?? Colors.white),
         ),
       ],
     );
