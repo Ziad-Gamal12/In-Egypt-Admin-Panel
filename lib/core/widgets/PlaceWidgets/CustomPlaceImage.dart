@@ -23,7 +23,7 @@ class CustomPlaceImage extends StatelessWidget {
                 : null,
           ),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(16),
             child: CustomCachedNetworkImage(imageUrl: imageUrl),
           ),
         );

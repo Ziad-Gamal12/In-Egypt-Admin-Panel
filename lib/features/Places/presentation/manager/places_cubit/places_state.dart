@@ -1,3 +1,4 @@
+import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 import 'package:in_egypt_admin_panel/core/Entities/imagePickerResult.dart';
 import 'package:in_egypt_admin_panel/features/Places/domain/Entities/GetplacesResponseEntity.dart';
 
@@ -55,6 +56,19 @@ final class PlacesDeletePlaceFailure extends PlacesState {
 }
 
 final class PlacesDeletePlaceLoading extends PlacesState {}
+
+//Search Places States
+final class PlacesSearchPlacesSuccess extends PlacesState {
+  final List<PlaceEntity> places;
+  PlacesSearchPlacesSuccess({required this.places});
+}
+
+final class PlacesSearchPlacesFailure extends PlacesState {
+  final String errmessage;
+  PlacesSearchPlacesFailure({required this.errmessage});
+}
+
+final class PlacesSearchPlacesLoading extends PlacesState {}
 
 //Select displayed Place main image States
 final class PlacesSelectPlaceMainImageSuccess extends PlacesState {

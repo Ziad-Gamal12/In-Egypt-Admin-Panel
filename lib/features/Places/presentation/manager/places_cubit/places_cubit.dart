@@ -119,6 +119,19 @@ class PlacesCubit extends Cubit<PlacesState> {
     );
   }
 
+  searchPlaces({required String searchKey}) async {
+    emit(PlacesSearchPlacesLoading());
+    final result = await placesRepo.searchPlaces(searchKey: searchKey);
+    result.fold(
+      (failure) {
+        emit(PlacesSearchPlacesFailure(errmessage: failure.message));
+      },
+      (places) {
+        emit(PlacesSearchPlacesSuccess(places: places));
+      },
+    );
+  }
+
   void selectPlaceMainImage({required String url}) {
     emit(PlacesSelectPlaceMainImageSuccess(imageUrl: url));
   }

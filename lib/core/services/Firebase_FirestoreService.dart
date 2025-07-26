@@ -118,8 +118,25 @@ class FirebaseFirestoreservice implements Databaseservice {
       } else {
         Query queryData = currentCollection;
         if (query != null) {
+          if (query["where"] != null && query["whereValue"] != null) {
+            queryData = queryData.where(
+              query["where"],
+              isGreaterThanOrEqualTo: query["whereValue"],
+              isLessThan: "${query["whereValue"]}\uf8ff",
+            );
+          }
           if (query["orderBy"] != null) {
-            queryData = queryData.orderBy(query["orderBy"], descending: true);
+            queryData = queryData.orderBy(
+              query["orderBy"],
+              descending: query["descending"] ?? true,
+            );
+
+            if (query["startAt"] != null) {
+              queryData = queryData.startAt(query["startAt"]);
+            }
+            if (query["endAt"] != null) {
+              queryData = queryData.endAt(query["endAt"]);
+            }
           }
           if (query["limit"] != null) {
             queryData = queryData.limit(query["limit"]);

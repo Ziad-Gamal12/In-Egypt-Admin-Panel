@@ -9,7 +9,6 @@ import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/CustomAddPlaceButton.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/CustomPlacesHeader.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/CustomPlacesSliverGrid.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class ManagePlacesViewBodyContent extends StatefulWidget {
   const ManagePlacesViewBodyContent({super.key});
@@ -23,6 +22,8 @@ class _ManagePlacesViewBodyContentState
     extends State<ManagePlacesViewBodyContent> {
   ScrollController scrollController = ScrollController();
   List<PlaceEntity> places = [];
+  List<PlaceEntity> searchPlaces = [];
+
   bool isLoadMore = true;
   @override
   void initState() {
@@ -54,40 +55,42 @@ class _ManagePlacesViewBodyContentState
           places.addAll(state.responseEntity.places);
           isLoadMore = state.responseEntity.hasMore;
           setState(() {});
+        } else if (state is PlacesSearchPlacesSuccess) {
+          searchPlaces = state.places;
+          setState(() {});
         }
       },
       builder: (context, state) {
         if (state is PlacesGetPlacesFailure) {
           return Center(child: CustomErrorWidget(message: state.errmessage));
+        } else if (state is PlacesSearchPlacesFailure) {
+          return Center(child: CustomErrorWidget(message: state.errmessage));
         } else {
           return LayoutBuilder(
             builder: (context, constraints) => Stack(
               children: [
-                Skeletonizer(
-                  enabled: state is PlacesGetPlacesLoading,
-                  child: CustomScrollView(
-                    controller: scrollController,
-                    slivers: [
-                      SliverToBoxAdapter(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CustomSearchAndFilterWidget(),
-                            SizedBox(height: 20),
-                            CustomPlacesHeader(),
-                            SizedBox(height: 20),
-                          ],
-                        ),
+                CustomScrollView(
+                  controller: scrollController,
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomSearchAndFilterWidget(),
+                          SizedBox(height: 20),
+                          CustomPlacesHeader(),
+                          SizedBox(height: 20),
+                        ],
                       ),
-                      if (places.isEmpty)
-                        SliverToBoxAdapter(child: EmptyWidget())
-                      else
-                        CustomPlacesSliverGrid(
-                          maxWidth: constraints.maxWidth,
-                          places: places,
-                        ),
-                    ],
-                  ),
+                    ),
+                    if (places.isEmpty)
+                      SliverToBoxAdapter(child: EmptyWidget())
+                    else
+                      CustomPlacesSliverGrid(
+                        maxWidth: constraints.maxWidth,
+                        places: searchPlaces.isEmpty ? places : searchPlaces,
+                      ),
+                  ],
                 ),
                 Positioned(left: 16, bottom: 16, child: CustomAddPlaceButton()),
               ],

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -120,9 +119,7 @@ class PlacesRepoImpl implements PlacesRepo {
       );
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e, s) {
-      log("getPlaces Exception: ${e.toString()}");
-      log("getPlaces StackTrace: ${s.toString()}");
+    } catch (e) {
       return left(ServerFailure(message: e.toString()));
     }
   }
@@ -194,5 +191,30 @@ class PlacesRepoImpl implements PlacesRepo {
       urls.add(url);
     }
     return urls;
+  }
+
+  @override
+  Future<Either<Failure, List<PlaceEntity>>> searchPlaces({
+    required String searchKey,
+  }) async {
+    try {
+      FireStorePaginateResponse response = await databaseservice.getData(
+        requirements: FireStoreRequirmentsEntity(
+          collection: Backendkeys.placesCollection,
+        ),
+        query: {"where": "name", "whereValue": searchKey},
+      );
+      if (response.listData == null) {
+        return right([]);
+      }
+      List<PlaceEntity> placesEntity = response.listData!
+          .map((e) => PlaceModel.fromJson(e).toEntity())
+          .toList();
+      return right(placesEntity);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      return left(ServerFailure(message: e.toString()));
+    }
   }
 }
