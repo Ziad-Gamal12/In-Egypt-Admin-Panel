@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 import 'package:in_egypt_admin_panel/core/widgets/PlaceWidgets/CustomPlaceVerticalDesignItem.dart';
+import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_cubit.dart';
+import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_state.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/PlaceDetailsWidgets/PlaceDetailsViewBody.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class CustomPlacesSliverGrid extends StatefulWidget {
   const CustomPlacesSliverGrid({
@@ -19,27 +22,40 @@ class CustomPlacesSliverGrid extends StatefulWidget {
 class _CustomPlacesSliverGridState extends State<CustomPlacesSliverGrid> {
   @override
   Widget build(BuildContext context) {
-    return SliverGrid.builder(
-      itemCount: widget.places.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: getCrossAxisCount(widget.maxWidth),
-        crossAxisSpacing: 20,
-        mainAxisSpacing: 20,
-        childAspectRatio: getItemAspectRatio(widget.maxWidth),
-      ),
-      itemBuilder: (context, index) {
-        return GestureDetector(
-          onTap: () {
-            showBottomSheet(
-              context: context,
-              builder: (_) {
-                return PlaceDetailsViewBody(place: widget.places[index]);
+    return BlocSelector<PlacesCubit, PlacesState, bool>(
+      selector: (state) {
+        if (state is PlacesGetPlacesLoading ||
+            state is PlacesSearchPlacesLoading)
+          return true;
+        return false;
+      },
+      builder: (context, state) {
+        return SliverGrid.builder(
+          itemCount: widget.places.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: getCrossAxisCount(widget.maxWidth),
+            crossAxisSpacing: 20,
+            mainAxisSpacing: 20,
+            childAspectRatio: getItemAspectRatio(widget.maxWidth),
+          ),
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                showBottomSheet(
+                  context: context,
+                  builder: (_) {
+                    return PlaceDetailsViewBody(place: widget.places[index]);
+                  },
+                );
               },
+              child: Skeletonizer(
+                enabled: state,
+                child: CustomPlaceVerticalDesignItem(
+                  place: widget.places[index],
+                ),
+              ),
             );
           },
-          child: CustomPlaceVerticalDesignItem(
-            place: widget.places[index],
-          ).animate().fadeIn(duration: 300.ms, delay: (index * 100).ms),
         );
       },
     );

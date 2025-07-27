@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/constant.dart';
-import 'package:in_egypt_admin_panel/core/widgets/CustomSearchAndFilterWidget.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widgets/CustomBookingsHeader.dart';
+import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widgets/CustomBookingsSearchAndFilterWidget.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widgets/CustomBookingsSliverGrid.dart';
 
 class BookingsViewBody extends StatelessWidget {
@@ -21,7 +21,7 @@ class BookingsViewBody extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomSearchAndFilterWidget(),
+                  CustomBookingsSearchAndFilterWidget(),
                   SizedBox(height: 20),
                   CustomBookingsHeader(),
                   SizedBox(height: 20),

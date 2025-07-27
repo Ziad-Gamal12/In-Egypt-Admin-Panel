@@ -1,33 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 import 'package:in_egypt_admin_panel/features/Places/domain/Entities/SelectPlaceCategoryEntity.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/SelectPlaceCategoryItem.dart';
-import 'package:provider/provider.dart';
 
-class SelectPlaceCategoryList extends StatefulWidget {
-  const SelectPlaceCategoryList({super.key, required this.isEdit});
-  final bool isEdit;
+class CustomFillterPlacesCategoriesList extends StatefulWidget {
+  const CustomFillterPlacesCategoriesList({
+    super.key,
+    required this.onCategoryChanged,
+  });
+  final ValueChanged<String> onCategoryChanged;
   @override
-  State<SelectPlaceCategoryList> createState() =>
-      _SelectPlaceCategoryListState();
+  State<CustomFillterPlacesCategoriesList> createState() =>
+      _CustomFillterPlacesCategoriesListState();
 }
 
-class _SelectPlaceCategoryListState extends State<SelectPlaceCategoryList> {
+class _CustomFillterPlacesCategoriesListState
+    extends State<CustomFillterPlacesCategoriesList> {
   int selectedIndex = -1;
-  @override
-  void initState() {
-    if (widget.isEdit) {
-      try {
-        selectedIndex = SelectPlaceCategoryEntity.placeCategories.indexWhere(
-          (element) => element.enTitle == context.read<PlaceEntity>().category,
-        );
-      } catch (e) {
-        selectedIndex = -1;
-      }
-    }
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -45,7 +33,7 @@ class _SelectPlaceCategoryListState extends State<SelectPlaceCategoryList> {
                     setState(() {
                       selectedIndex = e.key;
                     });
-                    context.read<PlaceEntity>().category = e.value.enTitle;
+                    widget.onCategoryChanged(e.value.enTitle);
                   },
                   child: SelectPlaceCategoryItem(
                     e: e,

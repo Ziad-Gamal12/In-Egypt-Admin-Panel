@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomErrorWidget.dart';
-import 'package:in_egypt_admin_panel/core/widgets/CustomSearchAndFilterWidget.dart';
 import 'package:in_egypt_admin_panel/core/widgets/EmptyWidget.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_cubit.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_state.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/CustomAddPlaceButton.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/CustomPlacesHeader.dart';
+import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/CustomPlacesSearchAndFilterWidget.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/CustomPlacesSliverGrid.dart';
 
 class ManagePlacesViewBodyContent extends StatefulWidget {
@@ -76,19 +76,28 @@ class _ManagePlacesViewBodyContentState
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CustomSearchAndFilterWidget(),
+                          CustomPlacesSearchAndFilterWidget(),
                           SizedBox(height: 20),
                           CustomPlacesHeader(),
                           SizedBox(height: 20),
                         ],
                       ),
                     ),
-                    if (places.isEmpty)
+                    if (state is PlacesSearchPlacesSuccess &&
+                        searchPlaces.isEmpty)
+                      SliverToBoxAdapter(child: EmptyWidget())
+                    else if (state is PlacesSearchPlacesSuccess &&
+                        state.places.isNotEmpty)
+                      CustomPlacesSliverGrid(
+                        maxWidth: constraints.maxWidth,
+                        places: state.places,
+                      )
+                    else if (places.isEmpty && state is PlacesGetPlacesSuccess)
                       SliverToBoxAdapter(child: EmptyWidget())
                     else
                       CustomPlacesSliverGrid(
                         maxWidth: constraints.maxWidth,
-                        places: searchPlaces.isEmpty ? places : searchPlaces,
+                        places: places,
                       ),
                   ],
                 ),
