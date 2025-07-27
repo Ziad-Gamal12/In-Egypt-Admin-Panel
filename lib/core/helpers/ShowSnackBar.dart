@@ -25,10 +25,13 @@ void showErrorSnackBar({
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       width: MediaQuery.sizeOf(context).width * .5,
-
       elevation: 0,
       behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.red,
+      backgroundColor: Colors.red.shade300,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        side: const BorderSide(color: Colors.red, width: 1.5),
+      ),
       content: Text(
         message,
         textAlign: TextAlign.center,
@@ -48,11 +51,14 @@ void showWarningSnackBar({
       width: MediaQuery.sizeOf(context).width * .5,
 
       behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.orangeAccent,
+      backgroundColor: Colors.orange.shade300,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        side: const BorderSide(color: Colors.orange, width: 1.5),
+      ),
       content: Text(
         message,
         textAlign: TextAlign.center,
-
         style: AppTextStyles(context).semiBold16.copyWith(color: Colors.white),
       ),
     ),
@@ -68,7 +74,11 @@ void showSuccessSnackBar({
       width: MediaQuery.sizeOf(context).width * .5,
       elevation: 0,
       behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.green,
+      backgroundColor: Colors.green.shade300,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        side: const BorderSide(color: Colors.green, width: 1.5),
+      ),
       content: Text(
         message,
         textAlign: TextAlign.center,
