@@ -7,12 +7,19 @@ ShowSnackBar({
   required BuildContext context,
   required Widget child,
   required Color backgroundColor,
+  Color? borderColor,
 }) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
+      width: MediaQuery.sizeOf(context).width * .5,
+
       backgroundColor: backgroundColor,
       behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        side: BorderSide(color: borderColor ?? Colors.transparent, width: 1.5),
+      ),
       content: child,
     ),
   );

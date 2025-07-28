@@ -118,11 +118,30 @@ class FirebaseFirestoreservice implements Databaseservice {
       } else {
         Query queryData = currentCollection;
         if (query != null) {
-          if (query["where"] != null && query["whereValue"] != null) {
+          if (query["filters"] is List<Map<String, dynamic>>) {
+            for (Map<String, dynamic> element in query["filters"]) {
+              if (element["field"] != null && element["value"] != null) {
+                if (element["operator"] != null) {
+                  if (element["operator"] == "==") {
+                    queryData = queryData.where(
+                      element["field"],
+                      isEqualTo: element["value"],
+                    );
+                  } else if (element["operator"] == ">=") {
+                    queryData = queryData.where(
+                      element["field"],
+                      isGreaterThanOrEqualTo: element["value"],
+                    );
+                  }
+                }
+              }
+            }
+          }
+          if (query["searchField"] is String && query["searchValue"] != null) {
             queryData = queryData.where(
-              query["where"],
-              isGreaterThanOrEqualTo: query["whereValue"],
-              isLessThan: "${query["whereValue"]}\uf8ff",
+              query["searchField"],
+              isGreaterThanOrEqualTo: query["searchValue"],
+              isLessThan: "${query["searchValue"]}\uf8ff",
             );
           }
           if (query["orderBy"] != null) {
@@ -130,7 +149,6 @@ class FirebaseFirestoreservice implements Databaseservice {
               query["orderBy"],
               descending: query["descending"] ?? true,
             );
-
             if (query["startAt"] != null) {
               queryData = queryData.startAt(query["startAt"]);
             }
@@ -156,6 +174,7 @@ class FirebaseFirestoreservice implements Databaseservice {
         );
       }
     } on FirebaseException catch (e) {
+      log(e.toString());
       switch (e.code) {
         case 'permission-denied':
           throw CustomException(
@@ -182,6 +201,11 @@ class FirebaseFirestoreservice implements Databaseservice {
         default:
           throw CustomException(message: "❌ حدث خطأ غير متوقع.");
       }
+    } catch (e, s) {
+      log(
+        "Exception from FireStoreService in catch With Firebase Exception: ${e.toString()} and the StackTrace is $s",
+      );
+      throw CustomException(message: "❌ حدث خطاء غير متوقع.");
     }
   }
 

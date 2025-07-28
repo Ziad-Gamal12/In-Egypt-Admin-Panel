@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -13,6 +14,7 @@ import 'package:in_egypt_admin_panel/core/models/PlaceModel.dart';
 import 'package:in_egypt_admin_panel/core/services/DataBaseService.dart';
 import 'package:in_egypt_admin_panel/core/services/StorageService.dart';
 import 'package:in_egypt_admin_panel/core/utils/BackEndkeys.dart';
+import 'package:in_egypt_admin_panel/features/Places/domain/Entities/FilterPlacesEntity.dart';
 import 'package:in_egypt_admin_panel/features/Places/domain/Entities/GetplacesResponseEntity.dart';
 import 'package:in_egypt_admin_panel/features/Places/domain/Repos/PlacesRepo.dart';
 
@@ -202,7 +204,7 @@ class PlacesRepoImpl implements PlacesRepo {
         requirements: FireStoreRequirmentsEntity(
           collection: Backendkeys.placesCollection,
         ),
-        query: {"where": "name", "whereValue": searchKey},
+        query: {"searchField": "name", "searchValue": searchKey},
       );
       if (response.listData == null) {
         return right([]);
@@ -216,5 +218,64 @@ class PlacesRepoImpl implements PlacesRepo {
     } catch (e) {
       return left(ServerFailure(message: e.toString()));
     }
+  }
+
+  @override
+  Future<Either<Failure, List<PlaceEntity>>> getFilteredPlaces({
+    required FilterPlacesEntity filterPlacesEntity,
+  }) async {
+    try {
+      FireStorePaginateResponse response = await databaseservice.getData(
+        requirements: FireStoreRequirmentsEntity(
+          collection: Backendkeys.placesCollection,
+        ),
+        query: _buildFilterQuery(filterPlacesEntity: filterPlacesEntity),
+      );
+      if (response.listData?.isEmpty ?? true) {
+        return right([]);
+      }
+      List<PlaceEntity> placesEntity = response.listData!
+          .map((e) => PlaceModel.fromJson(e).toEntity())
+          .toList();
+      return right(placesEntity);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e, s) {
+      log("${e.toString()} ${s.toString()}");
+      return left(ServerFailure(message: e.toString()));
+    }
+  }
+
+  Map<String, dynamic> _buildFilterQuery({
+    required FilterPlacesEntity filterPlacesEntity,
+  }) {
+    final query = <String, dynamic>{};
+    final filters = <Map<String, dynamic>>[];
+    if (filterPlacesEntity.maxPrice != null) {
+      filters.add({
+        "field": "ticketPrice",
+        "value": filterPlacesEntity.maxPrice,
+        "operator": ">=",
+      });
+    }
+    if (filterPlacesEntity.category != null) {
+      filters.add({
+        "field": "category",
+        "value": filterPlacesEntity.category,
+        "operator": "==",
+      });
+    }
+    if (filterPlacesEntity.isRatingDescending != null) {
+      query["orderBy"] = "rating";
+      if (filterPlacesEntity.isRatingDescending == true) {
+        query["descending"] = true;
+      } else {
+        query["descending"] = false;
+      }
+    }
+    if (filters.isNotEmpty) {
+      query["filters"] = filters;
+    }
+    return query;
   }
 }

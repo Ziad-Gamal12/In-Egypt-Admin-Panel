@@ -3,12 +3,17 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomTextFields/CustomSearchTextField.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_cubit.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/FilterPlacesBottomSheetWidgets/FilterAndSortPlacesBottomSheet.dart';
 
 class CustomPlacesSearchAndFilterWidget extends StatefulWidget {
-  const CustomPlacesSearchAndFilterWidget({super.key});
+  const CustomPlacesSearchAndFilterWidget({
+    super.key,
+    required this.onPlacesChanged,
+  });
+  final ValueChanged<List<PlaceEntity>> onPlacesChanged;
 
   @override
   State<CustomPlacesSearchAndFilterWidget> createState() =>
@@ -58,7 +63,9 @@ class _CustomPlacesSearchAndFilterWidgetState
                 context: context,
                 backgroundColor: Colors.white,
                 builder: (context) {
-                  return FilterAndSortPlacesBottomSheet();
+                  return FilterAndSortPlacesBottomSheet(
+                    onPlacesChanged: widget.onPlacesChanged,
+                  );
                 },
               );
             },

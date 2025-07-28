@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 import 'package:in_egypt_admin_panel/core/errors/Failures.dart';
+import 'package:in_egypt_admin_panel/features/Places/domain/Entities/FilterPlacesEntity.dart';
 import 'package:in_egypt_admin_panel/features/Places/domain/Entities/GetplacesResponseEntity.dart';
 
 abstract class PlacesRepo {
@@ -15,5 +16,8 @@ abstract class PlacesRepo {
   });
   Future<Either<Failure, List<PlaceEntity>>> searchPlaces({
     required String searchKey,
+  });
+  Future<Either<Failure, List<PlaceEntity>>> getFilteredPlaces({
+    required FilterPlacesEntity filterPlacesEntity,
   });
 }

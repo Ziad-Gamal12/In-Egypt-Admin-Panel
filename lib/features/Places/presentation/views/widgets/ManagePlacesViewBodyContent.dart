@@ -20,19 +20,22 @@ class ManagePlacesViewBodyContent extends StatefulWidget {
 
 class _ManagePlacesViewBodyContentState
     extends State<ManagePlacesViewBodyContent> {
-  ScrollController scrollController = ScrollController();
-  List<PlaceEntity> places = [];
-  List<PlaceEntity> searchPlaces = [];
+  late final ScrollController scrollController;
 
   bool isLoadMore = true;
+  List<PlaceEntity> filteredPlaces = [];
+
   @override
   void initState() {
     super.initState();
+    scrollController = ScrollController();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<PlacesCubit>().getPlaces(isPaginated: false);
+
       scrollController.addListener(() {
-        if (scrollController.position.pixels ==
-                scrollController.position.maxScrollExtent &&
+        if (scrollController.position.pixels >=
+                scrollController.position.maxScrollExtent - 200 &&
             isLoadMore) {
           context.read<PlacesCubit>().getPlaces(isPaginated: true);
         }
@@ -42,8 +45,8 @@ class _ManagePlacesViewBodyContentState
 
   @override
   void dispose() {
-    super.dispose();
     scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -51,61 +54,81 @@ class _ManagePlacesViewBodyContentState
     return BlocConsumer<PlacesCubit, PlacesState>(
       listener: (context, state) {
         if (state is PlacesGetPlacesSuccess) {
-          if (!isLoadMore && state.responseEntity.hasMore) return;
-          places.addAll(state.responseEntity.places);
           isLoadMore = state.responseEntity.hasMore;
-          setState(() {});
-        } else if (state is PlacesSearchPlacesSuccess) {
-          searchPlaces = state.places;
-          setState(() {});
         }
       },
       builder: (context, state) {
-        if (state is PlacesGetPlacesFailure) {
-          return Center(child: CustomErrorWidget(message: state.errmessage));
-        } else if (state is PlacesSearchPlacesFailure) {
-          return Center(child: CustomErrorWidget(message: state.errmessage));
-        } else {
-          return LayoutBuilder(
-            builder: (context, constraints) => Stack(
-              children: [
-                CustomScrollView(
-                  controller: scrollController,
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomPlacesSearchAndFilterWidget(),
-                          SizedBox(height: 20),
-                          CustomPlacesHeader(),
-                          SizedBox(height: 20),
-                        ],
-                      ),
+        final bool isSearchSuccess = state is PlacesSearchPlacesSuccess;
+        final List<PlaceEntity> searchedPlaces = isSearchSuccess
+            ? state.places
+            : [];
+
+        final bool isGetSuccess = state is PlacesGetPlacesSuccess;
+        final List<PlaceEntity> fetchedPlaces = isGetSuccess
+            ? state.responseEntity.places
+            : [];
+
+        return LayoutBuilder(
+          builder: (context, constraints) => Stack(
+            children: [
+              CustomScrollView(
+                controller: scrollController,
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomPlacesSearchAndFilterWidget(
+                          onPlacesChanged: (val) {
+                            setState(() {
+                              filteredPlaces = val;
+                            });
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                        const CustomPlacesHeader(),
+                        const SizedBox(height: 20),
+                      ],
                     ),
-                    if (state is PlacesSearchPlacesSuccess &&
-                        searchPlaces.isEmpty)
-                      SliverToBoxAdapter(child: EmptyWidget())
-                    else if (state is PlacesSearchPlacesSuccess &&
-                        state.places.isNotEmpty)
-                      CustomPlacesSliverGrid(
-                        maxWidth: constraints.maxWidth,
-                        places: state.places,
-                      )
-                    else if (places.isEmpty && state is PlacesGetPlacesSuccess)
-                      SliverToBoxAdapter(child: EmptyWidget())
-                    else
-                      CustomPlacesSliverGrid(
-                        maxWidth: constraints.maxWidth,
-                        places: places,
-                      ),
-                  ],
+                  ),
+                  if (filteredPlaces.isNotEmpty)
+                    CustomPlacesSliverGrid(
+                      maxWidth: constraints.maxWidth,
+                      places: filteredPlaces,
+                    )
+                  else if (isSearchSuccess && searchedPlaces.isEmpty)
+                    const SliverToBoxAdapter(child: EmptyWidget())
+                  else if (isSearchSuccess)
+                    CustomPlacesSliverGrid(
+                      maxWidth: constraints.maxWidth,
+                      places: searchedPlaces,
+                    )
+                  else if (isGetSuccess && fetchedPlaces.isEmpty)
+                    const SliverToBoxAdapter(child: EmptyWidget())
+                  else
+                    CustomPlacesSliverGrid(
+                      maxWidth: constraints.maxWidth,
+                      places: fetchedPlaces,
+                    ),
+                ],
+              ),
+              const Positioned(
+                left: 16,
+                bottom: 16,
+                child: CustomAddPlaceButton(),
+              ),
+              if (state is PlacesGetPlacesFailure ||
+                  state is PlacesSearchPlacesFailure)
+                Center(
+                  child: CustomErrorWidget(
+                    message: state is PlacesGetPlacesFailure
+                        ? state.errmessage
+                        : (state as PlacesSearchPlacesFailure).errmessage,
+                  ),
                 ),
-                Positioned(left: 16, bottom: 16, child: CustomAddPlaceButton()),
-              ],
-            ),
-          );
-        }
+            ],
+          ),
+        );
       },
     );
   }
