@@ -2,21 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_egypt_admin_panel/constant.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/manager/dashboard_cubit/dashboard_cubit.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/layouts/DashBoardMobileAndTabletLayout/CustomDashBoardBookingsSectionHeader.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/layouts/DashBoardMobileAndTabletLayout/CustomDashBoardPlacesSectionMobileAndTabletLayout.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/layouts/DashBoardMobileAndTabletLayout/CustomDashboardBookingsSliverGrid.dart';
+import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashBoardBookingsSectionHeader.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashBoardInfoRow.dart';
+import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashBoardPlacesSectionLayout.dart';
+import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashboardBookingsSliverGrid.dart';
 
-class Dashboardmobileandtabletlayout extends StatefulWidget {
-  const Dashboardmobileandtabletlayout({super.key});
+class CustomDashBoardBody extends StatefulWidget {
+  const CustomDashBoardBody({super.key});
 
   @override
-  State<Dashboardmobileandtabletlayout> createState() =>
-      _DashboardmobileandtabletlayoutState();
+  State<CustomDashBoardBody> createState() => _CustomDashBoardBodyState();
 }
 
-class _DashboardmobileandtabletlayoutState
-    extends State<Dashboardmobileandtabletlayout> {
+class _CustomDashBoardBodyState extends State<CustomDashBoardBody> {
   @override
   void initState() {
     super.initState();
@@ -43,8 +41,8 @@ class _DashboardmobileandtabletlayoutState
             ),
             SliverToBoxAdapter(
               child: SizedBox(
-                height: MediaQuery.of(context).size.height * .4,
-                child: CustomDashBoardPlacesSectionMobileAndTabletLayout(),
+                height: MediaQuery.of(context).size.height * .7,
+                child: CustomDashBoardPlacesSectionLayout(),
               ),
             ),
             SliverToBoxAdapter(

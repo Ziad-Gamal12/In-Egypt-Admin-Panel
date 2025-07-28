@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 import 'package:in_egypt_admin_panel/core/widgets/PlaceWidgets/CustomPlaceVerticalDesignItem.dart';
 
-class CustomBookingsMobileAndTabletListView extends StatelessWidget {
-  const CustomBookingsMobileAndTabletListView({
-    super.key,
-    required this.places,
-  });
+class CustomPlacesListView extends StatelessWidget {
+  const CustomPlacesListView({super.key, required this.places});
   final List<PlaceEntity> places;
   @override
   Widget build(BuildContext context) {
@@ -17,7 +14,7 @@ class CustomBookingsMobileAndTabletListView extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: AspectRatio(
-            aspectRatio: 1 / 1.2,
+            aspectRatio: 1 / 1.5,
             child: CustomPlaceVerticalDesignItem(place: places[index]),
           ),
         );

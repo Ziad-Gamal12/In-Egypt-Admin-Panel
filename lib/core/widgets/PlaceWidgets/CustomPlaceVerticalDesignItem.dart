@@ -18,28 +18,38 @@ class _CustomPlaceVerticalDesignItemState
   Widget build(BuildContext context) {
     return CustomScaleAnimatedWidget(
       child: Container(
+        padding: EdgeInsets.all(10),
+        margin: const EdgeInsets.symmetric(vertical: 10),
         alignment: Alignment.bottomCenter,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: Colors.transparent,
+          color: Colors.white,
+          border: Border.all(color: Colors.grey.shade100),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.shade100,
+              blurRadius: 50,
+              spreadRadius: 10,
+              offset: const Offset(5, 40),
+            ),
+          ],
         ),
-        child: Stack(
+        child: Column(
           children: [
-            Positioned.fill(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: CustomCachedNetworkImage(
-                  imageUrl: widget.place.images[0],
-                  boxFit: BoxFit.cover,
+            Expanded(
+              child: SizedBox(
+                width: double.infinity,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: CustomCachedNetworkImage(
+                    imageUrl: widget.place.images[0],
+                    boxFit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: CustomPlaceItemInfo(place: widget.place),
-            ),
+            const SizedBox(height: 10),
+            CustomPlaceItemInfo(place: widget.place),
           ],
         ),
       ),

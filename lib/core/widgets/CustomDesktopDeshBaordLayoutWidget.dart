@@ -5,7 +5,8 @@ import 'package:in_egypt_admin_panel/core/services/get_it_Service.dart';
 import 'package:in_egypt_admin_panel/core/services/picker_assets_interface.dart';
 import 'package:in_egypt_admin_panel/core/widgets/Drawer/CustomDrawerContent.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widgets/BookingsViewBody.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/layouts/DashBoardDesktopLayout/DashboardDesktopLayout.dart';
+import 'package:in_egypt_admin_panel/features/DashBoard/presentation/manager/dashboard_cubit/dashboard_cubit.dart';
+import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashBoardBody.dart';
 import 'package:in_egypt_admin_panel/features/Places/domain/Repos/PlacesRepo.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_cubit.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/ManagePlacesViewBody.dart';
@@ -34,19 +35,28 @@ class _MyWidgetState extends State<CustomDesktopDeshBaordLayoutWidget> {
   }
 
   List<Widget> widgets(BuildContext context) => [
-    Dashboarddesktoplayout(),
+    CustomDashBoardBody(),
     ManagePlacesViewBody(),
     BookingsViewBody(),
     UsersViewBodyDesktopLayout(),
   ];
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => PlacesCubit(
-        pickerassetsservice: getIt.get<PickerAssetsInterface>(),
-        storageService: getIt.get<StorageService>(),
-        placesRepo: getIt.get<PlacesRepo>(),
-      ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              DashboardCubit(placesRepo: getIt.get<PlacesRepo>()),
+        ),
+        BlocProvider(
+          create: (context) => PlacesCubit(
+            pickerassetsservice: getIt.get<PickerAssetsInterface>(),
+            storageService: getIt.get<StorageService>(),
+            placesRepo: getIt.get<PlacesRepo>(),
+          ),
+        ),
+      ],
+
       child: Row(
         children: [
           Expanded(

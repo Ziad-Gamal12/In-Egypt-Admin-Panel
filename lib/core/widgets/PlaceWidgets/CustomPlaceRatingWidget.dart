@@ -16,7 +16,7 @@ class CustomPlaceRatingWidget extends StatelessWidget {
           "$rating",
           style: AppTextStyles(
             context,
-          ).medium12.copyWith(color: ratingColor ?? Colors.white),
+          ).medium12.copyWith(color: ratingColor ?? Colors.black),
         ),
       ],
     );

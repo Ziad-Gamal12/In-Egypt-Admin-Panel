@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomAppBar.dart';
 import 'package:in_egypt_admin_panel/core/widgets/Drawer/CustomDrawer.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/layouts/DashBoardMobileAndTabletLayout/DashboardMobileAndTabletLayout.dart';
+import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashBoardBody.dart';
 
 class DashboardViewMobileLayout extends StatefulWidget {
   const DashboardViewMobileLayout({super.key});
@@ -17,7 +17,7 @@ class _DashboardViewMobileLayoutState extends State<DashboardViewMobileLayout> {
     return Scaffold(
       appBar: CustomAppBar(appBartitle: "الصفحة الرئيسية"),
       drawer: CustomDrawer(currentIndex: currentIndex),
-      body: Dashboardmobileandtabletlayout(),
+      body: CustomDashBoardBody(),
     );
   }
 }
