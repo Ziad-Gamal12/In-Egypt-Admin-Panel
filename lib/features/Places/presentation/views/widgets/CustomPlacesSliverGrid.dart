@@ -34,8 +34,8 @@ class _CustomPlacesSliverGridState extends State<CustomPlacesSliverGrid> {
           itemCount: widget.places.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: getCrossAxisCount(widget.maxWidth),
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
             childAspectRatio: getItemAspectRatio(widget.maxWidth),
           ),
           itemBuilder: (context, index) {
@@ -67,7 +67,7 @@ class _CustomPlacesSliverGridState extends State<CustomPlacesSliverGrid> {
     double totalSpacing = spacing * (crossAxisCount - 1);
     double itemWidth = (maxWidth - totalSpacing) / crossAxisCount;
 
-    double itemHeight = itemWidth * 1.3;
+    double itemHeight = itemWidth * 1.4;
     return itemWidth / itemHeight;
   }
 

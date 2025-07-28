@@ -16,3 +16,17 @@ final class DashboardGetPlacesFailure extends DashboardState {
 }
 
 final class DashboardGetPlacesLoading extends DashboardState {}
+
+final class DashboardGetDashBoardInfoLoading extends DashboardState {}
+
+final class DashboardGetDashBoardInfoSuccess extends DashboardState {
+  final DashBoardInfoEntity dashBoardInfoEntity;
+
+  DashboardGetDashBoardInfoSuccess({required this.dashBoardInfoEntity});
+}
+
+final class DashboardGetDashBoardInfoFailure extends DashboardState {
+  final String errmessage;
+
+  DashboardGetDashBoardInfoFailure({required this.errmessage});
+}

@@ -1,7 +1,5 @@
 // ignore_for_file: file_names
 
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:in_egypt_admin_panel/core/Entities/FireStorePaginateResponse.dart';
 import 'package:in_egypt_admin_panel/core/Entities/FireStoreRequirmentsEntity.dart';
@@ -58,30 +56,7 @@ class FirebaseFirestoreservice implements Databaseservice {
         }
       }
     } on FirebaseException catch (e) {
-      if (e.code == 'permission-denied') {
-        throw CustomException(
-          message:
-              "🚨 ليس لديك الإذن اللازم لإضافة البيانات. يرجى مراجعة صلاحياتك أو تعديل قواعد الأمان في Firestore.",
-        );
-      } else if (e.code == "unavailable") {
-        throw CustomException(
-          message: "🚨 الخادم غير متوفر حاليا. يرجى المحاولة لاحقا.",
-        );
-      } else if (e.code == "invalid-argument") {
-        throw CustomException(
-          message:
-              "❌ تم تمرير بيانات غير صحيحة. يرجى التحقق من المدخلات وإعادة المحاولة.",
-        );
-      } else if (e.code == "deadline-exceeded") {
-        throw CustomException(
-          message:
-              "⏳ انتهت المهلة الزمنية للطلب. يرجى المحاولة مرة أخرى لاحقًا.",
-        );
-      } else if (e.code == "resource-exhausted") {
-        throw CustomException(
-          message: "🚨 استهلاك الحافزات المتاحة. يرجى المحاولة لاحقًا.",
-        );
-      }
+      throw _getFireStoreCustomException(e: e);
     }
   }
 
@@ -174,37 +149,8 @@ class FirebaseFirestoreservice implements Databaseservice {
         );
       }
     } on FirebaseException catch (e) {
-      log(e.toString());
-      switch (e.code) {
-        case 'permission-denied':
-          throw CustomException(
-            message:
-                "🚨 ليس لديك الإذن اللازم للوصول إلى البيانات. يرجى مراجعة صلاحياتك.",
-          );
-        case 'unavailable':
-          throw CustomException(
-            message: "🚨 الخادم غير متوفر حاليا. حاول مرة أخرى لاحقا.",
-          );
-        case 'invalid-argument':
-          throw CustomException(
-            message:
-                "❌ تم تمرير بيانات غير صحيحة. تأكد من المدخلات وحاول مجددًا.",
-          );
-        case 'deadline-exceeded':
-          throw CustomException(
-            message: "⏳ انتهت المهلة الزمنية للطلب. حاول مرة أخرى.",
-          );
-        case 'resource-exhausted':
-          throw CustomException(
-            message: "🚨 تم استهلاك الموارد المتاحة. يرجى المحاولة لاحقًا.",
-          );
-        default:
-          throw CustomException(message: "❌ حدث خطأ غير متوقع.");
-      }
-    } catch (e, s) {
-      log(
-        "Exception from FireStoreService in catch With Firebase Exception: ${e.toString()} and the StackTrace is $s",
-      );
+      throw _getFireStoreCustomException(e: e);
+    } catch (e) {
       throw CustomException(message: "❌ حدث خطاء غير متوقع.");
     }
   }
@@ -278,36 +224,8 @@ class FirebaseFirestoreservice implements Databaseservice {
         }
       }
     } on FirebaseException catch (e) {
-      if (e.code == 'permission-denied') {
-        throw CustomException(
-          message:
-              "🚨 ليس لديك الإذن اللازم لإضافة البيانات. يرجى مراجعة صلاحياتك أو تعديل قواعد الأمان في Firestore.",
-        );
-      } else if (e.code == "unavailable") {
-        throw CustomException(
-          message: "🚨 الخادم غير متوفر حاليا. يرجى المحاولة لاحقا.",
-        );
-      } else if (e.code == "invalid-argument") {
-        throw CustomException(
-          message:
-              "❌ تم تمرير بيانات غير صحيحة. يرجى التحقق من المدخلات وإعادة المحاولة.",
-        );
-      } else if (e.code == "deadline-exceeded") {
-        throw CustomException(
-          message:
-              "⏳ انتهت المهلة الزمنية للطلب. يرجى المحاولة مرة أخرى لاحقًا.",
-        );
-      } else if (e.code == "resource-exhausted") {
-        throw CustomException(
-          message: "🚨 استهلاك الحافزات المتاحة. يرجى المحاولة لاحقًا.",
-        );
-      } else {
-        throw CustomException(message: "حدث خطأ ما");
-      }
+      throw _getFireStoreCustomException(e: e);
     } catch (e) {
-      log(
-        "Exception from Firebase_FirestoreService.updateDate in catch With Firebase Exception: ${e.toString()}",
-      );
       throw CustomException(message: "حدث خطأ ما");
     }
   }
@@ -328,5 +246,84 @@ class FirebaseFirestoreservice implements Databaseservice {
           .delete();
     }
     await firestore.collection(collectionKey).doc(docId).delete();
+  }
+
+  @override
+  Future<int> getCollectionItemsCount({
+    required FireStoreRequirmentsEntity requirements,
+    Map<String, dynamic>? query,
+  }) async {
+    try {
+      final queryData = firestore;
+      if (requirements.collection != null) {
+        final queryData = firestore.collection(requirements.collection!);
+        if (query != null) {
+          if (query["searchField"] != null) {
+            if (query["searchValue"] != null) {
+              if (query["operator"] != null) {
+                if (query["operator"] == "==") {
+                  queryData.where(
+                    query["searchField"],
+                    isEqualTo: query["searchValue"],
+                  );
+                } else if (query["operator"] == "!=") {
+                  queryData.where(
+                    query["searchField"],
+                    isNotEqualTo: query["searchValue"],
+                  );
+                } else if (query["operator"] == "<=") {
+                  queryData.where(
+                    query["searchField"],
+                    isLessThanOrEqualTo: query["searchValue"],
+                  );
+                } else if (query["operator"] == ">=") {
+                  queryData.where(
+                    query["searchField"],
+                    isGreaterThanOrEqualTo: query["searchValue"],
+                  );
+                }
+              }
+            }
+          }
+        }
+        final querySnapshot = await queryData.get();
+        return querySnapshot.docs.length;
+      } else {
+        return 0;
+      }
+    } on FirebaseException catch (e) {
+      throw _getFireStoreCustomException(e: e);
+    } catch (e) {
+      throw CustomException(message: "حدث خطأ ما");
+    }
+  }
+
+  Exception _getFireStoreCustomException({required FirebaseException e}) {
+    switch (e.code) {
+      case 'permission-denied':
+        throw CustomException(
+          message:
+              "🚨 ليس لديك الإذن اللازم للوصول إلى البيانات. يرجى مراجعة صلاحياتك.",
+        );
+      case 'unavailable':
+        throw CustomException(
+          message: "🚨 الخادم غير متوفر حاليا. حاول مرة أخرى لاحقا.",
+        );
+      case 'invalid-argument':
+        throw CustomException(
+          message:
+              "❌ تم تمرير بيانات غير صحيحة. تأكد من المدخلات وحاول مجددًا.",
+        );
+      case 'deadline-exceeded':
+        throw CustomException(
+          message: "⏳ انتهت المهلة الزمنية للطلب. حاول مرة أخرى.",
+        );
+      case 'resource-exhausted':
+        throw CustomException(
+          message: "🚨 تم استهلاك الموارد المتاحة. يرجى المحاولة لاحقًا.",
+        );
+      default:
+        throw CustomException(message: "❌ حدث خطأ غير متوقع.");
+    }
   }
 }

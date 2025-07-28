@@ -19,6 +19,7 @@ class _CustomDashBoardBodyState extends State<CustomDashBoardBody> {
   void initState() {
     super.initState();
     context.read<DashboardCubit>().getPlaces(isPaginated: false);
+    context.read<DashboardCubit>().getDashBoardInfo();
   }
 
   @override
@@ -41,7 +42,7 @@ class _CustomDashBoardBodyState extends State<CustomDashBoardBody> {
             ),
             SliverToBoxAdapter(
               child: SizedBox(
-                height: MediaQuery.of(context).size.height * .7,
+                height: MediaQuery.of(context).size.height * .65,
                 child: CustomDashBoardPlacesSectionLayout(),
               ),
             ),

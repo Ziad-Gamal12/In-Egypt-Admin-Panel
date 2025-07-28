@@ -5,6 +5,7 @@ import 'package:in_egypt_admin_panel/core/services/get_it_Service.dart';
 import 'package:in_egypt_admin_panel/core/services/picker_assets_interface.dart';
 import 'package:in_egypt_admin_panel/core/widgets/Drawer/CustomDrawerContent.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widgets/BookingsViewBody.dart';
+import 'package:in_egypt_admin_panel/features/DashBoard/domain/repos/DashBoardRepo.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/manager/dashboard_cubit/dashboard_cubit.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashBoardBody.dart';
 import 'package:in_egypt_admin_panel/features/Places/domain/Repos/PlacesRepo.dart';
@@ -45,8 +46,10 @@ class _MyWidgetState extends State<CustomDesktopDeshBaordLayoutWidget> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) =>
-              DashboardCubit(placesRepo: getIt.get<PlacesRepo>()),
+          create: (context) => DashboardCubit(
+            placesRepo: getIt.get<PlacesRepo>(),
+            dashBoardRepo: getIt<DashBoardRepo>(),
+          ),
         ),
         BlocProvider(
           create: (context) => PlacesCubit(

@@ -4,6 +4,7 @@ class Backendkeys {
   static const isOnboardingSeen = "isOnboardingSeen";
   static const usersCollection = "Users";
   static const placesCollection = "Places";
+  static const bookingsCollection = "Bookings";
   static const storeUserLocaly = "UserData";
   static const userRole = "User";
   static const adminRole = "Admin";

@@ -10,6 +10,8 @@ import 'package:in_egypt_admin_panel/core/services/picker_assets_interface.dart'
 import 'package:in_egypt_admin_panel/core/services/picker_assets_service.dart';
 import 'package:in_egypt_admin_panel/features/Auth/data/Repos/AuthRepoImpl.dart';
 import 'package:in_egypt_admin_panel/features/Auth/domain/Repos/AuthRepo.dart';
+import 'package:in_egypt_admin_panel/features/DashBoard/data/repos/DashBoardRepoImp.dart';
+import 'package:in_egypt_admin_panel/features/DashBoard/domain/repos/DashBoardRepo.dart';
 import 'package:in_egypt_admin_panel/features/Places/data/repos/PlacesRepoImpl.dart';
 import 'package:in_egypt_admin_panel/features/Places/domain/Repos/PlacesRepo.dart';
 
@@ -35,5 +37,8 @@ void setup_Getit() {
       databaseservice: getIt<Databaseservice>(),
       storageService: getIt<StorageService>(),
     ),
+  );
+  getIt.registerSingleton<DashBoardRepo>(
+    DashBoardRepoImp(databaseservice: getIt<Databaseservice>()),
   );
 }

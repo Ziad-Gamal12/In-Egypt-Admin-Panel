@@ -23,6 +23,7 @@ class _ManagePlacesViewBodyContentState
   late final ScrollController scrollController;
 
   bool isLoadMore = true;
+  List<PlaceEntity> fetchedPlaces = [];
   List<PlaceEntity> filteredPlaces = [];
 
   @override
@@ -32,7 +33,6 @@ class _ManagePlacesViewBodyContentState
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<PlacesCubit>().getPlaces(isPaginated: false);
-
       scrollController.addListener(() {
         if (scrollController.position.pixels >=
                 scrollController.position.maxScrollExtent - 200 &&
@@ -54,7 +54,11 @@ class _ManagePlacesViewBodyContentState
     return BlocConsumer<PlacesCubit, PlacesState>(
       listener: (context, state) {
         if (state is PlacesGetPlacesSuccess) {
-          isLoadMore = state.responseEntity.hasMore;
+          if (!isLoadMore && state.responseEntity.hasMore) return;
+          setState(() {
+            fetchedPlaces.addAll(state.responseEntity.places);
+            isLoadMore = state.responseEntity.hasMore;
+          });
         }
       },
       builder: (context, state) {
@@ -62,12 +66,6 @@ class _ManagePlacesViewBodyContentState
         final List<PlaceEntity> searchedPlaces = isSearchSuccess
             ? state.places
             : [];
-
-        final bool isGetSuccess = state is PlacesGetPlacesSuccess;
-        final List<PlaceEntity> fetchedPlaces = isGetSuccess
-            ? state.responseEntity.places
-            : [];
-
         return LayoutBuilder(
           builder: (context, constraints) => Stack(
             children: [
@@ -103,7 +101,8 @@ class _ManagePlacesViewBodyContentState
                       maxWidth: constraints.maxWidth,
                       places: searchedPlaces,
                     )
-                  else if (isGetSuccess && fetchedPlaces.isEmpty)
+                  else if (state is PlacesGetPlacesSuccess &&
+                      fetchedPlaces.isEmpty)
                     const SliverToBoxAdapter(child: EmptyWidget())
                   else
                     CustomPlacesSliverGrid(
