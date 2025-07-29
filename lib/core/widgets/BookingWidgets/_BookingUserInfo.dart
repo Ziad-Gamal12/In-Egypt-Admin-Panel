@@ -1,7 +1,6 @@
 // ignore_for_file: unused_element, file_names
 
 import 'package:flutter/material.dart';
-import 'package:in_egypt_admin_panel/core/helpers/getUserData.dart';
 import 'package:in_egypt_admin_panel/core/utils/textStyles.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomUserCirclurWIdget.dart';
 import 'package:in_egypt_admin_panel/features/Auth/domain/Entities/UserEntity.dart';
@@ -23,7 +22,7 @@ class BookingUserInfo extends StatelessWidget {
         userEntity.email,
         style: AppTextStyles(context).regular10.copyWith(color: Colors.black),
       ),
-      leading: CustomUserCirclurWidget(imageUrl: getUserData().photoUrl),
+      leading: CustomUserCirclurWidget(imageUrl: userEntity.photoUrl),
     );
   }
 }

@@ -23,8 +23,16 @@ class _CustomBookingItemState extends State<CustomBookingItem> {
     return CustomScaleAnimatedWidget(
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.grey.shade50,
+          color: Colors.white,
           border: Border.all(color: getborderColor(widget.booking.status)),
+          boxShadow: [
+            BoxShadow(
+              color: getShadeColor(widget.booking.status),
+              blurRadius: 50,
+              spreadRadius: 10,
+              offset: const Offset(5, 40),
+            ),
+          ],
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
@@ -62,10 +70,22 @@ class _CustomBookingItemState extends State<CustomBookingItem> {
       return Colors.black;
     } else if (status == "approved") {
       return Colors.green;
-    } else if (status == "rejected") {
+    } else if (status == "rejected" || status == "canceled") {
       return Colors.red;
     } else {
       return Colors.black;
+    }
+  }
+
+  Color getShadeColor(String status) {
+    if (status == "pending") {
+      return Colors.black26;
+    } else if (status == "approved") {
+      return Colors.green.shade100;
+    } else if (status == "rejected" || status == "canceled") {
+      return Colors.red.shade100;
+    } else {
+      return Colors.black26;
     }
   }
 }

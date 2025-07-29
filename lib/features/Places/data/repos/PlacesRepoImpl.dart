@@ -114,7 +114,7 @@ class PlacesRepoImpl implements PlacesRepo {
           .map((e) => PlaceModel.fromJson(e).toEntity())
           .toList();
 
-      bool hasMore = placesData.length == query["limit"];
+      bool hasMore = response.hasMore ?? placesData.length == query["limit"];
 
       return right(
         GetplacesResponseEntity(places: placesEntity, hasMore: hasMore),

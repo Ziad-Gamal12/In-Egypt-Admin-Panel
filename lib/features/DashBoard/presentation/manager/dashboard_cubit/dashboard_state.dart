@@ -30,3 +30,15 @@ final class DashboardGetDashBoardInfoFailure extends DashboardState {
 
   DashboardGetDashBoardInfoFailure({required this.errmessage});
 }
+
+final class DashboardGetDashBoardBookingsLoading extends DashboardState {}
+
+final class DashboardGetDashBoardBookingsSuccess extends DashboardState {
+  final GetBookingsResponseEntity response;
+  DashboardGetDashBoardBookingsSuccess({required this.response});
+}
+
+final class DashboardGetDashBoardBookingsFailure extends DashboardState {
+  final String errmessage;
+  DashboardGetDashBoardBookingsFailure({required this.errmessage});
+}

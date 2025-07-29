@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_egypt_admin_panel/ResponsiveLayout%20.dart';
 import 'package:in_egypt_admin_panel/core/services/get_it_Service.dart';
+import 'package:in_egypt_admin_panel/features/Bookings/domain/Repos/BookingsRepo.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/domain/repos/DashBoardRepo.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/manager/dashboard_cubit/dashboard_cubit.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/DashboardViewDesktopLayout.dart';
@@ -17,6 +18,7 @@ class ResponsiveDashBaoardView extends StatelessWidget {
       create: (context) => DashboardCubit(
         placesRepo: getIt.get<PlacesRepo>(),
         dashBoardRepo: getIt<DashBoardRepo>(),
+        bookingsRepo: getIt<BookingsRepo>(),
       ),
       child: ResponsiveLayout(
         mobile: const DashboardViewMobileLayout(),

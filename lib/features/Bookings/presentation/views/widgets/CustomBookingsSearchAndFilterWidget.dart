@@ -1,11 +1,19 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomTextFields/CustomSearchTextField.dart';
+import 'package:in_egypt_admin_panel/features/Bookings/presentation/manager/bookings_cubit/bookings_cubit.dart';
 
 class CustomBookingsSearchAndFilterWidget extends StatefulWidget {
-  const CustomBookingsSearchAndFilterWidget({super.key});
+  const CustomBookingsSearchAndFilterWidget({
+    super.key,
+    required this.searchKeyWord,
+    required this.isSearching,
+  });
+  final ValueChanged<String> searchKeyWord;
+  final ValueChanged<bool> isSearching;
 
   @override
   State<CustomBookingsSearchAndFilterWidget> createState() =>
@@ -14,17 +22,33 @@ class CustomBookingsSearchAndFilterWidget extends StatefulWidget {
 
 class _CustomBookingsSearchAndFilterWidgetState
     extends State<CustomBookingsSearchAndFilterWidget> {
-  TextEditingController controller = TextEditingController();
+  late TextEditingController controller;
   Timer? debouncer;
   @override
   void initState() {
-    controller.addListener(debounce);
+    controller = TextEditingController();
+    controller.addListener(() {
+      if (controller.text.isNotEmpty) {
+        widget.searchKeyWord(controller.text.trim().toLowerCase());
+        widget.isSearching(true);
+        debounce(isPaginated: false);
+      } else {
+        widget.searchKeyWord("");
+        widget.isSearching(false);
+      }
+    });
+
     super.initState();
   }
 
-  debounce() {
+  debounce({required bool isPaginated}) {
     if (debouncer != null && debouncer!.isActive) debouncer!.cancel();
-    debouncer = Timer(const Duration(milliseconds: 500), () {});
+    debouncer = Timer(const Duration(milliseconds: 500), () {
+      context.read<BookingsCubit>().getSearchedBookings(
+        searchKey: controller.text.trim().toLowerCase(),
+        isPaginated: isPaginated,
+      );
+    });
   }
 
   @override

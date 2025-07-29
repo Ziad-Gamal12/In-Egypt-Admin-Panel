@@ -1,22 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:in_egypt_admin_panel/core/utils/Variables.dart';
+import 'package:in_egypt_admin_panel/core/Entities/BookingEntity.dart';
 import 'package:in_egypt_admin_panel/core/widgets/BookingWidgets/CustomBookingItem.dart';
 
-class CustomBookingsSliverGrid extends StatelessWidget {
-  const CustomBookingsSliverGrid({super.key, required this.maxWidth});
+class CustomBookingsSliverGrid extends StatefulWidget {
+  const CustomBookingsSliverGrid({
+    super.key,
+    required this.maxWidth,
+    required this.bookings,
+  });
   final double maxWidth;
+  final List<BookingEntity> bookings;
+
+  @override
+  State<CustomBookingsSliverGrid> createState() =>
+      _CustomBookingsSliverGridState();
+}
+
+class _CustomBookingsSliverGridState extends State<CustomBookingsSliverGrid> {
   @override
   Widget build(BuildContext context) {
     return SliverGrid.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: getCrossAxisCount(maxWidth),
+        crossAxisCount: getCrossAxisCount(widget.maxWidth),
         crossAxisSpacing: 20,
         mainAxisSpacing: 20,
-        childAspectRatio: getItemAspectRatio(maxWidth),
+        childAspectRatio: getItemAspectRatio(widget.maxWidth),
       ),
-      itemCount: Variables.testBookingsList.length,
+      itemCount: widget.bookings.length,
       itemBuilder: (context, index) {
-        return CustomBookingItem(booking: Variables.testBookingsList[index]);
+        return CustomBookingItem(booking: widget.bookings[index]);
       },
     );
   }

@@ -19,6 +19,7 @@ class ResponsiveSignUpView extends StatefulWidget {
 
 class _ResponsiveSignUpViewState extends State<ResponsiveSignUpView> {
   UserEntity user = UserEntity(
+    fullName: '',
     uid: '',
     firstName: '',
     isBlocked: false,

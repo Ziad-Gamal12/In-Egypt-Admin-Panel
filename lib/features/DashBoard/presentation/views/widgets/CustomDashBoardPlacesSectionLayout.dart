@@ -6,7 +6,6 @@ import 'package:in_egypt_admin_panel/core/widgets/EmptyWidget.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/manager/dashboard_cubit/dashboard_cubit.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashBoardPlacesSectionHeader.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomPlacesListView.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class CustomDashBoardPlacesSectionLayout extends StatefulWidget {
   const CustomDashBoardPlacesSectionLayout({super.key});
@@ -38,13 +37,10 @@ class _CustomDashBoardPlacesSectionLayoutState
             SizedBox(height: 20),
             if (state is DashboardGetPlacesFailure)
               CustomErrorWidget(message: state.errmessage)
-            else if (state is DashboardGetPlacesSuccess && places.isEmpty)
+            else if (state is DashboardGetPlacesSuccess && state.places.isEmpty)
               Center(child: EmptyWidget())
             else
-              Skeletonizer(
-                enabled: state is DashboardGetPlacesLoading,
-                child: Expanded(child: CustomPlacesListView(places: places)),
-              ),
+              Expanded(child: CustomPlacesListView(places: places)),
           ],
         );
       },

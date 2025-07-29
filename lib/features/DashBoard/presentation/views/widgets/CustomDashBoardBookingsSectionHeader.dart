@@ -21,7 +21,7 @@ class CustomDashBoardBookingsSectionHeader extends StatelessWidget {
         const SizedBox(width: 20),
         Expanded(
           child: Text(
-            "نبذة عن الحجوزات",
+            "أحدث الحجوزات",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles(

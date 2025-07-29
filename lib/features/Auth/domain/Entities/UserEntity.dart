@@ -2,7 +2,7 @@
 
 class UserEntity {
   String uid;
-  String firstName, lastName, email, phoneNumber, photoUrl, role;
+  String fullName, firstName, lastName, email, phoneNumber, photoUrl, role;
   String createdAt;
   final bool isBlocked;
   final bool isVerified;
@@ -11,6 +11,7 @@ class UserEntity {
     required this.firstName,
     required this.isBlocked,
     required this.isVerified,
+    required this.fullName,
     required this.lastName,
     required this.email,
     required this.phoneNumber,

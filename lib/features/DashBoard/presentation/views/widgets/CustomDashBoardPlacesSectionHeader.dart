@@ -21,7 +21,7 @@ class CustomDashBoardPlacesSectionHeader extends StatelessWidget {
         const SizedBox(width: 20),
         Expanded(
           child: Text(
-            "الأماكن",
+            "أحدث الأماكن",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles(

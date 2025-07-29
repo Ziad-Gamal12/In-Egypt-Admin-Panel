@@ -1,7 +1,14 @@
 import 'package:in_egypt_admin_panel/features/Auth/domain/Entities/UserEntity.dart';
 
 class UserModel {
-  final String uid, firstName, lastName, email, phoneNumber, photoUrl, role;
+  final String fullName,
+      uid,
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      photoUrl,
+      role;
   final String createdAt;
   final bool isVerified;
   final bool isBlocked;
@@ -12,6 +19,7 @@ class UserModel {
     required this.isBlocked,
     required this.isVerified,
     required this.lastName,
+    required this.fullName,
     required this.email,
     required this.phoneNumber,
     required this.photoUrl,
@@ -23,6 +31,7 @@ class UserModel {
     return UserModel(
       uid: json['uid'] ?? '',
       firstName: json['firstName'] ?? '',
+      fullName: json['fullName'] ?? '',
       isVerified: json['isVerified'] ?? false,
       lastName: json['lastName'] ?? '',
       isBlocked: json['isBlocked'] ?? false,
@@ -37,6 +46,7 @@ class UserModel {
     return UserModel(
       uid: entity.uid,
       firstName: entity.firstName,
+      fullName: entity.fullName,
       lastName: entity.lastName,
       isVerified: entity.isVerified,
       isBlocked: entity.isBlocked,
@@ -51,9 +61,11 @@ class UserModel {
     return UserEntity(
       uid: uid,
       firstName: firstName,
+      fullName: fullName,
       lastName: lastName,
       isBlocked: isBlocked,
       isVerified: isVerified,
+
       email: email,
       phoneNumber: phoneNumber,
       photoUrl: photoUrl,
@@ -65,6 +77,7 @@ class UserModel {
   Map<String, dynamic> toJson() {
     return {
       'uid': uid,
+      'fullName': fullName,
       'firstName': firstName,
       'lastName': lastName,
       'isBlocked': isBlocked,

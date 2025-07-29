@@ -36,11 +36,11 @@ class BookingModel {
       startAt: (json['startAt'] as Timestamp).toDate(),
       endAt: (json['endAt'] as Timestamp).toDate(),
       createdAt: (json['createdAt'] as Timestamp).toDate(),
-      daysDuration: json['daysDuration'],
-      numberOfGuests: json['numberOfGuests'],
+      daysDuration: (json['daysDuration'] as num).toDouble(),
+      numberOfGuests: (json['numberOfGuests'] as num).toInt(),
       status: json['status'],
       id: json['id'],
-      totalPrice: json['totalPrice'],
+      totalPrice: (json['totalPrice'] as num).toDouble(),
       paymentMethod: json['paymentMethod'],
     );
   }

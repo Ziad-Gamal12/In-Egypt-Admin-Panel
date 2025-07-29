@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
+import 'package:in_egypt_admin_panel/features/Bookings/domain/Entities/GetBookingsResponseEntity.dart';
+import 'package:in_egypt_admin_panel/features/Bookings/domain/Repos/BookingsRepo.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/domain/Entities/DashBoardInfoEntity.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/domain/repos/DashBoardRepo.dart';
 import 'package:in_egypt_admin_panel/features/Places/domain/Repos/PlacesRepo.dart';
@@ -8,11 +10,15 @@ import 'package:meta/meta.dart';
 part 'dashboard_state.dart';
 
 class DashboardCubit extends Cubit<DashboardState> {
-  DashboardCubit({required this.placesRepo, required this.dashBoardRepo})
-    : super(DashboardInitial());
+  DashboardCubit({
+    required this.placesRepo,
+    required this.dashBoardRepo,
+    required this.bookingsRepo,
+  }) : super(DashboardInitial());
   final PlacesRepo placesRepo;
   final DashBoardRepo dashBoardRepo;
-  getPlaces({required bool isPaginated}) async {
+  final BookingsRepo bookingsRepo;
+  Future<void> getPlaces({required bool isPaginated}) async {
     try {
       emit(DashboardGetPlacesLoading());
       final result = await placesRepo.getPlaces(isPaginated: isPaginated);
@@ -38,6 +44,19 @@ class DashboardCubit extends Cubit<DashboardState> {
       },
       (response) {
         emit(DashboardGetDashBoardInfoSuccess(dashBoardInfoEntity: response));
+      },
+    );
+  }
+
+  Future<void> getDashBoardBookings() async {
+    emit(DashboardGetDashBoardBookingsLoading());
+    final result = await bookingsRepo.getBookings(isPaginated: false);
+    result.fold(
+      (failure) {
+        emit(DashboardGetDashBoardBookingsFailure(errmessage: failure.message));
+      },
+      (response) {
+        emit(DashboardGetDashBoardBookingsSuccess(response: response));
       },
     );
   }

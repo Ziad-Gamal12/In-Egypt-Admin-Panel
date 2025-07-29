@@ -1,22 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:in_egypt_admin_panel/core/utils/Variables.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:in_egypt_admin_panel/core/Entities/BookingEntity.dart';
 import 'package:in_egypt_admin_panel/core/widgets/BookingWidgets/CustomBookingItem.dart';
+import 'package:in_egypt_admin_panel/features/DashBoard/presentation/manager/dashboard_cubit/dashboard_cubit.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class CustomDashboardBookingsSliverGrid extends StatelessWidget {
-  const CustomDashboardBookingsSliverGrid({super.key, required this.maxWidth});
+  const CustomDashboardBookingsSliverGrid({
+    super.key,
+    required this.maxWidth,
+    required this.bookings,
+  });
   final double maxWidth;
+  final List<BookingEntity> bookings;
   @override
   Widget build(BuildContext context) {
-    return SliverGrid.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisSpacing: 20,
-        mainAxisSpacing: 20,
-        childAspectRatio: getItemAspectRatio(maxWidth),
-        crossAxisCount: getCrossAxisCount(maxWidth),
-      ),
-      itemCount: Variables.testBookingsList.length,
-      itemBuilder: (context, index) =>
-          CustomBookingItem(booking: Variables.testBookingsList[index]),
+    return BlocSelector<DashboardCubit, DashboardState, bool>(
+      selector: (state) {
+        if (state is DashboardGetDashBoardBookingsLoading) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      builder: (context, state) {
+        return SliverGrid.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisSpacing: 20,
+            mainAxisSpacing: 20,
+            childAspectRatio: getItemAspectRatio(maxWidth),
+            crossAxisCount: getCrossAxisCount(maxWidth),
+          ),
+          itemCount: bookings.length,
+          itemBuilder: (context, index) => Skeletonizer(
+            enabled: state,
+            child: CustomBookingItem(booking: bookings[index]),
+          ),
+        );
+      },
     );
   }
 
