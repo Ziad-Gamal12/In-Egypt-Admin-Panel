@@ -13,6 +13,15 @@ class CustomDashBoardInfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DashboardCubit, DashboardState>(
+      buildWhen: (previous, current) {
+        if (current is DashboardGetDashBoardInfoSuccess ||
+            current is DashboardGetDashBoardInfoFailure ||
+            current is DashboardGetDashBoardInfoLoading) {
+          return true;
+        } else {
+          return false;
+        }
+      },
       builder: (context, state) {
         if (state is DashboardGetDashBoardInfoFailure) {
           return CustomErrorWidget(message: state.errmessage);
@@ -56,7 +65,7 @@ class CustomDashBoardInfoRow extends StatelessWidget {
           );
         } else {
           return Skeletonizer(
-            enabled: true,
+            enabled: state is DashboardGetDashBoardInfoLoading,
             child: Customdashboardcard(
               child: IntrinsicHeight(
                 child: SingleChildScrollView(

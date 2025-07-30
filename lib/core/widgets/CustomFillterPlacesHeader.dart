@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:in_egypt_admin_panel/core/utils/textStyles.dart';
 
-class CustomFillterPlacesHeader extends StatelessWidget {
-  const CustomFillterPlacesHeader({super.key});
+class CustomFillterAndSortHeader extends StatelessWidget {
+  const CustomFillterAndSortHeader({super.key});
 
   @override
   Widget build(BuildContext context) {

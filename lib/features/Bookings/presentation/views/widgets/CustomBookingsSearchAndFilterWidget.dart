@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomTextFields/CustomSearchTextField.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/presentation/manager/bookings_cubit/bookings_cubit.dart';
+import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widgets/FilterBookingsBottomSheetWidgets/FilterBookingsBottomSheet.dart';
 
 class CustomBookingsSearchAndFilterWidget extends StatefulWidget {
   const CustomBookingsSearchAndFilterWidget({
@@ -70,7 +71,15 @@ class _CustomBookingsSearchAndFilterWidgetState
         FittedBox(
           child: IconButton(
             iconSize: 30,
-            onPressed: () {},
+            onPressed: () {
+              showBottomSheet(
+                context: context,
+                backgroundColor: Colors.white,
+                builder: (context) {
+                  return FilterBookingsBottomSheet();
+                },
+              );
+            },
             icon: Icon(FontAwesomeIcons.barsStaggered, color: Colors.black),
           ),
         ),

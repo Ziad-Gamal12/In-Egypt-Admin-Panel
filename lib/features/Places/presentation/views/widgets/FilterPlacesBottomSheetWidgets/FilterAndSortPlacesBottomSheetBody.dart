@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 import 'package:in_egypt_admin_panel/core/helpers/ShowSnackBar.dart';
 import 'package:in_egypt_admin_panel/core/utils/textStyles.dart';
+import 'package:in_egypt_admin_panel/core/widgets/CustomFillterPlacesHeader.dart';
 import 'package:in_egypt_admin_panel/features/Places/domain/Entities/FilterPlacesEntity.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/manager/filter_places_cubit/filter_places_cubit.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/FilterPlacesBottomSheetWidgets/CustomFillterPlacesCategorySelection.dart';
-import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/FilterPlacesBottomSheetWidgets/CustomFillterPlacesHeader.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/FilterPlacesBottomSheetWidgets/CustomFillterPlacesPriceSlider.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/FilterPlacesBottomSheetWidgets/CustomFillterPlacesRatingRadioButtons.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/FilterPlacesBottomSheetWidgets/FilterAndSortPlacesBottomSheetBodyButton.dart';
@@ -67,7 +67,7 @@ class _FilterAndSortPlacesBottomSheetBodyState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomFillterPlacesHeader(),
+              CustomFillterAndSortHeader(),
               const SizedBox(height: 10),
               CustomFillterPlacesCategorySelection(
                 onCategoryChanged: (value) {

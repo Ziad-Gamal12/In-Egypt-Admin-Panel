@@ -8,7 +8,6 @@ import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widge
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashBoardInfoRow.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashBoardPlacesSectionLayout.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashboardBookingsSliverGrid.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class CustomDashBoardBody extends StatefulWidget {
   const CustomDashBoardBody({super.key});
@@ -20,90 +19,73 @@ class CustomDashBoardBody extends StatefulWidget {
 class _CustomDashBoardBodyState extends State<CustomDashBoardBody> {
   @override
   void initState() {
-    initActions();
+    WidgetsBinding.instance.addPostFrameCallback((_) => initActions());
     super.initState();
   }
 
-  Future<void> initActions() async {
-    Future.wait([
-      context.read<DashboardCubit>().getPlaces(isPaginated: false),
-      context.read<DashboardCubit>().getDashBoardInfo(),
-      context.read<DashboardCubit>().getDashBoardBookings(),
-    ]);
+  void initActions() async {
+    final cubit = context.read<DashboardCubit>();
+
+    await cubit.getPlaces(isPaginated: false);
+    if (!mounted) return;
+
+    await cubit.getDashBoardInfo();
+    if (!mounted) return;
+
+    await cubit.getDashBoardBookings();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DashboardCubit, DashboardState>(
-      buildWhen: (previous, current) {
-        if (current is DashboardGetDashBoardBookingsFailure) {
-          return true;
-        } else if (current is DashboardGetDashBoardBookingsSuccess) {
-          return true;
-        } else if (current is DashboardGetDashBoardBookingsLoading) {
-          return true;
-        } else if (current is DashboardGetDashBoardInfoLoading) {
-          return true;
-        } else if (current is DashboardGetPlacesLoading) {
-          return true;
-        } else {
-          return false;
-        }
-      },
       builder: (context, state) {
         return Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: kHorizentalPadding,
             vertical: kVerticalPadding,
           ),
-          child: Skeletonizer(
-            enabled:
-                state is DashboardGetDashBoardBookingsLoading ||
-                state is DashboardGetDashBoardInfoLoading ||
-                state is DashboardGetPlacesLoading,
-            child: LayoutBuilder(
-              builder: (context, constraints) => CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: Column(
-                      children: [
-                        CustomDashBoardInfoRow(),
-                        Divider(height: 40, color: Colors.grey.shade400),
-                      ],
-                    ),
+          child: LayoutBuilder(
+            builder: (context, constraints) => CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      CustomDashBoardInfoRow(),
+                      Divider(height: 40, color: Colors.grey.shade400),
+                    ],
                   ),
-                  SliverToBoxAdapter(
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height * .65,
-                      child: CustomDashBoardPlacesSectionLayout(),
-                    ),
+                ),
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height * .65,
+                    child: CustomDashBoardPlacesSectionLayout(),
                   ),
-                  SliverToBoxAdapter(
-                    child: Divider(height: 40, color: Colors.grey.shade400),
+                ),
+                SliverToBoxAdapter(
+                  child: Divider(height: 40, color: Colors.grey.shade400),
+                ),
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      CustomDashBoardBookingsSectionHeader(),
+                      SizedBox(height: 20),
+                    ],
                   ),
+                ),
+                if (state is DashboardGetDashBoardBookingsFailure)
                   SliverToBoxAdapter(
-                    child: Column(
-                      children: [
-                        CustomDashBoardBookingsSectionHeader(),
-                        SizedBox(height: 20),
-                      ],
-                    ),
+                    child: CustomErrorWidget(message: state.errmessage),
+                  )
+                else if (state is DashboardGetDashBoardBookingsSuccess &&
+                    state.response.bookings.isEmpty)
+                  SliverToBoxAdapter(child: Center(child: EmptyWidget()))
+                else if (state is DashboardGetDashBoardBookingsSuccess &&
+                    state.response.bookings.isNotEmpty)
+                  CustomDashboardBookingsSliverGrid(
+                    maxWidth: constraints.maxWidth,
+                    bookings: state.response.bookings,
                   ),
-                  if (state is DashboardGetDashBoardBookingsFailure)
-                    SliverToBoxAdapter(
-                      child: CustomErrorWidget(message: state.errmessage),
-                    )
-                  else if (state is DashboardGetDashBoardBookingsSuccess &&
-                      state.response.bookings.isEmpty)
-                    SliverToBoxAdapter(child: Center(child: EmptyWidget()))
-                  else if (state is DashboardGetDashBoardBookingsSuccess &&
-                      state.response.bookings.isNotEmpty)
-                    CustomDashboardBookingsSliverGrid(
-                      maxWidth: constraints.maxWidth,
-                      bookings: state.response.bookings,
-                    ),
-                ],
-              ),
+              ],
             ),
           ),
         );
