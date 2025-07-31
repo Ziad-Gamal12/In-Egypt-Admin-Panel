@@ -4,12 +4,12 @@ import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 import 'package:in_egypt_admin_panel/core/helpers/ShowSnackBar.dart';
 import 'package:in_egypt_admin_panel/core/utils/textStyles.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomFillterPlacesHeader.dart';
+import 'package:in_egypt_admin_panel/core/widgets/CustomFilterButtons.dart';
 import 'package:in_egypt_admin_panel/features/Places/domain/Entities/FilterPlacesEntity.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/manager/filter_places_cubit/filter_places_cubit.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/FilterPlacesBottomSheetWidgets/CustomFillterPlacesCategorySelection.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/FilterPlacesBottomSheetWidgets/CustomFillterPlacesPriceSlider.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/FilterPlacesBottomSheetWidgets/CustomFillterPlacesRatingRadioButtons.dart';
-import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/FilterPlacesBottomSheetWidgets/FilterAndSortPlacesBottomSheetBodyButton.dart';
 
 class FilterAndSortPlacesBottomSheetBody extends StatefulWidget {
   const FilterAndSortPlacesBottomSheetBody({
@@ -42,24 +42,7 @@ class _FilterAndSortPlacesBottomSheetBodyState
   Widget build(BuildContext context) {
     return BlocListener<FilterPlacesCubit, FilterPlacesState>(
       listener: (context, state) {
-        if (state is GetFilteredPlacesSuccess && state.places.isNotEmpty) {
-          widget.onPlacesChanged(state.places);
-          Navigator.pop(context);
-        } else if (state is GetFilteredPlacesSuccess && state.places.isEmpty) {
-          ShowSnackBar(
-            context: context,
-            borderColor: Colors.blue,
-            child: Text(
-              "لا يوجد أماكن مطابقة للبحث",
-              style: AppTextStyles(
-                context,
-              ).regular14.copyWith(color: Colors.black),
-            ),
-            backgroundColor: Colors.blue.shade300,
-          );
-        } else if (state is GetFilteredPlacesFailure) {
-          showErrorSnackBar(context: context, message: state.errmessage);
-        }
+        customFilterPlacesListener(state, context);
       },
       child: IntrinsicHeight(
         child: Padding(
@@ -97,14 +80,58 @@ class _FilterAndSortPlacesBottomSheetBodyState
                 },
               ),
               SizedBox(height: 40),
-              FilterAndSortPlacesBottomSheetBodyButton(
-                filterPlacesEntity: filterPlacesEntity,
-                clearPlaces: widget.onPlacesChanged,
+              CustomFilterButtons(
+                onApply: () {
+                  context.read<FilterPlacesCubit>().getFilteredPlaces(
+                    filterPlacesEntity: filterPlacesEntity,
+                  );
+                },
+                onReset: () {
+                  onResetPlacesFilter();
+                },
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void customFilterPlacesListener(
+    FilterPlacesState state,
+    BuildContext context,
+  ) {
+    if (state is GetFilteredPlacesSuccess && state.places.isNotEmpty) {
+      widget.onPlacesChanged(state.places);
+      Navigator.pop(context);
+    } else if (state is GetFilteredPlacesSuccess && state.places.isEmpty) {
+      widget.onPlacesChanged([]);
+      Navigator.pop(context);
+      ShowSnackBar(
+        context: context,
+        borderColor: Colors.blue,
+        child: Text(
+          "لا يوجد أماكن مطابقة للبحث",
+          style: AppTextStyles(context).regular14.copyWith(color: Colors.black),
+        ),
+        backgroundColor: Colors.blue.shade300,
+      );
+    } else if (state is GetFilteredPlacesFailure) {
+      showErrorSnackBar(context: context, message: state.errmessage);
+    }
+  }
+
+  void onResetPlacesFilter() {
+    setState(() {
+      maxPrice = null;
+      selectedCategory = null;
+      isRatingDescending = null;
+    });
+    filterPlacesEntity = FilterPlacesEntity(
+      maxPrice: maxPrice,
+      category: selectedCategory,
+      isRatingDescending: isRatingDescending,
+    );
+    widget.onPlacesChanged([]);
   }
 }

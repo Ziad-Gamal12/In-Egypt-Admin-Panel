@@ -62,6 +62,13 @@ class _CustomPlacesSearchAndFilterWidgetState
               showBottomSheet(
                 context: context,
                 backgroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                  side: BorderSide(color: Colors.grey.shade300),
+                ),
                 builder: (context) {
                   return FilterAndSortPlacesBottomSheet(
                     onPlacesChanged: widget.onPlacesChanged,

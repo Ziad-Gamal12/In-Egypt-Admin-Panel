@@ -4,8 +4,12 @@ import 'package:in_egypt_admin_panel/features/Bookings/presentation/manager/filt
 import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widgets/FilterBookingsBottomSheetWidgets/SelectDateItem.dart';
 
 class CustomFilterBookingsStartAndEndDatesRow extends StatefulWidget {
-  const CustomFilterBookingsStartAndEndDatesRow({super.key});
-
+  const CustomFilterBookingsStartAndEndDatesRow({
+    super.key,
+    required this.startDate,
+    required this.endDate,
+  });
+  final ValueChanged<DateTime?> startDate, endDate;
   @override
   State<CustomFilterBookingsStartAndEndDatesRow> createState() =>
       _CustomFilterBookingsStartAndEndDatesRowState();
@@ -20,9 +24,11 @@ class _CustomFilterBookingsStartAndEndDatesRowState
       listener: (context, state) {
         if (state is FilterBookingsStartDateSelected) {
           startDate = state.startDate;
+          widget.startDate(startDate);
           setState(() {});
         } else if (state is FilterBookingsEndDateSelected) {
           endDate = state.endDate;
+          widget.endDate(endDate);
           setState(() {});
         }
       },

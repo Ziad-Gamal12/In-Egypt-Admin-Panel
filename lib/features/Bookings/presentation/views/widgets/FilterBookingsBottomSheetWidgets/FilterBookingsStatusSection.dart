@@ -5,8 +5,11 @@ import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widget
 import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widgets/FilterBookingsBottomSheetWidgets/FilterBookingsStatusSectionSelectStatusButton.dart';
 
 class FilterBookingsStatusSection extends StatefulWidget {
-  const FilterBookingsStatusSection({super.key});
-
+  const FilterBookingsStatusSection({
+    super.key,
+    required this.onStatusSelected,
+  });
+  final ValueChanged<BookingStatusEntity> onStatusSelected;
   @override
   State<FilterBookingsStatusSection> createState() =>
       _FilterBookingsStatusSectionState();
@@ -36,6 +39,7 @@ class _FilterBookingsStatusSectionState
             setState(() {
               bookingstatusentity = val;
             });
+            widget.onStatusSelected(val);
           },
         ),
       ),

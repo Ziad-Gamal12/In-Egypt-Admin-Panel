@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:in_egypt_admin_panel/core/Entities/BookingEntity.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomTextFields/CustomSearchTextField.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/presentation/manager/bookings_cubit/bookings_cubit.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widgets/FilterBookingsBottomSheetWidgets/FilterBookingsBottomSheet.dart';
@@ -12,9 +13,11 @@ class CustomBookingsSearchAndFilterWidget extends StatefulWidget {
     super.key,
     required this.searchKeyWord,
     required this.isSearching,
+    required this.onBookingsChanged,
   });
   final ValueChanged<String> searchKeyWord;
   final ValueChanged<bool> isSearching;
+  final ValueChanged<List<BookingEntity>> onBookingsChanged;
 
   @override
   State<CustomBookingsSearchAndFilterWidget> createState() =>
@@ -74,9 +77,18 @@ class _CustomBookingsSearchAndFilterWidgetState
             onPressed: () {
               showBottomSheet(
                 context: context,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                  side: BorderSide(color: Colors.grey.shade300),
+                ),
                 backgroundColor: Colors.white,
                 builder: (context) {
-                  return FilterBookingsBottomSheet();
+                  return FilterBookingsBottomSheet(
+                    onBookingsChanged: widget.onBookingsChanged,
+                  );
                 },
               );
             },

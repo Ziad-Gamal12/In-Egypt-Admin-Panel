@@ -29,9 +29,9 @@ class BookingStatusBadge extends StatelessWidget {
   String getBadgeText(String status) {
     if (status == "pending") {
       return "قيد الانتظار";
-    } else if (status == "approved") {
+    } else if (status == "confirmed") {
       return "نجاح";
-    } else if (status == "rejected") {
+    } else if (status == "rejected" || status == "cancelled") {
       return "رفض";
     } else {
       return "غير معروف";
@@ -41,9 +41,9 @@ class BookingStatusBadge extends StatelessWidget {
   Color getBadgeColor(String status) {
     if (status == "pending") {
       return Colors.black;
-    } else if (status == "approved") {
+    } else if (status == "confirmed") {
       return Colors.green;
-    } else if (status == "rejected") {
+    } else if (status == "rejected" || status == "cancelled") {
       return Colors.red;
     } else {
       return Colors.black;

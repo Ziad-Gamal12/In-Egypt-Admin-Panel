@@ -68,9 +68,9 @@ class _CustomBookingItemState extends State<CustomBookingItem> {
   Color getborderColor(String status) {
     if (status == "pending") {
       return Colors.black;
-    } else if (status == "approved") {
+    } else if (status == "confirmed") {
       return Colors.green;
-    } else if (status == "rejected" || status == "canceled") {
+    } else if (status == "rejected" || status == "cancelled") {
       return Colors.red;
     } else {
       return Colors.black;
@@ -80,9 +80,9 @@ class _CustomBookingItemState extends State<CustomBookingItem> {
   Color getShadeColor(String status) {
     if (status == "pending") {
       return Colors.black26;
-    } else if (status == "approved") {
+    } else if (status == "confirmed") {
       return Colors.green.shade100;
-    } else if (status == "rejected" || status == "canceled") {
+    } else if (status == "rejected" || status == "cancelled") {
       return Colors.red.shade100;
     } else {
       return Colors.black26;

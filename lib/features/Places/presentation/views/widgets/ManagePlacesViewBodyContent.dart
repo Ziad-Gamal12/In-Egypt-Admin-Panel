@@ -44,6 +44,7 @@ class _ManagePlacesViewBodyContentState
     });
   }
 
+  List<Map<String, dynamic>> places = [];
   @override
   void dispose() {
     scrollController.dispose();
@@ -60,6 +61,7 @@ class _ManagePlacesViewBodyContentState
             if (state.responseEntity.places.isNotEmpty) {
               fetchedPlaces.addAll(state.responseEntity.places);
             }
+
             isLoadMore = state.responseEntity.hasMore;
           });
         }

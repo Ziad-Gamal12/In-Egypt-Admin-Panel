@@ -109,6 +109,16 @@ class FirebaseFirestoreservice implements Databaseservice {
                       element["field"],
                       isGreaterThanOrEqualTo: element["value"],
                     );
+                  } else if (element["operator"] == "<=") {
+                    queryData = queryData.where(
+                      element["field"],
+                      isLessThanOrEqualTo: element["value"],
+                    );
+                  } else if (element["operator"] == "<") {
+                    queryData = queryData.where(
+                      element["field"],
+                      isLessThan: element["value"],
+                    );
                   }
                 }
               }

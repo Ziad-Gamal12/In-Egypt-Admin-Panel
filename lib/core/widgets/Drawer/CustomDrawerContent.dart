@@ -35,12 +35,15 @@ class _CustomDrawerContentState extends State<CustomDrawerContent> {
             currentIndexChanged: widget.currentIndexChanged,
           ),
           Spacer(),
-          CustomDrawerItem(
-            drawerItemEntity: CustomDrawerItemEntity(
-              iconPath: Assets.assetsIconsLogoutIcon,
-              title: "تسجيل الخروج",
+          InkWell(
+            onTap: () {},
+            child: CustomDrawerItem(
+              drawerItemEntity: CustomDrawerItemEntity(
+                iconPath: Assets.assetsIconsLogoutIcon,
+                title: "تسجيل الخروج",
+              ),
+              isActive: false,
             ),
-            isActive: false,
           ),
         ],
       ),

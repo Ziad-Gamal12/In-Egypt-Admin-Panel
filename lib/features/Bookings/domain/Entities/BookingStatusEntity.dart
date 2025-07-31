@@ -19,7 +19,7 @@ class BookingStatusEntity {
         iconPath: Assets.assetsIconsPending,
       ),
       BookingStatusEntity(
-        enStatus: "approved",
+        enStatus: "confirmed",
         arStatus: "موافق",
         iconPath: Assets.assetsIconsSuccess,
       ),

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomRadioButton.dart';
 
 class CustomFilterBookingSortingRadioButtons extends StatefulWidget {
-  const CustomFilterBookingSortingRadioButtons({super.key});
-
+  const CustomFilterBookingSortingRadioButtons({
+    super.key,
+    required this.isCreatedAtDescending,
+  });
+  final ValueChanged<bool> isCreatedAtDescending;
   @override
   State<CustomFilterBookingSortingRadioButtons> createState() =>
       _CustomFilterBookingSortingRadioButtonsState();
@@ -16,31 +19,33 @@ class _CustomFilterBookingSortingRadioButtonsState
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomRadioButton(
-            value: "الأحدث",
+            value: "ترتيب الحجوزات(الأحدث الى الأقدم)",
             onChanged: (val) {
               if (val != null && val.isNotEmpty && val != groupValue) {
                 setState(() {
                   groupValue = val;
                 });
+                widget.isCreatedAtDescending(true);
               }
             },
 
             isLabelShown: true,
             groupValue: groupValue,
           ),
-
+          SizedBox(height: 20),
           CustomRadioButton(
-            value: "الأقدم",
+            value: "ترتيب الحجوزات(الأقدم الى الأحدث)",
             onChanged: (val) {
               if (val != null && val.isNotEmpty && val != groupValue) {
                 setState(() {
                   groupValue = val;
                 });
+                widget.isCreatedAtDescending(false);
               }
             },
             isLabelShown: true,

@@ -1,8 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:date_picker_plus/date_picker_plus.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/core/utils/textStyles.dart';
+import 'package:in_egypt_admin_panel/features/Bookings/domain/Entities/FilterBookingsEntity.dart';
+import 'package:in_egypt_admin_panel/features/Bookings/domain/Entities/GetBookingsResponseEntity.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/domain/Repos/BookingsRepo.dart';
 
 part 'filter_bookings_state.dart';
@@ -17,18 +18,16 @@ class FilterBookingsCubit extends Cubit<FilterBookingsState> {
     ).semiBold16.copyWith(color: Colors.black);
     DateTime? range = await showDatePickerDialog(
       context: context,
-      minDate: DateTime.now(),
+      minDate: DateTime.now().subtract(const Duration(days: 365)),
       maxDate: DateTime.now().add(const Duration(days: 365)),
       currentDateTextStyle: customTextStyle,
       enabledCellsTextStyle: customTextStyle,
       leadingDateTextStyle: customTextStyle,
-
       padding: EdgeInsets.all(16),
       currentDateDecoration: BoxDecoration(
         color: Color(0xffFCD240),
         shape: BoxShape.circle,
       ),
-
       splashColor: Colors.transparent,
       initialPickerType: PickerType.days,
       slidersColor: Colors.black,
@@ -54,5 +53,24 @@ class FilterBookingsCubit extends Cubit<FilterBookingsState> {
         emit(FilterBookingsEndDateSelected(endDate: value));
       }
     });
+  }
+
+  void getFilteredBookings({
+    required FilterBookingsEntity filterBookingsEntity,
+  }) async {
+    emit(FilterBookingsGetFilteredBookingsLoading());
+    final result = await bookingsRepo.getFilteredBookings(
+      filterBookingsEntity: filterBookingsEntity,
+    );
+    result.fold(
+      (failure) {
+        emit(
+          FilterBookingsGetFilteredBookingsFailure(errmessage: failure.message),
+        );
+      },
+      (response) {
+        emit(FilterBookingsGetFilteredBookingsSuccess(response: response));
+      },
+    );
   }
 }
