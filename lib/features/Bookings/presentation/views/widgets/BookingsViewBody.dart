@@ -21,16 +21,14 @@ class _BookingsViewBodyState extends State<BookingsViewBody> {
   final List<BookingEntity> _allBookings = [];
   final List<BookingEntity> _searchedBookings = [];
   final List<BookingEntity> _filteredBookings = [];
-
-  final ScrollController _scrollController = ScrollController();
-
+  late ScrollController scrollController;
   bool _isSearching = false;
   bool _isLoadMore = true;
   String _searchKeyword = '';
-
   @override
   void initState() {
     super.initState();
+    scrollController = ScrollController(initialScrollOffset: 0.0);
     _fetchInitialBookings();
     _setupPaginationListener();
   }
@@ -41,13 +39,12 @@ class _BookingsViewBodyState extends State<BookingsViewBody> {
 
   void _setupPaginationListener() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollController.addListener(() {
+      scrollController.addListener(() {
         final shouldPaginate =
-            _scrollController.position.pixels >=
-            _scrollController.position.maxScrollExtent - 200;
-
+            scrollController.position.pixels >=
+            scrollController.position.maxScrollExtent;
+        final cubit = context.read<BookingsCubit>();
         if (shouldPaginate && _isLoadMore) {
-          final cubit = context.read<BookingsCubit>();
           _isSearching
               ? cubit.getSearchedBookings(
                   searchKey: _searchKeyword,
@@ -60,43 +57,45 @@ class _BookingsViewBodyState extends State<BookingsViewBody> {
   }
 
   @override
+  dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocListener<BookingsCubit, BookingsState>(
+    return BlocConsumer<BookingsCubit, BookingsState>(
       listener: _handleBookingStates,
-      child: BlocBuilder<BookingsCubit, BookingsState>(
-        builder: (context, state) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: kHorizentalPadding,
-              vertical: kVerticalPadding,
-            ),
-            child: Skeletonizer(
-              enabled: state is BookingsGetBookingsLoading,
-              child: LayoutBuilder(
-                builder: (context, constraints) => CustomScrollView(
-                  controller: _scrollController,
-                  slivers: [
-                    SliverToBoxAdapter(child: _buildSearchAndHeader()),
-                    _buildContent(constraints, state),
-                  ],
-                ),
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: kHorizentalPadding,
+            vertical: kVerticalPadding,
+          ),
+          child: Skeletonizer(
+            enabled: state is BookingsGetBookingsLoading,
+            child: LayoutBuilder(
+              builder: (context, constraints) => CustomScrollView(
+                controller: scrollController,
+                slivers: [
+                  SliverToBoxAdapter(child: _buildSearchAndHeader()),
+                  _buildContent(constraints, state),
+                ],
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
   void _handleBookingStates(BuildContext context, BookingsState state) {
     if (state is BookingsGetBookingsSuccess) {
       if (!_isLoadMore && state.response.hasMore) return;
-      setState(() {
-        if (state.response.bookings.isNotEmpty) {
-          _allBookings.addAll(state.response.bookings);
-        }
-        _isLoadMore = state.response.hasMore;
-      });
+      final newBookings = state.response.bookings;
+      final hasMore = state.response.hasMore;
+      _isLoadMore = hasMore;
+      _allBookings.addAll(newBookings);
     } else if (state is BookingsGetSearchBookingsSuccess) {
       if (!_isLoadMore && state.response.hasMore) return;
       setState(() {

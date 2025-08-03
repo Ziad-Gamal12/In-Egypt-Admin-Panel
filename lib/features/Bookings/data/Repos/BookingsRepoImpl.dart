@@ -32,6 +32,8 @@ class BookingsRepoImpl implements BookingsRepo {
     try {
       if (isPaginated) {
         getBookingsQuery["startAfter"] = getBookingslastDocumentSnapshot;
+      } else {
+        getBookingsQuery["startAfter"] = null;
       }
       FireStorePaginateResponse response = await databaseservice.getData(
         requirements: FireStoreRequirmentsEntity(
@@ -81,6 +83,8 @@ class BookingsRepoImpl implements BookingsRepo {
     try {
       if (isPaginated) {
         searchBookingsQuery["startAfter"] = searchBookingslastDocumentSnapshot;
+      } else {
+        searchBookingsQuery["startAfter"] = null;
       }
       searchBookingsQuery["searchValue"] = searchKey;
       FireStorePaginateResponse response = await databaseservice.getData(
@@ -101,6 +105,7 @@ class BookingsRepoImpl implements BookingsRepo {
       List<BookingEntity> bookingsEntity = response.listData!
           .map((e) => BookingModel.fromJson(e).toEntity())
           .toList();
+      log(bookingsEntity.length.toString());
       GetBookingsResponseEntity getBookingsResponseEntity =
           GetBookingsResponseEntity(bookings: bookingsEntity, hasMore: hasMore);
       return right(getBookingsResponseEntity);
@@ -122,7 +127,6 @@ class BookingsRepoImpl implements BookingsRepo {
   }) async {
     try {
       filterBookingsQuery = _buildFilterBookingsQuery(filterBookingsEntity);
-
       FireStorePaginateResponse response = await databaseservice.getData(
         requirements: FireStoreRequirmentsEntity(
           collection: Backendkeys.bookingsCollection,
@@ -160,6 +164,7 @@ class BookingsRepoImpl implements BookingsRepo {
       "limit": 10,
       "orderBy": null,
       "startAfter": null,
+      "filters": null,
     };
     List<Map<String, dynamic>> filters = [];
     if (filterBookingsEntity.bookingID != null) {

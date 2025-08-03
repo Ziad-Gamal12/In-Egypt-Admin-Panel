@@ -28,9 +28,8 @@ class _CustomBookingItemState extends State<CustomBookingItem> {
           boxShadow: [
             BoxShadow(
               color: getShadeColor(widget.booking.status),
-              blurRadius: 50,
-              spreadRadius: 10,
-              offset: const Offset(5, 40),
+              blurRadius: 5,
+              spreadRadius: 2,
             ),
           ],
           borderRadius: BorderRadius.circular(10),
@@ -81,9 +80,9 @@ class _CustomBookingItemState extends State<CustomBookingItem> {
     if (status == "pending") {
       return Colors.black26;
     } else if (status == "confirmed") {
-      return Colors.green.shade100;
+      return Colors.greenAccent.shade100;
     } else if (status == "rejected" || status == "cancelled") {
-      return Colors.red.shade100;
+      return Colors.redAccent.shade100;
     } else {
       return Colors.black26;
     }

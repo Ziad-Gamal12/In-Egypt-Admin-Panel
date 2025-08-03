@@ -57,7 +57,8 @@ class _FilterBookingsBottomSheetBodyState
                     obscureText: false,
                     textInputType: TextInputType.text,
                     validator: (val) => null, // add actual validation if needed
-                    onSaved: (val) => _filter.bookingID = val,
+                    onSaved: (val) =>
+                        _filter.bookingID = val == "" ? null : val,
                   ),
                   const SizedBox(height: 20),
                   CustomFilterBookingsStartAndEndDatesRow(

@@ -7,6 +7,7 @@ part 'bookings_state.dart';
 class BookingsCubit extends Cubit<BookingsState> {
   BookingsCubit({required this.bookingsRepo}) : super(BookingsInitial());
   final BookingsRepo bookingsRepo;
+
   Future<void> getBookings({required bool isPaginated}) async {
     emit(BookingsGetBookingsLoading());
     final result = await bookingsRepo.getBookings(isPaginated: isPaginated);

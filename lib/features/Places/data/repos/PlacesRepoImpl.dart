@@ -96,7 +96,11 @@ class PlacesRepoImpl implements PlacesRepo {
     required bool isPaginated,
   }) async {
     try {
-      if (isPaginated) query["startAfter"] = lastDocumentSnapshot;
+      if (isPaginated) {
+        query["startAfter"] = lastDocumentSnapshot;
+      } else {
+        query["startAfter"] = null;
+      }
       FireStorePaginateResponse response = await databaseservice.getData(
         requirements: FireStoreRequirmentsEntity(
           collection: Backendkeys.placesCollection,
