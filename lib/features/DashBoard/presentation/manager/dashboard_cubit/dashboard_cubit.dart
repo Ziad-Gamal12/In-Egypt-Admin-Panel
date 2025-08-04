@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/domain/Entities/GetBookingsResponseEntity.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/domain/Repos/BookingsRepo.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/domain/Entities/DashBoardInfoEntity.dart';
+import 'package:in_egypt_admin_panel/features/DashBoard/domain/Entities/DashBoardInfoEntities/dash_board_infoEntity.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/domain/repos/DashBoardRepo.dart';
 import 'package:in_egypt_admin_panel/features/Places/domain/Repos/PlacesRepo.dart';
 import 'package:meta/meta.dart';

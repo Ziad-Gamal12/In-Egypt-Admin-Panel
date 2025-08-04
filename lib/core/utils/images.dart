@@ -42,9 +42,21 @@ class Assets {
   /// assets/icons/culturePlaceIcon.png
   static const String assetsIconsCulturePlaceIcon = "assets/icons/culturePlaceIcon.png";
 
+  /// Assets for assetsIconsDecreasingArrow
+  /// assets/icons/decreasingArrow.png
+  static const String assetsIconsDecreasingArrow = "assets/icons/decreasingArrow.png";
+
+  /// Assets for assetsIconsDownArrow
+  /// assets/icons/downArrow.png
+  static const String assetsIconsDownArrow = "assets/icons/downArrow.png";
+
   /// Assets for assetsIconsEmptyIcon
   /// assets/icons/EmptyIcon.png
   static const String assetsIconsEmptyIcon = "assets/icons/EmptyIcon.png";
+
+  /// Assets for assetsIconsEqual
+  /// assets/icons/equal.png
+  static const String assetsIconsEqual = "assets/icons/equal.png";
 
   /// Assets for assetsIconsError
   /// assets/icons/error.png
@@ -65,6 +77,10 @@ class Assets {
   /// Assets for assetsIconsHomeIcon
   /// assets/icons/HomeIcon.svg
   static const String assetsIconsHomeIcon = "assets/icons/HomeIcon.svg";
+
+  /// Assets for assetsIconsIncreasingArrow
+  /// assets/icons/IncreasingArrow.png
+  static const String assetsIconsIncreasingArrow = "assets/icons/IncreasingArrow.png";
 
   /// Assets for assetsIconsLocationIcon
   /// assets/icons/locationIcon.svg
@@ -117,6 +133,14 @@ class Assets {
   /// Assets for assetsIconsSuccess
   /// assets/icons/success.png
   static const String assetsIconsSuccess = "assets/icons/success.png";
+
+  /// Assets for assetsIconsTotalIcon
+  /// assets/icons/totalIcon.png
+  static const String assetsIconsTotalIcon = "assets/icons/totalIcon.png";
+
+  /// Assets for assetsIconsUpArrow
+  /// assets/icons/upArrow.png
+  static const String assetsIconsUpArrow = "assets/icons/upArrow.png";
 
   /// Assets for assetsIconsUserIcon
   /// assets/icons/userIcon.png

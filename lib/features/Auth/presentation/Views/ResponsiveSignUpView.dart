@@ -29,7 +29,7 @@ class _ResponsiveSignUpViewState extends State<ResponsiveSignUpView> {
     phoneNumber: '',
     photoUrl: '',
     role: '',
-    createdAt: '',
+    createdAt: DateTime.now().toString(),
   );
 
   @override

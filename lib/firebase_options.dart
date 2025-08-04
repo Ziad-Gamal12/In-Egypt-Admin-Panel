@@ -64,8 +64,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '640108505954',
     projectId: 'notes-a4b6d',
     storageBucket: 'notes-a4b6d.appspot.com',
-    androidClientId: '640108505954-a4l2ihuobq7fptjl3i4sg9ikpe6bfa2o.apps.googleusercontent.com',
-    iosClientId: '640108505954-3kcinm1jotg1e9aes6pr28ci6htk3o9h.apps.googleusercontent.com',
+    androidClientId:
+        '640108505954-a4l2ihuobq7fptjl3i4sg9ikpe6bfa2o.apps.googleusercontent.com',
+    iosClientId:
+        '640108505954-3kcinm1jotg1e9aes6pr28ci6htk3o9h.apps.googleusercontent.com',
     iosBundleId: 'com.example.inEgyptAdminPanel',
   );
 
@@ -75,8 +77,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '640108505954',
     projectId: 'notes-a4b6d',
     storageBucket: 'notes-a4b6d.appspot.com',
-    androidClientId: '640108505954-a4l2ihuobq7fptjl3i4sg9ikpe6bfa2o.apps.googleusercontent.com',
-    iosClientId: '640108505954-3kcinm1jotg1e9aes6pr28ci6htk3o9h.apps.googleusercontent.com',
+    androidClientId:
+        '640108505954-a4l2ihuobq7fptjl3i4sg9ikpe6bfa2o.apps.googleusercontent.com',
+    iosClientId:
+        '640108505954-3kcinm1jotg1e9aes6pr28ci6htk3o9h.apps.googleusercontent.com',
     iosBundleId: 'com.example.inEgyptAdminPanel',
   );
 

@@ -10,11 +10,13 @@ import 'package:in_egypt_admin_panel/core/services/get_it_Service.dart';
 import 'package:in_egypt_admin_panel/core/utils/App_router.dart';
 import 'package:in_egypt_admin_panel/firebase_options.dart';
 import 'package:in_egypt_admin_panel/generated/l10n.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Supabase.initialize(url: supaBaseUrl, anonKey: supaBaseAnonKey);
   await Hive.initFlutter();
   await Hive_Services.init();
 

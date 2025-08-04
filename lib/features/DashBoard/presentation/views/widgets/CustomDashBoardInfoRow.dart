@@ -3,8 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_egypt_admin_panel/core/utils/images.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomErrorWidget.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/manager/dashboard_cubit/dashboard_cubit.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashBoardCard.dart';
-import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashboardInfoItem.dart';
+import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/DashboardItemInfoCard.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CustomDashBoardInfoRow extends StatelessWidget {
@@ -13,94 +12,59 @@ class CustomDashBoardInfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DashboardCubit, DashboardState>(
-      buildWhen: (previous, current) {
-        if (current is DashboardGetDashBoardInfoSuccess ||
-            current is DashboardGetDashBoardInfoFailure ||
-            current is DashboardGetDashBoardInfoLoading) {
-          return true;
-        } else {
-          return false;
-        }
-      },
+      buildWhen: (previous, current) =>
+          current is DashboardGetDashBoardInfoSuccess ||
+          current is DashboardGetDashBoardInfoFailure ||
+          current is DashboardGetDashBoardInfoLoading,
       builder: (context, state) {
         if (state is DashboardGetDashBoardInfoFailure) {
           return CustomErrorWidget(message: state.errmessage);
-        } else if (state is DashboardGetDashBoardInfoSuccess) {
-          return Customdashboardcard(
-            child: IntrinsicHeight(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    CustomDashboardInfoItem(
-                      title: "الاماكن",
-                      iconPath: Assets.assetsIconsPlacesIcon,
-                      number: state.dashBoardInfoEntity.totalPlacesCount
-                          .toString(),
-                    ),
-                    CustomDashboardInfoItem(
-                      title: "المسؤولين",
-                      iconPath: Assets.assetsIconsUsersIcon,
-                      number: state.dashBoardInfoEntity.totalAdminsCount
-                          .toString(),
-                    ),
-
-                    CustomDashboardInfoItem(
-                      title: "المستخدمين",
-                      iconPath: Assets.assetsIconsUsersIcon,
-                      number: state.dashBoardInfoEntity.totalUsersCount
-                          .toString(),
-                    ),
-
-                    CustomDashboardInfoItem(
-                      title: "الحجوزات",
-                      iconPath: Assets.assetsIconsBookingsIcon,
-                      number: state.dashBoardInfoEntity.totalBookingsCount
-                          .toString(),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        } else {
-          return Skeletonizer(
-            enabled: state is DashboardGetDashBoardInfoLoading,
-            child: Customdashboardcard(
-              child: IntrinsicHeight(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      CustomDashboardInfoItem(
-                        title: "الاماكن",
-                        iconPath: Assets.assetsIconsPlacesIcon,
-                        number: "",
-                      ),
-                      CustomDashboardInfoItem(
-                        title: "المسؤولين",
-                        iconPath: Assets.assetsIconsUsersIcon,
-                        number: "",
-                      ),
-
-                      CustomDashboardInfoItem(
-                        title: "المستخدمين",
-                        iconPath: Assets.assetsIconsUsersIcon,
-                        number: "",
-                      ),
-
-                      CustomDashboardInfoItem(
-                        title: "الحجوزات",
-                        iconPath: Assets.assetsIconsBookingsIcon,
-                        number: "",
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
         }
+
+        final isLoading = state is DashboardGetDashBoardInfoLoading;
+        final info = state is DashboardGetDashBoardInfoSuccess
+            ? state.dashBoardInfoEntity.data
+            : null;
+
+        return Skeletonizer(
+          enabled: isLoading,
+          child: IntrinsicHeight(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  DashboardItemInfoCard(
+                    label: "الأماكن",
+                    current: info?.places.current ?? 0,
+                    total: info?.places.total ?? 0,
+                    previous: info?.places.previous ?? 0,
+                    trend: info?.places.trend ?? "equal",
+                    iconPath: Assets.assetsIconsPlacesIcon,
+                  ),
+                  const SizedBox(width: 16),
+                  DashboardItemInfoCard(
+                    label: "المستخدمين",
+                    iconPath: Assets.assetsIconsUsersIcon,
+                    current: info?.users.current ?? 0,
+                    total: info?.users.total ?? 0,
+                    previous: info?.users.previous ?? 0,
+                    trend: info?.users.trend ?? "equal",
+                  ),
+                  const SizedBox(width: 16),
+                  DashboardItemInfoCard(
+                    label: "الحجوزات",
+                    current: info?.bookings.current ?? 0,
+                    total: info?.bookings.total ?? 0,
+                    previous: info?.bookings.previous ?? 0,
+                    trend: info?.bookings.trend ?? "equal",
+                    iconPath: Assets.assetsIconsBookingsIcon,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
       },
     );
   }
