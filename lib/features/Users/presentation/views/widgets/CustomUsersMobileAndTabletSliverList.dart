@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/core/utils/Variables.dart';
-import 'package:in_egypt_admin_panel/features/Users/presentation/views/layouts/UsersMobileAndTabletLayout/Widgets/CustomUserMibleAndTabletItem.dart';
+import 'package:in_egypt_admin_panel/features/Users/presentation/views/widgets/CustomUserMibleAndTabletItem.dart';
 
 class CustomUsersMobileAndTabletSliverList extends StatelessWidget {
   const CustomUsersMobileAndTabletSliverList({super.key});

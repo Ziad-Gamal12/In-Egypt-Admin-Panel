@@ -13,7 +13,8 @@ import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widge
 import 'package:in_egypt_admin_panel/features/Places/domain/Repos/PlacesRepo.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_cubit.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/ManagePlacesViewBody.dart';
-import 'package:in_egypt_admin_panel/features/Users/presentation/views/layouts/UsersDesktopLayout/UsersViewBodyDesktopLayout.dart';
+import 'package:in_egypt_admin_panel/features/Users/presentation/manager/UsersCubit/UsersCubit.dart';
+import 'package:in_egypt_admin_panel/features/Users/presentation/views/widgets/CustomUsersContentBody.dart';
 
 class CustomDesktopDeshBaordLayoutWidget extends StatefulWidget {
   const CustomDesktopDeshBaordLayoutWidget({
@@ -41,7 +42,7 @@ class _MyWidgetState extends State<CustomDesktopDeshBaordLayoutWidget> {
     CustomDashBoardBody(),
     ManagePlacesViewBody(),
     BookingsViewBody(),
-    UsersViewBodyDesktopLayout(),
+    CustomUsersContentBody(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -65,8 +66,8 @@ class _MyWidgetState extends State<CustomDesktopDeshBaordLayoutWidget> {
             placesRepo: getIt.get<PlacesRepo>(),
           ),
         ),
+        BlocProvider(create: (context) => UsersCubit()),
       ],
-
       child: Row(
         children: [
           Expanded(

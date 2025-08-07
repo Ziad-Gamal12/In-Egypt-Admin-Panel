@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/core/Entities/BookingEntity.dart';
-import 'package:in_egypt_admin_panel/core/widgets/BookingWidgets/_BookingDateRow.dart';
-import 'package:in_egypt_admin_panel/core/widgets/BookingWidgets/_BookingGuestCount.dart';
-import 'package:in_egypt_admin_panel/core/widgets/BookingWidgets/_BookingPaymentMethod.dart';
+import 'package:in_egypt_admin_panel/core/widgets/BookingWidgets/CustomBookingInfoSection.dart';
 import 'package:in_egypt_admin_panel/core/widgets/BookingWidgets/_BookingStatusBadge.dart';
-import 'package:in_egypt_admin_panel/core/widgets/BookingWidgets/_BookingTotalPrice.dart';
 import 'package:in_egypt_admin_panel/core/widgets/BookingWidgets/_BookingUserInfo.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomScaleAnimatedWidget.dart';
 
@@ -22,14 +19,16 @@ class _CustomBookingItemState extends State<CustomBookingItem> {
   Widget build(BuildContext context) {
     return CustomScaleAnimatedWidget(
       child: Container(
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: Colors.white,
-          border: Border.all(color: getborderColor(widget.booking.status)),
+          border: Border.all(color: Colors.grey.shade400),
           boxShadow: [
             BoxShadow(
-              color: getShadeColor(widget.booking.status),
+              color: Colors.grey.shade200,
               blurRadius: 2,
               spreadRadius: 2,
+              offset: const Offset(5, 5),
             ),
           ],
           borderRadius: BorderRadius.circular(10),
@@ -39,52 +38,13 @@ class _CustomBookingItemState extends State<CustomBookingItem> {
           children: [
             BookingUserInfo(userEntity: widget.booking.user),
             Divider(height: 1, color: Colors.grey.shade400),
-            BookingDateRow(
-              start: widget.booking.startAt,
-              end: widget.booking.endAt,
-            ),
-            Divider(height: 1, color: Colors.grey.shade400),
-            BookingGuestCount(count: widget.booking.numberOfGuests),
-            Divider(height: 1, color: Colors.grey.shade400),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Wrap(
-                children: [
-                  BookingTotalPrice(price: widget.booking.totalPrice),
-                  SizedBox(width: 5),
-                  BookingPaymentMethod(method: widget.booking.paymentMethod),
-                ],
-              ),
-            ),
-            const Spacer(),
+            SizedBox(height: 10),
+            Expanded(child: CustomBookingInfoSection(booking: widget.booking)),
+            SizedBox(height: 10),
             BookingStatusBadge(status: widget.booking.status),
           ],
         ),
       ),
     );
-  }
-
-  Color getborderColor(String status) {
-    if (status == "pending") {
-      return Colors.black;
-    } else if (status == "confirmed") {
-      return Colors.green;
-    } else if (status == "rejected" || status == "cancelled") {
-      return Colors.red;
-    } else {
-      return Colors.black;
-    }
-  }
-
-  Color getShadeColor(String status) {
-    if (status == "pending") {
-      return Colors.black26;
-    } else if (status == "confirmed") {
-      return Colors.greenAccent.shade100;
-    } else if (status == "rejected" || status == "cancelled") {
-      return Colors.redAccent.shade100;
-    } else {
-      return Colors.black26;
-    }
   }
 }

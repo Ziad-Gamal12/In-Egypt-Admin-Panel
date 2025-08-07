@@ -39,13 +39,19 @@ class _BookingDetailsBottomSheetBodyState
     return BlocListener<BookingsCubit, BookingsState>(
       listener: (context, state) {
         if (state is BookingsUpdateBookingSuccess) {
+          Navigator.pop(context);
           showSuccessSnackBar(context: context, message: "تم تعديل الحجز");
         } else if (state is BookingsUpdateBookingFailure) {
+          Navigator.pop(context);
+
           showErrorSnackBar(context: context, message: state.errmessage);
         } else if (state is BookingsDeleteBookingSuccess) {
-          showSuccessSnackBar(context: context, message: "تم حذف الحجز");
           Navigator.pop(context);
+
+          showSuccessSnackBar(context: context, message: "تم حذف الحجز");
         } else if (state is BookingsDeleteBookingFailure) {
+          Navigator.pop(context);
+
           showErrorSnackBar(context: context, message: state.errmessage);
         }
       },

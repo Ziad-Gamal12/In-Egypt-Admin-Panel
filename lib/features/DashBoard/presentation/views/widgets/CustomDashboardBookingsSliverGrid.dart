@@ -26,8 +26,8 @@ class CustomDashboardBookingsSliverGrid extends StatelessWidget {
       builder: (context, state) {
         return SliverGrid.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
             childAspectRatio: getItemAspectRatio(maxWidth),
             crossAxisCount: getCrossAxisCount(maxWidth),
           ),
@@ -52,7 +52,7 @@ class CustomDashboardBookingsSliverGrid extends StatelessWidget {
   }
 
   double getAspectRatioHightprecentage(double maxWidth) {
-    if (maxWidth >= 600) return 1.5;
+    if (maxWidth >= 600) return 1.50;
     return 1.51;
   }
 
@@ -60,7 +60,7 @@ class CustomDashboardBookingsSliverGrid extends StatelessWidget {
     if (maxWidth >= 1200) return 5;
     if (maxWidth >= 900) return 4;
     if (maxWidth >= 600) return 3;
-    if (maxWidth >= 360) return 2;
+    if (maxWidth >= 400) return 2;
 
     return 1; // For phones
   }

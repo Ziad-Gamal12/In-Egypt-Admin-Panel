@@ -35,6 +35,8 @@ class InEgyptAdminPanel extends StatelessWidget {
       theme: ThemeData(
         fontFamily: carioFontFamily,
         primaryColor: kMainColor,
+        primarySwatch: Colors.amber,
+
         scaffoldBackgroundColor: Colors.white,
       ),
       locale: Locale('ar'),

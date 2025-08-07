@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomScaleAnimatedWidget.dart';
 import 'package:in_egypt_admin_panel/features/Auth/domain/Entities/UserEntity.dart';
 import 'package:in_egypt_admin_panel/features/Users/presentation/manager/UsersCubit/UsersCubit.dart';
-import 'package:in_egypt_admin_panel/features/Users/presentation/views/layouts/UsersMobileAndTabletLayout/Widgets/CustomUserMibleAndTabletUserInfo.dart';
-import 'package:in_egypt_admin_panel/features/Users/presentation/views/layouts/UsersMobileAndTabletLayout/Widgets/CustomUserMibleAndTabletUserProfilePic.dart';
+import 'package:in_egypt_admin_panel/features/Users/presentation/views/widgets/CustomUserMibleAndTabletUserInfo.dart';
+import 'package:in_egypt_admin_panel/features/Users/presentation/views/widgets/CustomUserMibleAndTabletUserProfilePic.dart';
 
 class CustomUserMibleAndTabletItem extends StatelessWidget {
   const CustomUserMibleAndTabletItem({super.key, required this.userEntity});

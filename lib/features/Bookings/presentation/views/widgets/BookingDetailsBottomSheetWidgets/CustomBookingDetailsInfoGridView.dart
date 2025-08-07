@@ -42,7 +42,6 @@ class CustomBookingDetailsInfoGridView extends StatelessWidget {
         ),
         CustomBookingDetailsInfoItem(
           iconPath: Assets.assetsIconsUsersIcon,
-
           title: "عدد الافراد",
           value: "${bookingEntity.numberOfGuests}",
         ),

@@ -11,17 +11,13 @@ class BookingStatusBadge extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(10),
-          bottomRight: Radius.circular(10),
-        ),
+        borderRadius: BorderRadius.circular(14),
         color: getBadgeColor(status),
       ),
-      height: 40,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 4),
       child: Text(
         getBadgeText(status),
-        style: AppTextStyles(context).semiBold14.copyWith(color: Colors.white),
+        style: AppTextStyles(context).regular14.copyWith(color: Colors.white),
       ),
     );
   }
