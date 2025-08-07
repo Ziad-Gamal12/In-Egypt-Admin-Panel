@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/core/Entities/PlaceEntity.dart';
+import 'package:in_egypt_admin_panel/core/widgets/CustomBottomSheetUpperDivider.dart';
 import 'package:in_egypt_admin_panel/core/widgets/PlaceWidgets/CustomPlaceVerticalDesignItem.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/PlaceDetailsWidgets/PlaceDetailsViewBody.dart';
 
@@ -29,10 +30,18 @@ class _CustomPlacesSliverGridState extends State<CustomPlacesSliverGrid> {
       itemBuilder: (context, index) {
         return GestureDetector(
           onTap: () {
-            showBottomSheet(
+            showModalBottomSheet(
+              isScrollControlled: true,
+
               context: context,
               builder: (_) {
-                return PlaceDetailsViewBody(place: widget.places[index]);
+                return Column(
+                  children: [
+                    CustomBottomSheetUpperDivider(),
+                    SizedBox(height: 16),
+                    PlaceDetailsViewBody(place: widget.places[index]),
+                  ],
+                );
               },
             );
           },

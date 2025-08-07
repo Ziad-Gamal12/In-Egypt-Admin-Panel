@@ -32,11 +32,12 @@ abstract class Databaseservice {
     String? subCollectionKey,
     String? subDocId,
   });
-  Future<void> deleteDoc({
+  Future<void> deleteDocs({
     required String collectionKey,
     required String docId,
+    String? where,
+    String? whereValue,
     String? subCollectionKey,
-    String? subDocId,
   });
   Future<int> getCollectionItemsCount({
     required FireStoreRequirmentsEntity requirements,

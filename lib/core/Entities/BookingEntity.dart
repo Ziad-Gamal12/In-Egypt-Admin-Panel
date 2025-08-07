@@ -9,7 +9,7 @@ class BookingEntity {
   final DateTime createdAt;
   final double daysDuration;
   final int numberOfGuests;
-  final String status;
+  String status;
   final String id;
   final double totalPrice;
   final String paymentMethod;

@@ -8,15 +8,10 @@ class DashboardItemInfoTopIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.grey.shade50,
       child: Padding(
         padding: const EdgeInsets.all(10),
-        child: SvgPicture.asset(
-          iconPath,
-          height: 40,
-          width: 40,
-          color: Colors.amber,
-        ),
+        child: SvgPicture.asset(iconPath, height: 40, width: 40),
       ),
     );
   }

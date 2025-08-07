@@ -28,7 +28,7 @@ class _CustomBookingItemState extends State<CustomBookingItem> {
           boxShadow: [
             BoxShadow(
               color: getShadeColor(widget.booking.status),
-              blurRadius: 5,
+              blurRadius: 2,
               spreadRadius: 2,
             ),
           ],
@@ -48,7 +48,7 @@ class _CustomBookingItemState extends State<CustomBookingItem> {
             Divider(height: 1, color: Colors.grey.shade400),
             Padding(
               padding: const EdgeInsets.all(10),
-              child: Row(
+              child: Wrap(
                 children: [
                   BookingTotalPrice(price: widget.booking.totalPrice),
                   SizedBox(width: 5),

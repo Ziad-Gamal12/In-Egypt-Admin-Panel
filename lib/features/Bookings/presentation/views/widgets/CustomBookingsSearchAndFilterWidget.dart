@@ -75,8 +75,10 @@ class _CustomBookingsSearchAndFilterWidgetState
           child: IconButton(
             iconSize: 30,
             onPressed: () {
-              showBottomSheet(
+              showModalBottomSheet(
                 context: context,
+                isScrollControlled: true,
+
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20),

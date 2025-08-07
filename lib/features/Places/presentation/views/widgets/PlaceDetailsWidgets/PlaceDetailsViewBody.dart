@@ -11,6 +11,7 @@ import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/
 class PlaceDetailsViewBody extends StatelessWidget {
   const PlaceDetailsViewBody({super.key, required this.place});
   final PlaceEntity place;
+  static const String routeName = "/PlaceDetailsViewBody";
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

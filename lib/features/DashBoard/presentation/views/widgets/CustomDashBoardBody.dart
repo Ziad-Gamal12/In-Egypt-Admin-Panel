@@ -28,16 +28,20 @@ class _CustomDashBoardBodyState extends State<CustomDashBoardBody> {
 
     await cubit.getPlaces(isPaginated: false);
     if (!mounted) return;
-
-    await cubit.getDashBoardInfo();
+    await cubit.getDashBoardBookings();
     if (!mounted) return;
 
-    await cubit.getDashBoardBookings();
+    await cubit.getDashBoardInfo();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DashboardCubit, DashboardState>(
+      buildWhen: (previous, current) {
+        return current is DashboardGetDashBoardBookingsSuccess ||
+            current is DashboardGetDashBoardBookingsFailure ||
+            current is DashboardGetDashBoardBookingsLoading;
+      },
       builder: (context, state) {
         return Padding(
           padding: const EdgeInsets.symmetric(

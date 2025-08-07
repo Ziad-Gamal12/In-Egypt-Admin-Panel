@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/core/Entities/BookingEntity.dart';
 import 'package:in_egypt_admin_panel/core/widgets/BookingWidgets/CustomBookingItem.dart';
+import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widgets/BookingDetailsBottomSheetWidgets/BookingDetailsBottomSheet.dart';
 
 class CustomBookingsSliverGrid extends StatefulWidget {
   const CustomBookingsSliverGrid({
@@ -28,7 +29,26 @@ class _CustomBookingsSliverGridState extends State<CustomBookingsSliverGrid> {
       ),
       itemCount: widget.bookings.length,
       itemBuilder: (context, index) {
-        return CustomBookingItem(booking: widget.bookings[index]);
+        return InkWell(
+          onTap: () {
+            showModalBottomSheet(
+              isScrollControlled: true,
+              context: context,
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+                side: BorderSide(color: Colors.grey.shade300),
+              ),
+              builder: (_) => BookingDetailsBottomSheet(
+                bookingEntity: widget.bookings[index],
+              ),
+            );
+          },
+          child: CustomBookingItem(booking: widget.bookings[index]),
+        );
       },
     );
   }
@@ -45,7 +65,7 @@ class _CustomBookingsSliverGridState extends State<CustomBookingsSliverGrid> {
 
   double getAspectRatioHightprecentage(double maxWidth) {
     if (maxWidth >= 600) return 1.52;
-    return 1.4;
+    return 1.51;
   }
 
   int getCrossAxisCount(double maxWidth) {

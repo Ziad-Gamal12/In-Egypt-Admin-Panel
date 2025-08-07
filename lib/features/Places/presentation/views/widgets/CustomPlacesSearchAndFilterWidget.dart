@@ -59,7 +59,9 @@ class _CustomPlacesSearchAndFilterWidgetState
           child: IconButton(
             iconSize: 30,
             onPressed: () {
-              showBottomSheet(
+              showModalBottomSheet(
+                isScrollControlled: true,
+
                 context: context,
                 backgroundColor: Colors.white,
                 shape: RoundedRectangleBorder(

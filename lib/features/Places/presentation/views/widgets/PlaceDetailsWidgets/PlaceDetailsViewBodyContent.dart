@@ -47,13 +47,6 @@ class PlaceDetailsViewBodyContent extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Column(
                   children: [
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 120),
-                      width: double.infinity,
-                      height: 2,
-                      color: Colors.grey,
-                    ),
-                    SizedBox(height: 16),
                     SizedBox(
                       width: double.infinity,
                       child: CustomPlaceDetailsItemImage(

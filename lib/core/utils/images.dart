@@ -42,6 +42,14 @@ class Assets {
   /// assets/icons/culturePlaceIcon.png
   static const String assetsIconsCulturePlaceIcon = "assets/icons/culturePlaceIcon.png";
 
+  /// Assets for assetsIconsDateRange
+  /// assets/icons/DateRange.svg
+  static const String assetsIconsDateRange = "assets/icons/DateRange.svg";
+
+  /// Assets for assetsIconsDaysDuration
+  /// assets/icons/DaysDuration.svg
+  static const String assetsIconsDaysDuration = "assets/icons/DaysDuration.svg";
+
   /// Assets for assetsIconsDecreasingArrow
   /// assets/icons/decreasingArrow.png
   static const String assetsIconsDecreasingArrow = "assets/icons/decreasingArrow.png";
@@ -94,9 +102,17 @@ class Assets {
   /// assets/icons/modernPlaceIcon.png
   static const String assetsIconsModernPlaceIcon = "assets/icons/modernPlaceIcon.png";
 
+  /// Assets for assetsIconsMoney
+  /// assets/icons/money.svg
+  static const String assetsIconsMoney = "assets/icons/money.svg";
+
   /// Assets for assetsIconsMusuemePlaceIcon
   /// assets/icons/musuemePlaceIcon.png
   static const String assetsIconsMusuemePlaceIcon = "assets/icons/musuemePlaceIcon.png";
+
+  /// Assets for assetsIconsPaymentMethod
+  /// assets/icons/paymentMethod.svg
+  static const String assetsIconsPaymentMethod = "assets/icons/paymentMethod.svg";
 
   /// Assets for assetsIconsPending
   /// assets/icons/pending.png

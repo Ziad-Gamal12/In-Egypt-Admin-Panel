@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:in_egypt_admin_panel/core/Entities/BookingEntity.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/domain/Entities/GetBookingsResponseEntity.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/domain/Repos/BookingsRepo.dart';
 
@@ -36,6 +37,32 @@ class BookingsCubit extends Cubit<BookingsState> {
       },
       (response) {
         emit(BookingsGetSearchBookingsSuccess(response: response));
+      },
+    );
+  }
+
+  void updateBooking({required BookingEntity booking}) async {
+    emit(BookingsUpdateBookingLoading());
+    final result = await bookingsRepo.updateBookingStatus(booking: booking);
+    result.fold(
+      (failure) {
+        emit(BookingsUpdateBookingFailure(errmessage: failure.message));
+      },
+      (response) {
+        emit(BookingsUpdateBookingSuccess());
+      },
+    );
+  }
+
+  void deleteBooking({required String bookingId}) async {
+    emit(BookingsDeleteBookingLoading());
+    final result = await bookingsRepo.deleteBooking(bookingId: bookingId);
+    result.fold(
+      (failure) {
+        emit(BookingsDeleteBookingFailure(errmessage: failure.message));
+      },
+      (response) {
+        emit(BookingsDeleteBookingSuccess());
       },
     );
   }

@@ -8,10 +8,10 @@ import 'package:in_egypt_admin_panel/core/widgets/CustomFillterPlacesHeader.dart
 import 'package:in_egypt_admin_panel/core/widgets/CustomTextFields/CustomTeaxtField.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/domain/Entities/FilterBookingsEntity.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/presentation/manager/filter_bookings_cubit/filter_bookings_cubit.dart';
+import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widgets/BookingsStatusSection.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widgets/FilterBookingsBottomSheetWidgets/CustomFilterBookingSortingRadioButtons.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widgets/FilterBookingsBottomSheetWidgets/CustomFilterBookingsStartAndEndDatesRow.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widgets/FilterBookingsBottomSheetWidgets/FilterBookingsBottomSheetBodyButton.dart';
-import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widgets/FilterBookingsBottomSheetWidgets/FilterBookingsStatusSection.dart';
 
 class FilterBookingsBottomSheetBody extends StatefulWidget {
   const FilterBookingsBottomSheetBody({
@@ -46,7 +46,7 @@ class _FilterBookingsBottomSheetBodyState
                 children: [
                   const CustomFillterAndSortHeader(),
                   const SizedBox(height: 20),
-                  FilterBookingsStatusSection(
+                  BookingsStatusSection(
                     onStatusSelected: (val) {
                       _filter.status = val.enStatus;
                     },

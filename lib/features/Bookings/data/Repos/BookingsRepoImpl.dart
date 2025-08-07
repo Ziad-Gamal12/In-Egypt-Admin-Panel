@@ -69,7 +69,6 @@ class BookingsRepoImpl implements BookingsRepo {
 
   Map<String, dynamic> searchBookingsQuery = {
     "limit": 10,
-    "orderBy": "createdAt",
     "startAfter": null,
     "searchField": "user.fullName",
     "searchValue": "",
@@ -234,5 +233,47 @@ class BookingsRepoImpl implements BookingsRepo {
     }
 
     return query;
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteBooking({
+    required String bookingId,
+  }) async {
+    try {
+      final deleteBookingResult = await databaseservice.deleteDocs(
+        collectionKey: Backendkeys.bookingsCollection,
+        docId: bookingId,
+      );
+      return right(deleteBookingResult);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      return left(
+        ServerFailure(message: "حدث خطأ ما يرجي المحاولة في وقت لاحق"),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> updateBookingStatus({
+    required BookingEntity booking,
+  }) async {
+    try {
+      final updateBookingResult = await databaseservice.updateData(
+        data: booking.status,
+        field: "status",
+        doc: booking.id,
+        collectionKey: Backendkeys.bookingsCollection,
+      );
+      return right(updateBookingResult);
+    } on CustomException catch (e, s) {
+      log("updateBooking error $e , $s");
+      return left(ServerFailure(message: e.message));
+    } catch (e, s) {
+      log("updateBooking error", error: e, stackTrace: s);
+      return left(
+        ServerFailure(message: "حدث خطأ ما يرجي المحاولة في وقت لاحق"),
+      );
+    }
   }
 }

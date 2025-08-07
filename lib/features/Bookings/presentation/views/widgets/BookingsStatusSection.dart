@@ -4,20 +4,31 @@ import 'package:in_egypt_admin_panel/features/Bookings/domain/Entities/BookingSt
 import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widgets/FilterBookingsBottomSheetWidgets/FilterBookingsStatusListView.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widgets/FilterBookingsBottomSheetWidgets/FilterBookingsStatusSectionSelectStatusButton.dart';
 
-class FilterBookingsStatusSection extends StatefulWidget {
-  const FilterBookingsStatusSection({
+class BookingsStatusSection extends StatefulWidget {
+  BookingsStatusSection({
     super.key,
     required this.onStatusSelected,
+    this.bookingstatusentity,
   });
   final ValueChanged<BookingStatusEntity> onStatusSelected;
+  BookingStatusEntity? bookingstatusentity;
   @override
-  State<FilterBookingsStatusSection> createState() =>
-      _FilterBookingsStatusSectionState();
+  State<BookingsStatusSection> createState() => _BookingsStatusSectionState();
 }
 
-class _FilterBookingsStatusSectionState
-    extends State<FilterBookingsStatusSection> {
+class _BookingsStatusSectionState extends State<BookingsStatusSection> {
   BookingStatusEntity? bookingstatusentity;
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (widget.bookingstatusentity != null) {
+        setState(() {
+          bookingstatusentity = widget.bookingstatusentity;
+        });
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

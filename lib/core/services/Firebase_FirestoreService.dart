@@ -10,307 +10,63 @@ import 'package:in_egypt_admin_panel/core/services/DataBaseService.dart';
 
 class FirebaseFirestoreservice implements Databaseservice {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  @override
-  Future<void> setData({
-    required Map<String, dynamic> data,
-    required FireStoreRequirmentsEntity requirements,
-  }) async {
-    try {
-      if (requirements.collection != null) {
-        var query = firestore.collection(requirements.collection!);
-        if (requirements.docId != null) {
-          if (requirements.subCollection != null) {
-            var query1 = query
-                .doc(requirements.docId)
-                .collection(requirements.subCollection!);
-            if (requirements.subDocId != null) {
-              if (requirements.subCollection2 != null) {
-                var query2 = query1
-                    .doc(requirements.subDocId)
-                    .collection(requirements.subCollection2!);
-                if (requirements.sub2DocId != null) {
-                  if (requirements.subCollection3 != null) {
-                    var query3 = query2
-                        .doc(requirements.sub2DocId)
-                        .collection(requirements.subCollection3!);
-                    if (requirements.sub3DocId != null) {
-                      await query3.doc(requirements.sub3DocId).set(data);
-                    } else {
-                      await query3.add(data);
-                    }
-                  } else {
-                    await query2.doc(requirements.sub2DocId).set(data);
-                  }
-                } else {
-                  await query2.add(data);
-                }
-              } else {
-                await query1.doc(requirements.subDocId).set(data);
-              }
-            } else {
-              await query1.add(data);
-            }
-          } else {
-            await query.doc(requirements.docId).set(data);
-          }
-        } else {
-          await query.add(data);
+
+  CollectionReference<Map<String, dynamic>> _collectionRef(String collection) =>
+      firestore.collection(collection);
+
+  Query<Map<String, dynamic>> _applyQueryOptions(
+    Query<Map<String, dynamic>> base,
+    Map<String, dynamic>? options,
+  ) {
+    Query<Map<String, dynamic>> query = base;
+
+    if (options == null) return query;
+
+    if (options["filters"] is List<Map<String, dynamic>>) {
+      for (final Map<String, dynamic> f in options["filters"]) {
+        final field = f["field"];
+        final value = f["value"];
+        final operator = f["operator"];
+        if (field == null || value == null) continue;
+
+        if (operator == null || operator == "==") {
+          query = query.where(field, isEqualTo: value);
+        } else if (operator == ">=") {
+          query = query.where(field, isGreaterThanOrEqualTo: value);
+        } else if (operator == "<=") {
+          query = query.where(field, isLessThanOrEqualTo: value);
+        } else if (operator == "<") {
+          query = query.where(field, isLessThan: value);
+        } else if (operator == ">") {
+          query = query.where(field, isGreaterThan: value);
+        } else if (operator == "!=") {
+          query = query.where(field, isNotEqualTo: value);
         }
       }
-    } on FirebaseException catch (e) {
-      throw _getFireStoreCustomException(e: e);
     }
-  }
-
-  @override
-  Future<FireStorePaginateResponse> getData({
-    required FireStoreRequirmentsEntity requirements,
-    Map<String, dynamic>? query,
-  }) async {
-    try {
-      CollectionReference<Map<String, dynamic>> currentCollection = firestore
-          .collection(requirements.collection!);
-      if (requirements.docId != null) {
-        DocumentReference<Map<String, dynamic>> docRef = currentCollection.doc(
-          requirements.docId!,
-        );
-        if (requirements.subCollection != null) {
-          currentCollection = docRef.collection(requirements.subCollection!);
-          if (requirements.subDocId != null) {
-            DocumentReference<Map<String, dynamic>> subDocRef =
-                currentCollection.doc(requirements.subDocId!);
-            final subDocSnapshot = await subDocRef.get();
-
-            return FireStorePaginateResponse(docData: subDocSnapshot.data());
-          } else {
-            final subSnapshot = await currentCollection.get();
-            return FireStorePaginateResponse(
-              listData: subSnapshot.docs.map((e) => e.data()).toList(),
-            );
-          }
-        } else {
-          final docSnapshot = await docRef.get();
-          return FireStorePaginateResponse(docData: docSnapshot.data());
-        }
-      } else {
-        Query queryData = currentCollection;
-        if (query != null) {
-          if (query["filters"] is List<Map<String, dynamic>>) {
-            for (Map<String, dynamic> element in query["filters"]) {
-              if (element["field"] != null && element["value"] != null) {
-                if (element["operator"] != null) {
-                  if (element["operator"] == "==") {
-                    queryData = queryData.where(
-                      element["field"],
-                      isEqualTo: element["value"],
-                    );
-                  } else if (element["operator"] == ">=") {
-                    queryData = queryData.where(
-                      element["field"],
-                      isGreaterThanOrEqualTo: element["value"],
-                    );
-                  } else if (element["operator"] == "<=") {
-                    queryData = queryData.where(
-                      element["field"],
-                      isLessThanOrEqualTo: element["value"],
-                    );
-                  } else if (element["operator"] == "<") {
-                    queryData = queryData.where(
-                      element["field"],
-                      isLessThan: element["value"],
-                    );
-                  }
-                }
-              }
-            }
-          }
-          if (query["searchField"] is String && query["searchValue"] != null) {
-            queryData = queryData.where(
-              query["searchField"],
-              isGreaterThanOrEqualTo: query["searchValue"],
-              isLessThan: "${query["searchValue"]}\uf8ff",
-            );
-          }
-          if (query["orderBy"] != null) {
-            queryData = queryData.orderBy(
-              query["orderBy"],
-              descending: query["descending"] ?? true,
-            );
-            if (query["startAt"] != null) {
-              queryData = queryData.startAt(query["startAt"]);
-            }
-            if (query["endAt"] != null) {
-              queryData = queryData.endAt(query["endAt"]);
-            }
-          }
-          if (query["limit"] != null) {
-            queryData = queryData.limit(query["limit"]);
-          }
-          if (query["startAfter"] != null) {
-            queryData = queryData.startAfterDocument(query["startAfter"]);
-          }
-        }
-        final querySnapshot = await queryData.get();
-
-        return FireStorePaginateResponse(
-          hasMore: querySnapshot.docs.length == query?["limit"],
-          lastDocumentSnapshot: querySnapshot.docs.isNotEmpty
-              ? querySnapshot.docs.last
-              : null,
-          listData: querySnapshot.docs.map((e) => e.data()).toList(),
-        );
-      }
-    } on FirebaseException catch (e, s) {
-      log("error in get data${e.toString()} and StackTrace ${s.toString()}");
-      throw _getFireStoreCustomException(e: e);
-    } catch (e, s) {
-      log(
-        "error in catch get data${e.toString()} and StackTrace ${s.toString()}",
+    if (options["searchField"] is String && options["searchValue"] != null) {
+      query = query.where(
+        options["searchField"],
+        isGreaterThanOrEqualTo: options["searchValue"],
+        isLessThan: "${options["searchValue"]}\uf8ff",
       );
-      throw CustomException(message: "❌ حدث خطاء غير متوقع.");
     }
-  }
 
-  @override
-  Future<bool> isDataExists({
-    required String key,
-    required String docId,
-    String? subCollectionKey,
-    String? subDocId,
-  }) async {
-    if (subCollectionKey != null) {
-      var isExists = await firestore
-          .collection(key)
-          .doc(docId)
-          .collection(subCollectionKey)
-          .doc(subDocId)
-          .get();
-      return isExists.exists;
+    if (options["orderBy"] != null) {
+      query = query.orderBy(
+        options["orderBy"],
+        descending: options["descending"] ?? true,
+      );
+      if (options["startAt"] != null) query = query.startAt(options["startAt"]);
+      if (options["endAt"] != null) query = query.endAt(options["endAt"]);
     }
-    var isExists = await firestore.collection(key).doc(docId).get();
-    return isExists.exists;
-  }
 
-  @override
-  Future<bool> isFeildExists({
-    required String key,
-    required String feild,
-    required String feildValue,
-  }) async {
-    QuerySnapshot<Map<String, dynamic>> fileds = await firestore
-        .collection(key)
-        .where(feild, isEqualTo: feildValue)
-        .get();
-    return fileds.docs.isEmpty ? false : true;
-  }
-
-  @override
-  Future<void> updateData({
-    required String collectionKey,
-    required doc,
-    required dynamic data,
-    String? field,
-    String? subCollectionKey,
-    String? subDocId,
-  }) async {
-    try {
-      if (subCollectionKey != null) {
-        if (field == null) {
-          await firestore
-              .collection(collectionKey)
-              .doc(doc)
-              .collection(subCollectionKey)
-              .doc(subDocId)
-              .update(data);
-        } else {
-          await firestore
-              .collection(collectionKey)
-              .doc(doc)
-              .collection(subCollectionKey)
-              .doc(subDocId)
-              .update({field: data});
-        }
-      } else {
-        if (field == null) {
-          await firestore.collection(collectionKey).doc(doc).update(data);
-        } else {
-          await firestore.collection(collectionKey).doc(doc).update({
-            field: data,
-          });
-        }
-      }
-    } on FirebaseException catch (e) {
-      throw _getFireStoreCustomException(e: e);
-    } catch (e) {
-      throw CustomException(message: "حدث خطأ ما");
+    if (options["limit"] != null) query = query.limit(options["limit"]);
+    if (options["startAfter"] != null) {
+      query = query.startAfterDocument(options["startAfter"]);
     }
-  }
 
-  @override
-  Future<void> deleteDoc({
-    required String collectionKey,
-    required String docId,
-    String? subCollectionKey,
-    String? subDocId,
-  }) async {
-    if (subCollectionKey != null) {
-      await firestore
-          .collection(collectionKey)
-          .doc(docId)
-          .collection(subCollectionKey)
-          .doc(subDocId)
-          .delete();
-    }
-    await firestore.collection(collectionKey).doc(docId).delete();
-  }
-
-  @override
-  Future<int> getCollectionItemsCount({
-    required FireStoreRequirmentsEntity requirements,
-    Map<String, dynamic>? query,
-  }) async {
-    try {
-      if (requirements.collection != null) {
-        final queryData = firestore.collection(requirements.collection!);
-        if (query != null) {
-          if (query["searchField"] != null) {
-            if (query["searchValue"] != null) {
-              if (query["operator"] != null) {
-                if (query["operator"] == "==") {
-                  queryData.where(
-                    query["searchField"],
-                    isEqualTo: query["searchValue"],
-                  );
-                } else if (query["operator"] == "!=") {
-                  queryData.where(
-                    query["searchField"],
-                    isNotEqualTo: query["searchValue"],
-                  );
-                } else if (query["operator"] == "<=") {
-                  queryData.where(
-                    query["searchField"],
-                    isLessThanOrEqualTo: query["searchValue"],
-                  );
-                } else if (query["operator"] == ">=") {
-                  queryData.where(
-                    query["searchField"],
-                    isGreaterThanOrEqualTo: query["searchValue"],
-                  );
-                }
-              }
-            }
-          }
-        }
-        final querySnapshot = await queryData.get();
-        return querySnapshot.docs.length;
-      } else {
-        return 0;
-      }
-    } on FirebaseException catch (e) {
-      throw _getFireStoreCustomException(e: e);
-    } catch (e) {
-      throw CustomException(message: "حدث خطأ ما");
-    }
+    return query;
   }
 
   Exception _getFireStoreCustomException({required FirebaseException e}) {
@@ -339,6 +95,278 @@ class FirebaseFirestoreservice implements Databaseservice {
         );
       default:
         throw CustomException(message: "❌ حدث خطأ غير متوقع.");
+    }
+  }
+
+  @override
+  Future<void> setData({
+    required Map<String, dynamic> data,
+    required FireStoreRequirmentsEntity requirements,
+  }) async {
+    try {
+      if (requirements.collection == null) return;
+
+      var query = _collectionRef(requirements.collection!);
+
+      if (requirements.docId == null) {
+        await query.add(data);
+        return;
+      }
+
+      query = query.doc(requirements.docId).collection('');
+
+      if (requirements.subCollection == null) {
+        await _collectionRef(
+          requirements.collection!,
+        ).doc(requirements.docId!).set(data);
+        return;
+      }
+
+      var q1 = _collectionRef(
+        requirements.collection!,
+      ).doc(requirements.docId!).collection(requirements.subCollection!);
+
+      if (requirements.subDocId == null) {
+        await q1.add(data);
+        return;
+      }
+
+      if (requirements.subCollection2 == null) {
+        await q1.doc(requirements.subDocId!).set(data);
+        return;
+      }
+
+      var q2 = q1
+          .doc(requirements.subDocId!)
+          .collection(requirements.subCollection2!);
+
+      // sub2DocId
+      if (requirements.sub2DocId == null) {
+        await q2.add(data);
+        return;
+      }
+
+      // subCollection3
+      if (requirements.subCollection3 == null) {
+        await q2.doc(requirements.sub2DocId!).set(data);
+        return;
+      }
+
+      var q3 = q2
+          .doc(requirements.sub2DocId!)
+          .collection(requirements.subCollection3!);
+
+      // sub3DocId
+      if (requirements.sub3DocId == null) {
+        await q3.add(data);
+      } else {
+        await q3.doc(requirements.sub3DocId!).set(data);
+      }
+    } on FirebaseException catch (e) {
+      throw _getFireStoreCustomException(e: e);
+    }
+  }
+
+  @override
+  Future<FireStorePaginateResponse> getData({
+    required FireStoreRequirmentsEntity requirements,
+    Map<String, dynamic>? query,
+  }) async {
+    try {
+      final collectionName = requirements.collection;
+      if (collectionName == null) {
+        return FireStorePaginateResponse();
+      }
+
+      CollectionReference<Map<String, dynamic>> currentCollection =
+          _collectionRef(collectionName);
+
+      // If a top-level docId is provided
+      if (requirements.docId != null) {
+        final docRef = currentCollection.doc(requirements.docId!);
+
+        // If subCollection provided -> navigate to it
+        if (requirements.subCollection != null) {
+          currentCollection = docRef.collection(requirements.subCollection!);
+
+          // If subDocId provided -> return that doc
+          if (requirements.subDocId != null) {
+            final subDocSnapshot = await currentCollection
+                .doc(requirements.subDocId!)
+                .get();
+            return FireStorePaginateResponse(docData: subDocSnapshot.data());
+          }
+
+          // else return the subCollection docs
+          final subSnapshot = await currentCollection.get();
+          return FireStorePaginateResponse(
+            listData: subSnapshot.docs.map((e) => e.data()).toList(),
+          );
+        } else {
+          // No subCollection -> return the top-level doc
+          final docSnapshot = await docRef.get();
+          return FireStorePaginateResponse(docData: docSnapshot.data());
+        }
+      }
+
+      Query<Map<String, dynamic>> queryData = currentCollection;
+      queryData = _applyQueryOptions(queryData, query);
+
+      final querySnapshot = await queryData.get();
+
+      return FireStorePaginateResponse(
+        hasMore: querySnapshot.docs.length == query?["limit"],
+        lastDocumentSnapshot: querySnapshot.docs.isNotEmpty
+            ? querySnapshot.docs.last
+            : null,
+        listData: querySnapshot.docs.map((e) => e.data()).toList(),
+      );
+    } on FirebaseException catch (e, s) {
+      log("error in get data ${e.toString()} and StackTrace ${s.toString()}");
+      throw _getFireStoreCustomException(e: e);
+    } catch (e, s) {
+      log(
+        "error in catch get data ${e.toString()} and StackTrace ${s.toString()}",
+      );
+      throw CustomException(message: "❌ حدث خطاء غير متوقع.");
+    }
+  }
+
+  @override
+  Future<bool> isDataExists({
+    required String key,
+    required String docId,
+    String? subCollectionKey,
+    String? subDocId,
+  }) async {
+    if (subCollectionKey != null) {
+      final snapshot = await firestore
+          .collection(key)
+          .doc(docId)
+          .collection(subCollectionKey)
+          .doc(subDocId)
+          .get();
+      return snapshot.exists;
+    }
+
+    final snapshot = await firestore.collection(key).doc(docId).get();
+    return snapshot.exists;
+  }
+
+  @override
+  Future<bool> isFeildExists({
+    required String key,
+    required String feild,
+    required String feildValue,
+  }) async {
+    final fileds = await firestore
+        .collection(key)
+        .where(feild, isEqualTo: feildValue)
+        .get();
+    return fileds.docs.isNotEmpty;
+  }
+
+  @override
+  Future<void> updateData({
+    required String collectionKey,
+    required doc,
+    required dynamic data,
+    String? field,
+    String? subCollectionKey,
+    String? subDocId,
+  }) async {
+    try {
+      if (subCollectionKey != null) {
+        final target = firestore
+            .collection(collectionKey)
+            .doc(doc)
+            .collection(subCollectionKey)
+            .doc(subDocId);
+
+        if (field == null) {
+          await target.update(data);
+        } else {
+          await target.update({field: data});
+        }
+      } else {
+        final target = firestore.collection(collectionKey).doc(doc);
+        if (field == null) {
+          await target.update(data);
+        } else {
+          await target.update({field: data});
+        }
+      }
+    } on FirebaseException catch (e) {
+      throw _getFireStoreCustomException(e: e);
+    } catch (e) {
+      throw CustomException(message: "حدث خطأ ما");
+    }
+  }
+
+  @override
+  Future<void> deleteDocs({
+    required String collectionKey,
+    required String docId,
+    String? where,
+    String? whereValue,
+    String? subCollectionKey,
+  }) async {
+    final batch = firestore.batch();
+    bool hasDeletes = false;
+
+    Future<void> collectDeletes(Query<Map<String, dynamic>> query) async {
+      final snapshot = await query.get();
+      for (final doc in snapshot.docs) {
+        batch.delete(doc.reference);
+        hasDeletes = true;
+      }
+    }
+
+    if (subCollectionKey != null) {
+      Query<Map<String, dynamic>> subQuery = firestore
+          .collection(collectionKey)
+          .doc(docId)
+          .collection(subCollectionKey);
+      if (where != null && whereValue != null) {
+        subQuery = subQuery.where(where, isEqualTo: whereValue);
+      }
+      await collectDeletes(subQuery);
+    }
+
+    if (where != null && whereValue != null) {
+      Query<Map<String, dynamic>> mainQuery = firestore
+          .collection(collectionKey)
+          .where(where, isEqualTo: whereValue);
+      await collectDeletes(mainQuery);
+    } else {
+      batch.delete(firestore.collection(collectionKey).doc(docId));
+      hasDeletes = true;
+    }
+
+    if (hasDeletes) await batch.commit();
+  }
+
+  @override
+  Future<int> getCollectionItemsCount({
+    required FireStoreRequirmentsEntity requirements,
+    Map<String, dynamic>? query,
+  }) async {
+    try {
+      if (requirements.collection == null) return 0;
+
+      Query<Map<String, dynamic>> queryData = firestore.collection(
+        requirements.collection!,
+      );
+      if (query != null) {
+        queryData = _applyQueryOptions(queryData, query);
+      }
+
+      final querySnapshot = await queryData.get();
+      return querySnapshot.docs.length;
+    } on FirebaseException catch (e) {
+      throw _getFireStoreCustomException(e: e);
+    } catch (e) {
+      throw CustomException(message: "حدث خطأ ما");
     }
   }
 }

@@ -53,7 +53,7 @@ class CustomDashboardBookingsSliverGrid extends StatelessWidget {
 
   double getAspectRatioHightprecentage(double maxWidth) {
     if (maxWidth >= 600) return 1.5;
-    return 1.4;
+    return 1.51;
   }
 
   int getCrossAxisCount(double maxWidth) {
