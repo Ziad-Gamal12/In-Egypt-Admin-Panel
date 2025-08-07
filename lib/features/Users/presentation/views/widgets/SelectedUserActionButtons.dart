@@ -10,7 +10,6 @@ class SelectedUserActionButtons extends StatelessWidget {
       children: [
         Custombutton(
           borderRadius: BorderRadius.circular(8),
-
           text: "تفعيل",
           color: Colors.blue,
           textColor: Colors.white,

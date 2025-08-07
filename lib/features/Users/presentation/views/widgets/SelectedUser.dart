@@ -11,49 +11,47 @@ class SelectedUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(right: 16),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SelectedUserUserProfileImage(),
-            const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: [
-                  _buildInfoRow(FontAwesomeIcons.idBadge, user.uid, context),
-                  _buildInfoRow(
-                    FontAwesomeIcons.user,
-                    "${user.firstName} ${user.lastName}",
-                    context,
-                  ),
-                  _buildInfoRow(FontAwesomeIcons.envelope, user.email, context),
-                  _buildInfoRow(
-                    FontAwesomeIcons.phone,
-                    user.phoneNumber,
-                    context,
-                  ),
-                  _buildInfoRow(FontAwesomeIcons.userTie, user.role, context),
-                  _buildInfoRow(
-                    FontAwesomeIcons.certificate,
-                    user.isVerified ? "مفعل" : "غير مفعل",
-                    context,
-                  ),
-                  _buildInfoRow(
-                    FontAwesomeIcons.solidCircleCheck,
-                    user.isBlocked ? "محظور" : "نشط",
-                    context,
-                  ),
-                  const SizedBox(height: 20),
-                  SelectedUserActionButtons(),
-                ],
-              ),
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SelectedUserUserProfileImage(),
+          const SizedBox(height: 40),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              children: [
+                _buildInfoRow(FontAwesomeIcons.idBadge, user.uid, context),
+                _buildInfoRow(
+                  FontAwesomeIcons.user,
+                  "${user.firstName} ${user.lastName}",
+                  context,
+                ),
+                _buildInfoRow(FontAwesomeIcons.envelope, user.email, context),
+                _buildInfoRow(
+                  FontAwesomeIcons.phone,
+                  user.phoneNumber,
+                  context,
+                ),
+                _buildInfoRow(FontAwesomeIcons.userTie, user.role, context),
+                _buildInfoRow(
+                  FontAwesomeIcons.certificate,
+                  user.isVerified ? "مفعل" : "غير مفعل",
+                  context,
+                ),
+                _buildInfoRow(
+                  FontAwesomeIcons.solidCircleCheck,
+                  user.isBlocked ? "محظور" : "نشط",
+                  context,
+                ),
+                const SizedBox(height: 20),
+                SelectedUserActionButtons(),
+                const SizedBox(height: 20),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

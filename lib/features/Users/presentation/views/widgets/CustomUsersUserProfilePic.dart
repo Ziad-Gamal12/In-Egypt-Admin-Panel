@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomUserCirclurWIdget.dart';
 
-class CustomUserMibleAndTabletUserProfilePic extends StatelessWidget {
-  const CustomUserMibleAndTabletUserProfilePic({
-    super.key,
-    required this.profilePicUrl,
-  });
+class CustomUsersUserProfilePic extends StatelessWidget {
+  const CustomUsersUserProfilePic({super.key, required this.profilePicUrl});
 
   final String profilePicUrl;
 

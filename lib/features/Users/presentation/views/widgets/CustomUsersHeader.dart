@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/core/utils/textStyles.dart';
 
-class CustomUsersMolbieAndTabletHeader extends StatelessWidget {
-  const CustomUsersMolbieAndTabletHeader({super.key});
+class CustomUsersHeader extends StatelessWidget {
+  const CustomUsersHeader({super.key});
 
   @override
   Widget build(BuildContext context) {

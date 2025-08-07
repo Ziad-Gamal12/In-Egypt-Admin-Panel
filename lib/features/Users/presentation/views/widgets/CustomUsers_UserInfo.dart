@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/core/utils/textStyles.dart';
 import 'package:in_egypt_admin_panel/features/Auth/domain/Entities/UserEntity.dart';
 
-class CustomUserMibleAndTabletUserInfo extends StatelessWidget {
-  const CustomUserMibleAndTabletUserInfo({super.key, required this.userEntity});
+class CustomUsersUserInfo extends StatelessWidget {
+  const CustomUsersUserInfo({super.key, required this.userEntity});
 
   final UserEntity userEntity;
 
