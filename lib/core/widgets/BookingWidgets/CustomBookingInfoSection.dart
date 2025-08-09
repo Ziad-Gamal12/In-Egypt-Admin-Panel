@@ -18,17 +18,17 @@ class CustomBookingInfoSection extends StatelessWidget {
       children: [
         CustomBookingInfoItem(
           label: "الايام",
-          value: "${booking.daysDuration}",
+          value: booking.daysDuration.toString(),
           iconPath: Assets.assetsIconsDaysDuration,
         ),
         CustomBookingInfoItem(
           label: "الافراد",
-          value: "${booking.numberOfGuests}",
+          value: booking.numberOfGuests.toString(),
           iconPath: Assets.assetsIconsUsersIcon,
         ),
         CustomBookingInfoItem(
           label: "المبلغ",
-          value: "${booking.totalPrice}",
+          value: booking.totalPrice.toString(),
           iconPath: Assets.assetsIconsMoney,
         ),
         CustomBookingInfoItem(

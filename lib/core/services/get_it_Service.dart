@@ -16,6 +16,8 @@ import 'package:in_egypt_admin_panel/features/DashBoard/data/repos/DashBoardRepo
 import 'package:in_egypt_admin_panel/features/DashBoard/domain/repos/DashBoardRepo.dart';
 import 'package:in_egypt_admin_panel/features/Places/data/repos/PlacesRepoImpl.dart';
 import 'package:in_egypt_admin_panel/features/Places/domain/Repos/PlacesRepo.dart';
+import 'package:in_egypt_admin_panel/features/Users/data/repos/UsersRepoImpl.dart';
+import 'package:in_egypt_admin_panel/features/Users/domain/repos/UsersRepo.dart';
 
 final getIt = GetIt.instance;
 
@@ -45,5 +47,8 @@ void setup_Getit() {
   );
   getIt.registerSingleton<BookingsRepo>(
     BookingsRepoImpl(databaseservice: getIt<Databaseservice>()),
+  );
+  getIt.registerSingleton<UsersRepo>(
+    UsersRepoImpl(databaseservice: getIt<Databaseservice>()),
   );
 }

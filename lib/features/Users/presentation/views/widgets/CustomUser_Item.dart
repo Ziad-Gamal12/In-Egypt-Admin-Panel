@@ -15,19 +15,27 @@ class CustomUserItem extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0xffF3F3F3),
+              blurRadius: 2,
+              spreadRadius: 2,
+              offset: Offset(5, 5),
+            ),
+          ],
           border: Border.all(color: Color(0xffF3F3F3), width: 1),
         ),
         child: Row(
           children: [
             Expanded(
-              flex: 2,
+              flex: 1,
               child: CustomUsersUserProfilePic(
                 profilePicUrl: userEntity.photoUrl,
               ),
             ),
             SizedBox(width: 10),
             Expanded(
-              flex: 6,
+              flex: 20,
               child: CustomUsersUserInfo(userEntity: userEntity),
             ),
           ],

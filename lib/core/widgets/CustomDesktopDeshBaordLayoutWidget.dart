@@ -13,6 +13,7 @@ import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widge
 import 'package:in_egypt_admin_panel/features/Places/domain/Repos/PlacesRepo.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/manager/places_cubit/places_cubit.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/widgets/ManagePlacesViewBody.dart';
+import 'package:in_egypt_admin_panel/features/Users/domain/repos/UsersRepo.dart';
 import 'package:in_egypt_admin_panel/features/Users/presentation/manager/UsersCubit/UsersCubit.dart';
 import 'package:in_egypt_admin_panel/features/Users/presentation/views/widgets/CustomUsersContentBody.dart';
 
@@ -66,7 +67,9 @@ class _MyWidgetState extends State<CustomDesktopDeshBaordLayoutWidget> {
             placesRepo: getIt.get<PlacesRepo>(),
           ),
         ),
-        BlocProvider(create: (context) => UsersCubit()),
+        BlocProvider(
+          create: (context) => UsersCubit(usersRepo: getIt.get<UsersRepo>()),
+        ),
       ],
       child: Row(
         children: [

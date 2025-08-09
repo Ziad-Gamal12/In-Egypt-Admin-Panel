@@ -16,7 +16,7 @@ class SelectedUser extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SelectedUserUserProfileImage(),
+          SelectedUserUserProfileImage(imageUrl: user.photoUrl),
           const SizedBox(height: 40),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -76,7 +76,6 @@ class SelectedUser extends StatelessWidget {
             ],
           ),
           SizedBox(height: 10),
-          Divider(height: 1, color: Colors.grey.shade400),
         ],
       ),
     );
