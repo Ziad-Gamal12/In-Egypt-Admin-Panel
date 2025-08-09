@@ -17,6 +17,7 @@ class UsersRepoImpl implements UsersRepo {
   Map<String, dynamic> getUsersQuery = {
     "orderBy": "fullName",
     "limit": 10,
+    "descending": false,
     "startAfter": null,
   };
   DocumentSnapshot<Object?>? getUserslastDocumentSnapshot;
@@ -45,6 +46,57 @@ class UsersRepoImpl implements UsersRepo {
         return right(GetUsersReponseEntity(usersList: [], hasMore: false));
       }
       bool hasMore = response.hasMore ?? users.length == getUsersQuery["limit"];
+      List<UserEntity> usersEntity = response.listData!
+          .map((e) => UserModel.fromJson(e).toEntity())
+          .toList();
+      return right(
+        GetUsersReponseEntity(usersList: usersEntity, hasMore: hasMore),
+      );
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      return left(ServerFailure(message: "حدث خطأ ما"));
+    }
+  }
+
+  Map<String, dynamic> getSearchedUsersQuery = {
+    "orderBy": "fullName",
+    "limit": 10,
+    "searchField": "fullName",
+    "searchValue": "",
+    "startAfter": null,
+  };
+  DocumentSnapshot<Object?>? getSearchedUserslastDocumentSnapshot;
+  @override
+  Future<Either<Failure, GetUsersReponseEntity>> getSearchedUsers({
+    required String searchKey,
+    required bool isPaginated,
+  }) async {
+    try {
+      if (isPaginated) {
+        getSearchedUsersQuery["startAfter"] =
+            getSearchedUserslastDocumentSnapshot;
+      } else {
+        getSearchedUsersQuery["startAfter"] = null;
+      }
+      getSearchedUsersQuery["searchValue"] = searchKey;
+
+      FireStorePaginateResponse response = await databaseservice.getData(
+        requirements: FireStoreRequirmentsEntity(
+          collection: Backendkeys.usersCollection,
+        ),
+        query: getSearchedUsersQuery,
+      );
+
+      final users = response.listData ?? [];
+      if (users.isNotEmpty && response.lastDocumentSnapshot != null) {
+        getSearchedUserslastDocumentSnapshot = response.lastDocumentSnapshot;
+      }
+      if (users.isEmpty) {
+        return right(GetUsersReponseEntity(usersList: [], hasMore: false));
+      }
+      bool hasMore =
+          response.hasMore ?? users.length == getSearchedUsersQuery["limit"];
       List<UserEntity> usersEntity = response.listData!
           .map((e) => UserModel.fromJson(e).toEntity())
           .toList();

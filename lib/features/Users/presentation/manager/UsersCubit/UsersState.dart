@@ -16,3 +16,16 @@ final class UsersGetUsersFailure extends UsersState {
   final String errMessage;
   UsersGetUsersFailure(this.errMessage);
 }
+
+// getSearchedUsers
+final class UsersGetSearchedUsersLoading extends UsersState {}
+
+final class UsersGetSearchedUsersSuccess extends UsersState {
+  final GetUsersReponseEntity response;
+  UsersGetSearchedUsersSuccess(this.response);
+}
+
+final class UsersGetSearchedUsersFailure extends UsersState {
+  final String errMessage;
+  UsersGetSearchedUsersFailure(this.errMessage);
+}
