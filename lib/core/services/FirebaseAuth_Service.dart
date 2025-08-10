@@ -178,4 +178,8 @@ class firebaseAuthService {
   Future<void> signout() async {
     auth.signOut();
   }
+
+  Future<bool> isLoggedIn() async {
+    return auth.currentUser != null;
+  }
 }

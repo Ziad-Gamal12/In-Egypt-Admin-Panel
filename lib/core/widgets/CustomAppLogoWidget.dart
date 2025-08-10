@@ -8,7 +8,7 @@ class CustomAppLogoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 1,
+      aspectRatio: 3 / 2,
       child: SvgPicture.asset(Assets.assetsImagesAppLogo),
     );
   }

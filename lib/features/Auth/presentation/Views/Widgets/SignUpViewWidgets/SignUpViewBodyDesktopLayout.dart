@@ -9,8 +9,8 @@ class SignUpViewBodyDesktopLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(child: SignUpViewBody()),
-        Expanded(flex: 2, child: CustomSignUpWelcomePanel()),
+        Expanded(flex: 2, child: SignUpViewBody()),
+        Expanded(flex: 3, child: CustomSignUpWelcomePanel()),
       ],
     );
   }

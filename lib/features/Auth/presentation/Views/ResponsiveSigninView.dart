@@ -9,7 +9,7 @@ import 'package:in_egypt_admin_panel/features/Auth/presentation/manager/sign_in_
 
 class ResponsiveSigninView extends StatelessWidget {
   const ResponsiveSigninView({super.key});
-  static String routeName = "/";
+  static String routeName = "/ResponsiveSigninView";
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

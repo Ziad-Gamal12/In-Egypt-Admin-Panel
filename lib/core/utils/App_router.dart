@@ -5,6 +5,7 @@ import 'package:in_egypt_admin_panel/features/Auth/presentation/Views/Responsive
 import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/ResponsiveBookingsView.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/ResponsiveDashBaoardView.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/ResponsivePlacesView.dart';
+import 'package:in_egypt_admin_panel/features/Splash/presentation/views/SplashView.dart';
 import 'package:in_egypt_admin_panel/features/Users/presentation/views/ResponsiveUsersView.dart';
 
 class App_router {
@@ -34,6 +35,10 @@ class App_router {
       GoRoute(
         path: ResponsiveUsersView.routeName,
         builder: (context, state) => ResponsiveUsersView(),
+      ),
+      GoRoute(
+        path: SplashView.routeName,
+        builder: (context, state) => SplashView(),
       ),
     ],
   );
