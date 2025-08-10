@@ -4,6 +4,7 @@ import 'package:in_egypt_admin_panel/core/utils/images.dart';
 import 'package:in_egypt_admin_panel/core/widgets/Drawer/CustomDrawerContentActionsItems.dart';
 import 'package:in_egypt_admin_panel/core/widgets/Drawer/CustomDrawerItem.dart';
 import 'package:in_egypt_admin_panel/core/widgets/Drawer/CustomDrawerUserinfo.dart';
+import 'package:in_egypt_admin_panel/core/widgets/LogoutDialog.dart';
 
 class CustomDrawerContent extends StatefulWidget {
   const CustomDrawerContent({
@@ -36,7 +37,13 @@ class _CustomDrawerContentState extends State<CustomDrawerContent> {
           ),
           Spacer(),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              showDialog(
+                context: context,
+
+                builder: (context) => const LogoutDialog(),
+              );
+            },
             child: CustomDrawerItem(
               drawerItemEntity: CustomDrawerItemEntity(
                 iconPath: Assets.assetsIconsLogoutIcon,

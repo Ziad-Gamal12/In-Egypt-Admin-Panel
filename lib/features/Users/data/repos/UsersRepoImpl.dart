@@ -95,4 +95,72 @@ class UsersRepoImpl implements UsersRepo {
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> blockUser({required String userId}) async {
+    try {
+      final result = await databaseservice.updateData(
+        collectionKey: Backendkeys.usersCollection,
+        doc: userId,
+        field: "isBlocked",
+        data: true,
+      );
+      return right(result);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      return left(ServerFailure(message: "حدث خطأ ما"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> unBlockUser({required String userId}) async {
+    try {
+      final response = await databaseservice.updateData(
+        collectionKey: Backendkeys.usersCollection,
+        doc: userId,
+        field: "isBlocked",
+        data: false,
+      );
+      return right(response);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      return left(ServerFailure(message: "حدث خطأ ما"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> unVerifyUser({required String userId}) async {
+    try {
+      final response = await databaseservice.updateData(
+        collectionKey: Backendkeys.usersCollection,
+        doc: userId,
+        field: "isVerified",
+        data: false,
+      );
+      return right(response);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      return left(ServerFailure(message: "حدث خطأ ما"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> verifyUser({required String userId}) async {
+    try {
+      final response = await databaseservice.updateData(
+        collectionKey: Backendkeys.usersCollection,
+        doc: userId,
+        field: "isVerified",
+        data: true,
+      );
+      return right(response);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      return left(ServerFailure(message: "حدث خطأ ما"));
+    }
+  }
 }

@@ -29,3 +29,27 @@ final class UsersGetSearchedUsersFailure extends UsersState {
   final String errMessage;
   UsersGetSearchedUsersFailure(this.errMessage);
 }
+
+final class UsersChangeUserVerificationStateLoading extends UsersState {}
+
+final class UsersChangeUserVerificationStateSuccess extends UsersState {
+  final String message;
+  UsersChangeUserVerificationStateSuccess(this.message);
+}
+
+final class UsersChangeUserVerificationStateFailure extends UsersState {
+  final String errMessage;
+  UsersChangeUserVerificationStateFailure(this.errMessage);
+}
+
+final class UsersChangeUserBlockingStateFailure extends UsersState {
+  final String errMessage;
+  UsersChangeUserBlockingStateFailure(this.errMessage);
+}
+
+final class UsersChangeUserBlockingStateSuccess extends UsersState {
+  final String message;
+  UsersChangeUserBlockingStateSuccess(this.message);
+}
+
+final class UsersChangeUserBlockingStateLoading extends UsersState {}

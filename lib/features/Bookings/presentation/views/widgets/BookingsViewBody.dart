@@ -4,6 +4,7 @@ import 'package:in_egypt_admin_panel/constant.dart';
 import 'package:in_egypt_admin_panel/core/Entities/BookingEntity.dart';
 import 'package:in_egypt_admin_panel/core/helpers/ShowSnackBar.dart';
 import 'package:in_egypt_admin_panel/core/widgets/EmptyWidget.dart';
+import 'package:in_egypt_admin_panel/core/widgets/customRefreshWidget.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/presentation/manager/bookings_cubit/bookings_cubit.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widgets/CustomBookingsHeader.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widgets/CustomBookingsSearchAndFilterWidget.dart';
@@ -56,28 +57,32 @@ class _BookingsViewBodyState extends State<BookingsViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<BookingsCubit, BookingsState>(
-      listener: _handleBookingStates,
-      builder: (context, state) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: kHorizentalPadding,
-            vertical: kVerticalPadding,
-          ),
-          child: Skeletonizer(
-            enabled: state is BookingsGetBookingsLoading,
-            child: LayoutBuilder(
-              builder: (context, constraints) => CustomScrollView(
-                controller: scrollController,
-                slivers: [
-                  SliverToBoxAdapter(child: _buildSearchAndHeader()),
-                  _buildContent(constraints, state),
-                ],
+    return Customrefreshwidget(
+      onRefresh: () =>
+          context.read<BookingsCubit>().getBookings(isPaginated: false),
+      child: BlocConsumer<BookingsCubit, BookingsState>(
+        listener: _handleBookingStates,
+        builder: (context, state) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: kHorizentalPadding,
+              vertical: kVerticalPadding,
+            ),
+            child: Skeletonizer(
+              enabled: state is BookingsGetBookingsLoading,
+              child: LayoutBuilder(
+                builder: (context, constraints) => CustomScrollView(
+                  controller: scrollController,
+                  slivers: [
+                    SliverToBoxAdapter(child: _buildSearchAndHeader()),
+                    _buildContent(constraints, state),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 

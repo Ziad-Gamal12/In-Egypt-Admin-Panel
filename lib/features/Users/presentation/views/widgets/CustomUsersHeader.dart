@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomTextFields/CustomSearchTextField.dart';
 import 'package:in_egypt_admin_panel/features/Users/presentation/manager/UsersCubit/UsersCubit.dart';
 import 'package:in_egypt_admin_panel/features/Users/presentation/views/widgets/CustomUsersHeaderInfo.dart';
@@ -47,11 +46,6 @@ class _CustomUsersHeaderState extends State<CustomUsersHeader> {
         CustomUsersHeaderInfo(),
         Spacer(),
         Expanded(child: CustomSearchTextField(controller: searchController)),
-        SizedBox(width: 10),
-        IconButton(
-          onPressed: () {},
-          icon: Icon(FontAwesomeIcons.ban, color: Colors.red),
-        ),
       ],
     );
   }

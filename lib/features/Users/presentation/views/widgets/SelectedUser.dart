@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:in_egypt_admin_panel/core/utils/textStyles.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:in_egypt_admin_panel/core/services/get_it_Service.dart';
 import 'package:in_egypt_admin_panel/features/Auth/domain/Entities/UserEntity.dart';
-import 'package:in_egypt_admin_panel/features/Users/presentation/views/widgets/SelectedUserActionButtons.dart';
-import 'package:in_egypt_admin_panel/features/Users/presentation/views/widgets/SelectedUser_UserProfileImage.dart';
+import 'package:in_egypt_admin_panel/features/Users/domain/repos/UsersRepo.dart';
+import 'package:in_egypt_admin_panel/features/Users/presentation/manager/UsersCubit/UsersCubit.dart';
+import 'package:in_egypt_admin_panel/features/Users/presentation/views/widgets/SelectedUserBody.dart';
 
 class SelectedUser extends StatelessWidget {
   const SelectedUser({super.key, required this.user});
@@ -11,73 +12,9 @@ class SelectedUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SelectedUserUserProfileImage(imageUrl: user.photoUrl),
-          const SizedBox(height: 40),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              children: [
-                _buildInfoRow(FontAwesomeIcons.idBadge, user.uid, context),
-                _buildInfoRow(
-                  FontAwesomeIcons.user,
-                  "${user.firstName} ${user.lastName}",
-                  context,
-                ),
-                _buildInfoRow(FontAwesomeIcons.envelope, user.email, context),
-                _buildInfoRow(
-                  FontAwesomeIcons.phone,
-                  user.phoneNumber,
-                  context,
-                ),
-                _buildInfoRow(FontAwesomeIcons.userTie, user.role, context),
-                _buildInfoRow(
-                  FontAwesomeIcons.certificate,
-                  user.isVerified ? "مفعل" : "غير مفعل",
-                  context,
-                ),
-                _buildInfoRow(
-                  FontAwesomeIcons.solidCircleCheck,
-                  user.isBlocked ? "محظور" : "نشط",
-                  context,
-                ),
-                const SizedBox(height: 20),
-                SelectedUserActionButtons(),
-                const SizedBox(height: 20),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildInfoRow(IconData icon, String value, BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Icon(icon, size: 20, color: Colors.black),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Text(
-                  value,
-                  style: AppTextStyles(
-                    context,
-                  ).regular11.copyWith(color: Colors.black),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 10),
-        ],
-      ),
+    return BlocProvider(
+      create: (context) => UsersCubit(usersRepo: getIt.get<UsersRepo>()),
+      child: SelectedUserBody(user: user),
     );
   }
 }

@@ -10,7 +10,7 @@ class SignUpViewBodyDesktopLayout extends StatelessWidget {
     return Row(
       children: [
         Expanded(child: SignUpViewBody()),
-        Expanded(child: CustomSignUpWelcomePanel()),
+        Expanded(flex: 2, child: CustomSignUpWelcomePanel()),
       ],
     );
   }

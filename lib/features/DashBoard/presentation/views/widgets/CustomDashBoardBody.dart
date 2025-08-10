@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_egypt_admin_panel/constant.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomErrorWidget.dart';
 import 'package:in_egypt_admin_panel/core/widgets/EmptyWidget.dart';
+import 'package:in_egypt_admin_panel/core/widgets/customRefreshWidget.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/manager/dashboard_cubit/dashboard_cubit.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashBoardBookingsSectionHeader.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashBoardInfoRow.dart';
@@ -25,7 +26,6 @@ class _CustomDashBoardBodyState extends State<CustomDashBoardBody> {
 
   void initActions() async {
     final cubit = context.read<DashboardCubit>();
-
     await cubit.getPlaces(isPaginated: false);
     if (!mounted) return;
     await cubit.getDashBoardBookings();
@@ -43,53 +43,56 @@ class _CustomDashBoardBodyState extends State<CustomDashBoardBody> {
             current is DashboardGetDashBoardBookingsLoading;
       },
       builder: (context, state) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: kHorizentalPadding,
-            vertical: kVerticalPadding,
-          ),
-          child: LayoutBuilder(
-            builder: (context, constraints) => CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(
-                  child: Column(
-                    children: [
-                      CustomDashBoardInfoRow(),
-                      Divider(height: 40, color: Colors.grey.shade400),
-                    ],
-                  ),
-                ),
-                SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height * .65,
-                    child: CustomDashBoardPlacesSectionLayout(),
-                  ),
-                ),
-                SliverToBoxAdapter(
-                  child: Divider(height: 40, color: Colors.grey.shade400),
-                ),
-                SliverToBoxAdapter(
-                  child: Column(
-                    children: [
-                      CustomDashBoardBookingsSectionHeader(),
-                      SizedBox(height: 20),
-                    ],
-                  ),
-                ),
-                if (state is DashboardGetDashBoardBookingsFailure)
+        return Customrefreshwidget(
+          onRefresh: () async => initActions(),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: kHorizentalPadding,
+              vertical: kVerticalPadding,
+            ),
+            child: LayoutBuilder(
+              builder: (context, constraints) => CustomScrollView(
+                slivers: [
                   SliverToBoxAdapter(
-                    child: CustomErrorWidget(message: state.errmessage),
-                  )
-                else if (state is DashboardGetDashBoardBookingsSuccess &&
-                    state.response.bookings.isEmpty)
-                  SliverToBoxAdapter(child: Center(child: EmptyWidget()))
-                else if (state is DashboardGetDashBoardBookingsSuccess &&
-                    state.response.bookings.isNotEmpty)
-                  CustomDashboardBookingsSliverGrid(
-                    maxWidth: constraints.maxWidth,
-                    bookings: state.response.bookings,
+                    child: Column(
+                      children: [
+                        CustomDashBoardInfoRow(),
+                        Divider(height: 40, color: Colors.grey.shade400),
+                      ],
+                    ),
                   ),
-              ],
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height * .65,
+                      child: CustomDashBoardPlacesSectionLayout(),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Divider(height: 40, color: Colors.grey.shade400),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Column(
+                      children: [
+                        CustomDashBoardBookingsSectionHeader(),
+                        SizedBox(height: 20),
+                      ],
+                    ),
+                  ),
+                  if (state is DashboardGetDashBoardBookingsFailure)
+                    SliverToBoxAdapter(
+                      child: CustomErrorWidget(message: state.errmessage),
+                    )
+                  else if (state is DashboardGetDashBoardBookingsSuccess &&
+                      state.response.bookings.isEmpty)
+                    SliverToBoxAdapter(child: Center(child: EmptyWidget()))
+                  else if (state is DashboardGetDashBoardBookingsSuccess &&
+                      state.response.bookings.isNotEmpty)
+                    CustomDashboardBookingsSliverGrid(
+                      maxWidth: constraints.maxWidth,
+                      bookings: state.response.bookings,
+                    ),
+                ],
+              ),
             ),
           ),
         );

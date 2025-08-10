@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_egypt_admin_panel/constant.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomErrorWidget.dart';
 import 'package:in_egypt_admin_panel/core/widgets/EmptyWidget.dart';
+import 'package:in_egypt_admin_panel/core/widgets/customRefreshWidget.dart';
 import 'package:in_egypt_admin_panel/features/Auth/domain/Entities/UserEntity.dart';
 import 'package:in_egypt_admin_panel/features/Users/presentation/manager/UsersCubit/UsersCubit.dart';
 import 'package:in_egypt_admin_panel/features/Users/presentation/views/widgets/CustomUsersHeader.dart';
@@ -43,60 +44,63 @@ class _CustomUsersContentBodyState extends State<CustomUsersContentBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<UsersCubit, UsersState>(
-      listener: (context, state) {
-        if (state is UsersGetUsersSuccess) {
-          if (!isLoadMore && state.response.hasMore) return;
-          setState(() {
-            fetchedUsers.addAll(state.response.usersList);
-            isLoadMore = state.response.hasMore;
-          });
-        }
-      },
-      builder: (context, state) {
-        if (state is UsersGetUsersFailure) {
-          return Center(child: CustomErrorWidget(message: state.errMessage));
-        }
-        if (state is UsersGetSearchedUsersFailure) {
-          return Center(child: CustomErrorWidget(message: state.errMessage));
-        }
-        bool isLoading = state is UsersGetUsersLoading;
-        return Skeletonizer(
-          enabled: isLoading,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: kHorizentalPadding,
-              vertical: kVerticalPadding,
+    return Customrefreshwidget(
+      onRefresh: () => context.read<UsersCubit>().getUsers(isPaginated: false),
+      child: BlocConsumer<UsersCubit, UsersState>(
+        listener: (context, state) {
+          if (state is UsersGetUsersSuccess) {
+            if (!isLoadMore && state.response.hasMore) return;
+            setState(() {
+              fetchedUsers.addAll(state.response.usersList);
+              isLoadMore = state.response.hasMore;
+            });
+          }
+        },
+        builder: (context, state) {
+          if (state is UsersGetUsersFailure) {
+            return Center(child: CustomErrorWidget(message: state.errMessage));
+          }
+          if (state is UsersGetSearchedUsersFailure) {
+            return Center(child: CustomErrorWidget(message: state.errMessage));
+          }
+          bool isLoading = state is UsersGetUsersLoading;
+          return Skeletonizer(
+            enabled: isLoading,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: kHorizentalPadding,
+                vertical: kVerticalPadding,
+              ),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return CustomScrollView(
+                    slivers: [
+                      SliverToBoxAdapter(child: CustomUsersHeader()),
+                      const SliverToBoxAdapter(child: SizedBox(height: 20)),
+                      if ((state is UsersGetUsersSuccess &&
+                              fetchedUsers.isEmpty) ||
+                          (state is UsersGetSearchedUsersSuccess &&
+                              state.response.usersList.isEmpty))
+                        SliverToBoxAdapter(child: Center(child: EmptyWidget()))
+                      else if (state is UsersGetSearchedUsersSuccess &&
+                          state.response.usersList.isNotEmpty)
+                        CustomUsersSliverList(
+                          width: constraints.maxWidth,
+                          users: state.response.usersList,
+                        )
+                      else
+                        CustomUsersSliverList(
+                          width: constraints.maxWidth,
+                          users: fetchedUsers,
+                        ),
+                    ],
+                  );
+                },
+              ),
             ),
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                return CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(child: CustomUsersHeader()),
-                    const SliverToBoxAdapter(child: SizedBox(height: 20)),
-                    if ((state is UsersGetUsersSuccess &&
-                            fetchedUsers.isEmpty) ||
-                        (state is UsersGetSearchedUsersSuccess &&
-                            state.response.usersList.isEmpty))
-                      SliverToBoxAdapter(child: Center(child: EmptyWidget()))
-                    else if (state is UsersGetSearchedUsersSuccess &&
-                        state.response.usersList.isNotEmpty)
-                      CustomUsersSliverList(
-                        width: constraints.maxWidth,
-                        users: state.response.usersList,
-                      )
-                    else
-                      CustomUsersSliverList(
-                        width: constraints.maxWidth,
-                        users: fetchedUsers,
-                      ),
-                  ],
-                );
-              },
-            ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

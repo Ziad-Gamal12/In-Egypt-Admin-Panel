@@ -9,4 +9,8 @@ abstract class UsersRepo {
   Future<Either<Failure, GetUsersReponseEntity>> getSearchedUsers({
     required String searchKey,
   });
+  Future<Either<Failure, void>> blockUser({required String userId});
+  Future<Either<Failure, void>> unBlockUser({required String userId});
+  Future<Either<Failure, void>> unVerifyUser({required String userId});
+  Future<Either<Failure, void>> verifyUser({required String userId});
 }

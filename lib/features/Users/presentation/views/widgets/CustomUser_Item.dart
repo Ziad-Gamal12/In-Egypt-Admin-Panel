@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomScaleAnimatedWidget.dart';
 import 'package:in_egypt_admin_panel/features/Auth/domain/Entities/UserEntity.dart';
+import 'package:in_egypt_admin_panel/features/Users/presentation/views/widgets/CustomUserItemQuickActionsButtons.dart';
 import 'package:in_egypt_admin_panel/features/Users/presentation/views/widgets/CustomUsersUserProfilePic.dart';
 import 'package:in_egypt_admin_panel/features/Users/presentation/views/widgets/CustomUsers_UserInfo.dart';
 
@@ -26,18 +27,28 @@ class CustomUserItem extends StatelessWidget {
           border: Border.all(color: Color(0xffF3F3F3), width: 1),
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              flex: 1,
-              child: CustomUsersUserProfilePic(
-                profilePicUrl: userEntity.photoUrl,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: CustomUsersUserProfilePic(
+                      profilePicUrl: userEntity.photoUrl,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    flex: 20,
+                    child: CustomUsersUserInfo(userEntity: userEntity),
+                  ),
+                ],
               ),
             ),
-            SizedBox(width: 10),
-            Expanded(
-              flex: 20,
-              child: CustomUsersUserInfo(userEntity: userEntity),
-            ),
+            CustomUserItemQuickActionsButtons(userEntity: userEntity),
           ],
         ),
       ),
