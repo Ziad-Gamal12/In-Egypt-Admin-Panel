@@ -23,6 +23,7 @@ void main() async {
   runApp(InEgyptAdminPanel());
 }
 
+//finished
 class InEgyptAdminPanel extends StatelessWidget {
   const InEgyptAdminPanel({super.key});
 
