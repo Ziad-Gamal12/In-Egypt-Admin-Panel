@@ -5,10 +5,8 @@ import 'package:in_egypt_admin_panel/constant.dart';
 import 'package:in_egypt_admin_panel/core/helpers/ShowSnackBar.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomAppLogoWidget.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomLoadingWidget.dart';
-import 'package:in_egypt_admin_panel/features/Auth/presentation/Views/Widgets/SignInViewWidgets/CustomRemmberMeWidget.dart';
 import 'package:in_egypt_admin_panel/features/Auth/presentation/Views/Widgets/SignInViewWidgets/CustomSignInActionButton.dart';
 import 'package:in_egypt_admin_panel/features/Auth/presentation/Views/Widgets/SignInViewWidgets/CutomSignUpNavigationButton.dart';
-import 'package:in_egypt_admin_panel/features/Auth/presentation/Views/Widgets/SignInViewWidgets/ForgetPasswordText.dart';
 import 'package:in_egypt_admin_panel/features/Auth/presentation/Views/Widgets/SignInViewWidgets/SignInTextFields.dart';
 import 'package:in_egypt_admin_panel/features/Auth/presentation/manager/sign_in_cubit/sign_in_cubit.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/ResponsiveDashBaoardView.dart';
@@ -56,11 +54,7 @@ class _CustomSignInViewBodyState extends State<CustomSignInViewBody> {
                     emailController: emailController,
                     passwordController: passwordController,
                   ),
-                  SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [CustomRemmberMeWidget(), ForgetPasswordText()],
-                  ),
+
                   SizedBox(height: 40),
                   CutomSignUpNavigationButton(),
                   SizedBox(height: 20),
