@@ -8,6 +8,5 @@ abstract class UsersRepo {
   });
   Future<Either<Failure, GetUsersReponseEntity>> getSearchedUsers({
     required String searchKey,
-    required bool isPaginated,
   });
 }

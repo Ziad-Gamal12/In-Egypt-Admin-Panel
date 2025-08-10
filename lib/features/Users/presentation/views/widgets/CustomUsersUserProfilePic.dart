@@ -12,11 +12,7 @@ class CustomUsersUserProfilePic extends StatelessWidget {
       aspectRatio: 1,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(40),
-        child: CustomCachedNetworkImage(
-          imageUrl: profilePicUrl == ""
-              ? "https://cdn-icons-png.flaticon.com/128/16683/16683419.png"
-              : profilePicUrl,
-        ),
+        child: CustomCachedNetworkImage(imageUrl: profilePicUrl),
       ),
     );
   }

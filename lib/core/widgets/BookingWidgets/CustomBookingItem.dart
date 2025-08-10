@@ -39,7 +39,7 @@ class _CustomBookingItemState extends State<CustomBookingItem> {
             BookingUserInfo(userEntity: widget.booking.user),
             Divider(height: 1, color: Colors.grey.shade400),
             SizedBox(height: 10),
-            Expanded(child: CustomBookingInfoSection(booking: widget.booking)),
+            CustomBookingInfoSection(booking: widget.booking),
             SizedBox(height: 10),
             BookingStatusBadge(status: widget.booking.status),
           ],

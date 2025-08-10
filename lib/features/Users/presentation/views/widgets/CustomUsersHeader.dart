@@ -8,8 +8,7 @@ import 'package:in_egypt_admin_panel/features/Users/presentation/manager/UsersCu
 import 'package:in_egypt_admin_panel/features/Users/presentation/views/widgets/CustomUsersHeaderInfo.dart';
 
 class CustomUsersHeader extends StatefulWidget {
-  const CustomUsersHeader({super.key, required this.onSearchChanged});
-  final ValueChanged<String> onSearchChanged;
+  const CustomUsersHeader({super.key});
   @override
   State<CustomUsersHeader> createState() => _CustomUsersHeaderState();
 }
@@ -27,13 +26,9 @@ class _CustomUsersHeaderState extends State<CustomUsersHeader> {
   void debounce() {
     if (_debounce != null && _debounce!.isActive) _debounce!.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
-      if (searchController.text.isNotEmpty) {
-        widget.onSearchChanged(searchController.text.trim().toLowerCase());
-        context.read<UsersCubit>().getSearchedUsers(
-          searchKey: searchController.text.trim().toLowerCase(),
-          isPaginated: false,
-        );
-      }
+      context.read<UsersCubit>().getSearchedUsers(
+        searchKey: searchController.text.toLowerCase(),
+      );
     });
   }
 

@@ -19,11 +19,7 @@ class CustomUsersContentBody extends StatefulWidget {
 class _CustomUsersContentBodyState extends State<CustomUsersContentBody> {
   late ScrollController scrollController;
   bool isLoadMore = true;
-  bool isSearching = false;
-  String searchKeyWord = '';
-
   List<UserEntity> fetchedUsers = [];
-  List<UserEntity> searchedUsers = [];
 
   @override
   void initState() {
@@ -31,15 +27,9 @@ class _CustomUsersContentBodyState extends State<CustomUsersContentBody> {
     context.read<UsersCubit>().getUsers(isPaginated: false);
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent - 200) {
-        if (isSearching) {
-          context.read<UsersCubit>().getSearchedUsers(
-            searchKey: searchKeyWord,
-            isPaginated: true,
-          );
-        } else {
-          context.read<UsersCubit>().getUsers(isPaginated: true);
-        }
+              scrollController.position.maxScrollExtent - 200 &&
+          isLoadMore) {
+        context.read<UsersCubit>().getUsers(isPaginated: true);
       }
     });
     super.initState();
@@ -61,12 +51,6 @@ class _CustomUsersContentBodyState extends State<CustomUsersContentBody> {
             fetchedUsers.addAll(state.response.usersList);
             isLoadMore = state.response.hasMore;
           });
-        } else if (state is UsersGetSearchedUsersSuccess) {
-          if (!isLoadMore && state.response.hasMore) return;
-          setState(() {
-            searchedUsers.addAll(state.response.usersList);
-            isLoadMore = state.response.hasMore;
-          });
         }
       },
       builder: (context, state) {
@@ -77,7 +61,6 @@ class _CustomUsersContentBodyState extends State<CustomUsersContentBody> {
           return Center(child: CustomErrorWidget(message: state.errMessage));
         }
         bool isLoading = state is UsersGetUsersLoading;
-        isSearching = state is UsersGetSearchedUsersLoading;
         return Skeletonizer(
           enabled: isLoading,
           child: Padding(
@@ -89,26 +72,18 @@ class _CustomUsersContentBodyState extends State<CustomUsersContentBody> {
               builder: (context, constraints) {
                 return CustomScrollView(
                   slivers: [
-                    SliverToBoxAdapter(
-                      child: CustomUsersHeader(
-                        onSearchChanged: (val) {
-                          setState(() {
-                            searchKeyWord = val;
-                          });
-                        },
-                      ),
-                    ),
+                    SliverToBoxAdapter(child: CustomUsersHeader()),
                     const SliverToBoxAdapter(child: SizedBox(height: 20)),
                     if ((state is UsersGetUsersSuccess &&
                             fetchedUsers.isEmpty) ||
                         (state is UsersGetSearchedUsersSuccess &&
-                            searchedUsers.isEmpty))
+                            state.response.usersList.isEmpty))
                       SliverToBoxAdapter(child: Center(child: EmptyWidget()))
                     else if (state is UsersGetSearchedUsersSuccess &&
-                        searchedUsers.isNotEmpty)
+                        state.response.usersList.isNotEmpty)
                       CustomUsersSliverList(
                         width: constraints.maxWidth,
-                        users: searchedUsers,
+                        users: state.response.usersList,
                       )
                     else
                       CustomUsersSliverList(

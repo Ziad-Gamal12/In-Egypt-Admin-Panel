@@ -11,12 +11,8 @@ import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widget
 class CustomBookingsSearchAndFilterWidget extends StatefulWidget {
   const CustomBookingsSearchAndFilterWidget({
     super.key,
-    required this.searchKeyWord,
-    required this.isSearching,
     required this.onBookingsChanged,
   });
-  final ValueChanged<String> searchKeyWord;
-  final ValueChanged<bool> isSearching;
   final ValueChanged<List<BookingEntity>> onBookingsChanged;
 
   @override
@@ -32,14 +28,7 @@ class _CustomBookingsSearchAndFilterWidgetState
   void initState() {
     controller = TextEditingController();
     controller.addListener(() {
-      if (controller.text.isNotEmpty) {
-        widget.searchKeyWord(controller.text.trim().toLowerCase());
-        widget.isSearching(true);
-        debounce(isPaginated: false);
-      } else {
-        widget.searchKeyWord("");
-        widget.isSearching(false);
-      }
+      debounce(isPaginated: false);
     });
 
     super.initState();

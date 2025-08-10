@@ -19,14 +19,10 @@ class UsersCubit extends Cubit<UsersState> {
     );
   }
 
-  Future<void> getSearchedUsers({
-    required String searchKey,
-    required bool isPaginated,
-  }) async {
+  Future<void> getSearchedUsers({required String searchKey}) async {
     emit(UsersGetSearchedUsersLoading());
     final failureOrUser = await usersRepo.getSearchedUsers(
       searchKey: searchKey,
-      isPaginated: isPaginated,
     );
     failureOrUser.fold(
       (failure) => emit(UsersGetSearchedUsersFailure(failure.message)),

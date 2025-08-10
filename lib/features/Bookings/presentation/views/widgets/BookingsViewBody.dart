@@ -19,16 +19,13 @@ class BookingsViewBody extends StatefulWidget {
 
 class _BookingsViewBodyState extends State<BookingsViewBody> {
   final List<BookingEntity> _allBookings = [];
-  final List<BookingEntity> _searchedBookings = [];
   final List<BookingEntity> _filteredBookings = [];
   late ScrollController scrollController;
-  bool _isSearching = false;
   bool _isLoadMore = true;
-  String _searchKeyword = '';
   @override
   void initState() {
     super.initState();
-    scrollController = ScrollController(initialScrollOffset: 0.0);
+    scrollController = ScrollController();
     _fetchInitialBookings();
     _setupPaginationListener();
   }
@@ -45,12 +42,7 @@ class _BookingsViewBodyState extends State<BookingsViewBody> {
             scrollController.position.maxScrollExtent;
         final cubit = context.read<BookingsCubit>();
         if (shouldPaginate && _isLoadMore) {
-          _isSearching
-              ? cubit.getSearchedBookings(
-                  searchKey: _searchKeyword,
-                  isPaginated: true,
-                )
-              : cubit.getBookings(isPaginated: true);
+          cubit.getBookings(isPaginated: true);
         }
       });
     });
@@ -96,14 +88,6 @@ class _BookingsViewBodyState extends State<BookingsViewBody> {
       final hasMore = state.response.hasMore;
       _isLoadMore = hasMore;
       _allBookings.addAll(newBookings);
-    } else if (state is BookingsGetSearchBookingsSuccess) {
-      if (!_isLoadMore && state.response.hasMore) return;
-      setState(() {
-        if (state.response.bookings.isNotEmpty) {
-          _searchedBookings.addAll(state.response.bookings);
-        }
-        _isLoadMore = state.response.hasMore;
-      });
     } else if (state is BookingsGetBookingsFailure ||
         state is BookingsGetSearchBookingsFailure) {
       final message = state is BookingsGetBookingsFailure
@@ -124,14 +108,6 @@ class _BookingsViewBodyState extends State<BookingsViewBody> {
               ..clear()
               ..addAll(val),
           ),
-          isSearching: (val) => setState(() => _isSearching = val),
-          searchKeyWord: (key) {
-            setState(() {
-              _searchKeyword = key;
-              _searchedBookings.clear();
-              _isLoadMore = true;
-            });
-          },
         ),
         const SizedBox(height: 20),
         const CustomBookingsHeader(),
@@ -143,19 +119,21 @@ class _BookingsViewBodyState extends State<BookingsViewBody> {
   Widget _buildContent(BoxConstraints constraints, BookingsState state) {
     if (state is BookingsGetSearchBookingsLoading) {
       return _buildLoading();
-    } else if (_isSearching && _searchedBookings.isEmpty) {
+    } else if (state is BookingsGetSearchBookingsSuccess &&
+        state.response.bookings.isEmpty) {
       return const SliverToBoxAdapter(child: EmptyWidget());
-    } else if (_isSearching && _searchedBookings.isNotEmpty) {
+    } else if (state is BookingsGetSearchBookingsSuccess &&
+        state.response.bookings.isNotEmpty) {
       return CustomBookingsSliverGrid(
         maxWidth: constraints.maxWidth,
-        bookings: _searchedBookings,
+        bookings: state.response.bookings,
       );
     } else if (_filteredBookings.isNotEmpty) {
       return CustomBookingsSliverGrid(
         maxWidth: constraints.maxWidth,
         bookings: _filteredBookings,
       );
-    } else if (!_isSearching && _allBookings.isEmpty) {
+    } else if (_allBookings.isEmpty) {
       return const SliverToBoxAdapter(child: EmptyWidget());
     } else {
       return CustomBookingsSliverGrid(

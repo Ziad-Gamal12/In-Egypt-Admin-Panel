@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:in_egypt_admin_panel/core/Entities/FireStorePaginateResponse.dart';
@@ -59,44 +61,28 @@ class UsersRepoImpl implements UsersRepo {
     }
   }
 
-  Map<String, dynamic> getSearchedUsersQuery = {
-    "orderBy": "fullName",
-    "limit": 10,
+  Map<String, String> getSearchedUsersQuery = {
     "searchField": "fullName",
     "searchValue": "",
-    "startAfter": null,
   };
-  DocumentSnapshot<Object?>? getSearchedUserslastDocumentSnapshot;
   @override
   Future<Either<Failure, GetUsersReponseEntity>> getSearchedUsers({
     required String searchKey,
-    required bool isPaginated,
   }) async {
     try {
-      if (isPaginated) {
-        getSearchedUsersQuery["startAfter"] =
-            getSearchedUserslastDocumentSnapshot;
-      } else {
-        getSearchedUsersQuery["startAfter"] = null;
-      }
       getSearchedUsersQuery["searchValue"] = searchKey;
-
       FireStorePaginateResponse response = await databaseservice.getData(
         requirements: FireStoreRequirmentsEntity(
           collection: Backendkeys.usersCollection,
         ),
         query: getSearchedUsersQuery,
       );
-
       final users = response.listData ?? [];
-      if (users.isNotEmpty && response.lastDocumentSnapshot != null) {
-        getSearchedUserslastDocumentSnapshot = response.lastDocumentSnapshot;
-      }
       if (users.isEmpty) {
+        log("users empty");
         return right(GetUsersReponseEntity(usersList: [], hasMore: false));
       }
-      bool hasMore =
-          response.hasMore ?? users.length == getSearchedUsersQuery["limit"];
+      bool hasMore = response.hasMore ?? true;
       List<UserEntity> usersEntity = response.listData!
           .map((e) => UserModel.fromJson(e).toEntity())
           .toList();
