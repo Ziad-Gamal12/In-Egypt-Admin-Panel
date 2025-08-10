@@ -31,15 +31,25 @@ class _CustomPlacesSliverGridState extends State<CustomPlacesSliverGrid> {
         return GestureDetector(
           onTap: () {
             showModalBottomSheet(
-              isScrollControlled: true,
-
               context: context,
+              isScrollControlled: true,
+              backgroundColor: Colors.white,
+              useRootNavigator: true,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+              ),
               builder: (_) {
                 return Column(
                   children: [
+                    const SizedBox(height: 16),
                     CustomBottomSheetUpperDivider(),
                     SizedBox(height: 16),
-                    PlaceDetailsViewBody(place: widget.places[index]),
+                    Expanded(
+                      child: PlaceDetailsViewBody(place: widget.places[index]),
+                    ),
                   ],
                 );
               },

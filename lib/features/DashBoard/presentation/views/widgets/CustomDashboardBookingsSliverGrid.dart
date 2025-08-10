@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_egypt_admin_panel/core/Entities/BookingEntity.dart';
 import 'package:in_egypt_admin_panel/core/widgets/BookingWidgets/CustomBookingItem.dart';
+import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widgets/BookingDetailsBottomSheetWidgets/BookingDetailsBottomSheet.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/manager/dashboard_cubit/dashboard_cubit.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -34,7 +35,25 @@ class CustomDashboardBookingsSliverGrid extends StatelessWidget {
           itemCount: bookings.length,
           itemBuilder: (context, index) => Skeletonizer(
             enabled: state,
-            child: CustomBookingItem(booking: bookings[index]),
+            child: InkWell(
+              onTap: () {
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  context: context,
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                    side: BorderSide(color: Colors.grey.shade300),
+                  ),
+                  builder: (_) =>
+                      BookingDetailsBottomSheet(bookingEntity: bookings[index]),
+                );
+              },
+              child: CustomBookingItem(booking: bookings[index]),
+            ),
           ),
         );
       },

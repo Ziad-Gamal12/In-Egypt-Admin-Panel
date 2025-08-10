@@ -27,54 +27,43 @@ class PlaceDetailsViewBodyContent extends StatelessWidget {
           showErrorSnackBar(context: context, message: state.errmessage);
         }
       },
-      child: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          border: Border.all(color: Color(0xffF3F3F3), width: 1),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(10),
-          ),
-          color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: kVerticalPadding,
+          horizontal: kHorizentalPadding,
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: kVerticalPadding,
-            horizontal: kHorizentalPadding,
-          ),
-          child: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      width: double.infinity,
-                      child: CustomPlaceDetailsItemImage(
-                        imageUrl: place.images[0],
-                      ),
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    child: CustomPlaceDetailsItemImage(
+                      imageUrl: place.images[0],
                     ),
-                    SizedBox(height: 16),
-                    CustomPlaceTitleAndRatingAndLocation(place: place),
-                    SizedBox(height: 16),
-                    AboutPlaceSection(description: place.description),
-                    SizedBox(height: 20),
-                    PlaceImagesSection(imagesURLS: place.images),
-                    SizedBox(height: 20),
+                  ),
+                  SizedBox(height: 16),
+                  CustomPlaceTitleAndRatingAndLocation(place: place),
+                  SizedBox(height: 16),
+                  AboutPlaceSection(description: place.description),
+                  SizedBox(height: 20),
+                  PlaceImagesSection(imagesURLS: place.images),
+                  SizedBox(height: 20),
 
-                    CustomPlaceMap(
-                      latitude: place.latitude,
-                      longitude: place.longitude,
-                    ),
+                  CustomPlaceMap(
+                    latitude: place.latitude,
+                    longitude: place.longitude,
+                  ),
 
-                    SizedBox(height: 20),
-                  ],
-                ),
+                  SizedBox(height: 20),
+                ],
               ),
-              SliverToBoxAdapter(
-                child: CustomPlaceDetailsActionButtons(place: place),
-              ),
-            ],
-          ),
+            ),
+            SliverToBoxAdapter(
+              child: CustomPlaceDetailsActionButtons(place: place),
+            ),
+          ],
         ),
       ),
     );

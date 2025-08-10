@@ -27,7 +27,15 @@ class CustomBookingPlaceInfo extends StatelessWidget {
             onTap: () {
               showModalBottomSheet(
                 context: context,
+                isScrollControlled: true,
+                backgroundColor: Colors.white,
                 useRootNavigator: true,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
                 builder: (_) {
                   return PlaceDetailsViewBody(place: bookingEntity.place);
                 },
