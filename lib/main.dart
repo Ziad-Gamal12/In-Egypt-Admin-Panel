@@ -14,12 +14,10 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await Supabase.initialize(url: supaBaseUrl, anonKey: supaBaseAnonKey);
   await Hive.initFlutter();
   await Hive_Services.init();
-
   setup_Getit();
   Bloc.observer = Custom_Blocobserver();
   runApp(InEgyptAdminPanel());
@@ -36,7 +34,6 @@ class InEgyptAdminPanel extends StatelessWidget {
         fontFamily: carioFontFamily,
         primaryColor: kMainColor,
         primarySwatch: Colors.amber,
-
         scaffoldBackgroundColor: Colors.white,
       ),
       locale: Locale('ar'),
