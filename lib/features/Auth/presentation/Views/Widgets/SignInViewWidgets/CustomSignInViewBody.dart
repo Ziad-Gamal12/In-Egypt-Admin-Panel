@@ -54,7 +54,6 @@ class _CustomSignInViewBodyState extends State<CustomSignInViewBody> {
                     emailController: emailController,
                     passwordController: passwordController,
                   ),
-
                   SizedBox(height: 40),
                   CutomSignUpNavigationButton(),
                   SizedBox(height: 20),

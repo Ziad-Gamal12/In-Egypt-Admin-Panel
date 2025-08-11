@@ -20,7 +20,7 @@ class AddAndEditPlaceActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     PlaceEntity place = context.read<PlaceEntity>();
     List images = context.read<List>();
-    return BlocBuilder(
+    return BlocBuilder<PlacesCubit, PlacesState>(
       builder: (context, state) {
         if (state is PlacesUpdatePlaceLoading ||
             state is PlacesAddPlaceLoading) {

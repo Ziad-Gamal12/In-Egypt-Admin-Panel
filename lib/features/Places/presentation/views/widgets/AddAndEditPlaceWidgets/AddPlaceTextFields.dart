@@ -51,7 +51,7 @@ class _AddPlaceTextFieldsState extends State<AddPlaceTextFields> {
           controller: idController,
           textInputType: TextInputType.text,
           onSaved: (val) {
-            place.id = val ?? '';
+            place.id = val?.trim() ?? '';
           },
           validator: (val) {
             if (val == null || val.isEmpty) {
@@ -67,7 +67,7 @@ class _AddPlaceTextFieldsState extends State<AddPlaceTextFields> {
           controller: nameController,
           textInputType: TextInputType.name,
           onSaved: (val) {
-            place.name = val ?? '';
+            place.name = val?.trim() ?? '';
           },
           validator: (val) {
             if (val == null || val.isEmpty) {
@@ -83,7 +83,7 @@ class _AddPlaceTextFieldsState extends State<AddPlaceTextFields> {
           controller: descriptionController,
           textInputType: TextInputType.name,
           onSaved: (val) {
-            place.description = val ?? '';
+            place.description = val?.trim() ?? '';
           },
           validator: (val) {
             if (val == null || val.isEmpty) {
@@ -100,7 +100,7 @@ class _AddPlaceTextFieldsState extends State<AddPlaceTextFields> {
           obscureText: false,
           textInputType: TextInputType.name,
           onSaved: (val) {
-            place.location = val ?? '';
+            place.location = val?.trim() ?? '';
           },
           validator: (val) {
             if (val == null || val.isEmpty) {
@@ -121,7 +121,7 @@ class _AddPlaceTextFieldsState extends State<AddPlaceTextFields> {
                   obscureText: false,
                   textInputType: TextInputType.number,
                   onSaved: (val) {
-                    place.latitude = double.parse(val!);
+                    place.latitude = double.parse(val?.trim() ?? '');
                   },
                   validator: (val) {
                     if (val == null || val.isEmpty) {
@@ -139,7 +139,7 @@ class _AddPlaceTextFieldsState extends State<AddPlaceTextFields> {
                   obscureText: false,
                   textInputType: TextInputType.number,
                   onSaved: (val) {
-                    place.longitude = double.parse(val!);
+                    place.longitude = double.parse(val?.trim() ?? '');
                   },
                   validator: (val) {
                     if (val == null || val.isEmpty) {
@@ -159,7 +159,7 @@ class _AddPlaceTextFieldsState extends State<AddPlaceTextFields> {
           controller: priceController,
           textInputType: TextInputType.number,
           onSaved: (val) {
-            place.ticketPrice = double.parse(val!);
+            place.ticketPrice = double.parse(val?.trim() ?? '');
           },
           validator: (val) {
             if (val == null || val.isEmpty) {

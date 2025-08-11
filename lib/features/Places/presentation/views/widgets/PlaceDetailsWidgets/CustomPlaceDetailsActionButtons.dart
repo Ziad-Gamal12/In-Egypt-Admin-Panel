@@ -22,7 +22,8 @@ class CustomPlaceDetailsActionButtons extends StatelessWidget {
             color: Colors.blue,
             textColor: Colors.white,
             onPressed: () {
-              showBottomSheet(
+              showModalBottomSheet(
+                isScrollControlled: true,
                 context: context,
                 builder: (_) {
                   return AddAndEditPlaceBody(place: place, isEdit: true);

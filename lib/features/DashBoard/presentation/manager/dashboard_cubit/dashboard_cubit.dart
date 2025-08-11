@@ -50,14 +50,14 @@ class DashboardCubit extends Cubit<DashboardState> {
 
   Future<void> getDashBoardBookings() async {
     emit(DashboardGetDashBoardBookingsLoading());
-    final result = await bookingsRepo.getBookings(isPaginated: false);
-    result.fold(
-      (failure) {
-        emit(DashboardGetDashBoardBookingsFailure(errmessage: failure.message));
-      },
-      (response) {
-        emit(DashboardGetDashBoardBookingsSuccess(response: response));
-      },
-    );
+    // final result = await bookingsRepo.getBookings(isPaginated: false);
+    // result.fold(
+    //   (failure) {
+    //     emit(DashboardGetDashBoardBookingsFailure(errmessage: failure.message));
+    //   },
+    //   (response) {
+    //     emit(DashboardGetDashBoardBookingsSuccess(response: response));
+    //   },
+    // );
   }
 }

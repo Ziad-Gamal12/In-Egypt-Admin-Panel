@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_egypt_admin_panel/constant.dart';
-import 'package:in_egypt_admin_panel/core/widgets/CustomErrorWidget.dart';
-import 'package:in_egypt_admin_panel/core/widgets/EmptyWidget.dart';
 import 'package:in_egypt_admin_panel/core/widgets/customRefreshWidget.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/manager/dashboard_cubit/dashboard_cubit.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/widgets/CustomDashBoardBookingsSectionHeader.dart';
@@ -37,11 +35,6 @@ class _CustomDashBoardBodyState extends State<CustomDashBoardBody> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DashboardCubit, DashboardState>(
-      buildWhen: (previous, current) {
-        return current is DashboardGetDashBoardBookingsSuccess ||
-            current is DashboardGetDashBoardBookingsFailure ||
-            current is DashboardGetDashBoardBookingsLoading;
-      },
       builder: (context, state) {
         return Customrefreshwidget(
           onRefresh: () async => initActions(),
@@ -78,19 +71,9 @@ class _CustomDashBoardBodyState extends State<CustomDashBoardBody> {
                       ],
                     ),
                   ),
-                  if (state is DashboardGetDashBoardBookingsFailure)
-                    SliverToBoxAdapter(
-                      child: CustomErrorWidget(message: state.errmessage),
-                    )
-                  else if (state is DashboardGetDashBoardBookingsSuccess &&
-                      state.response.bookings.isEmpty)
-                    SliverToBoxAdapter(child: Center(child: EmptyWidget()))
-                  else if (state is DashboardGetDashBoardBookingsSuccess &&
-                      state.response.bookings.isNotEmpty)
-                    CustomDashboardBookingsSliverGrid(
-                      maxWidth: constraints.maxWidth,
-                      bookings: state.response.bookings,
-                    ),
+                  CustomDashboardBookingsSliverGrid(
+                    maxWidth: constraints.maxWidth,
+                  ),
                 ],
               ),
             ),

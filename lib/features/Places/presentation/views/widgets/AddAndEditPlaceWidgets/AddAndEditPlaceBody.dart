@@ -52,7 +52,11 @@ class _AddAndEditPlaceBodyState extends State<AddAndEditPlaceBody> {
       ),
       child: Provider.value(
         value: place,
-        child: AddAndEditPlaceBodyContent(isEdit: widget.isEdit),
+        child: Builder(
+          builder: (context) {
+            return AddAndEditPlaceBodyContent(isEdit: widget.isEdit);
+          },
+        ),
       ),
     );
   }
