@@ -54,8 +54,10 @@ class _ManagePlacesViewBodyContentState
   @override
   Widget build(BuildContext context) {
     return Customrefreshwidget(
-      onRefresh: () =>
-          context.read<PlacesCubit>().getPlaces(isPaginated: false),
+      onRefresh: () async {
+        fetchedPlaces.clear();
+        context.read<PlacesCubit>().getPlaces(isPaginated: false);
+      },
 
       child: BlocConsumer<PlacesCubit, PlacesState>(
         listener: (context, state) {

@@ -45,7 +45,10 @@ class _CustomUsersContentBodyState extends State<CustomUsersContentBody> {
   @override
   Widget build(BuildContext context) {
     return Customrefreshwidget(
-      onRefresh: () => context.read<UsersCubit>().getUsers(isPaginated: false),
+      onRefresh: () async {
+        fetchedUsers.clear();
+        context.read<UsersCubit>().getUsers(isPaginated: false);
+      },
       child: BlocConsumer<UsersCubit, UsersState>(
         listener: (context, state) {
           if (state is UsersGetUsersSuccess) {

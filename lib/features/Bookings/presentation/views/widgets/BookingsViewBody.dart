@@ -58,8 +58,11 @@ class _BookingsViewBodyState extends State<BookingsViewBody> {
   @override
   Widget build(BuildContext context) {
     return Customrefreshwidget(
-      onRefresh: () =>
-          context.read<BookingsCubit>().getBookings(isPaginated: false),
+      onRefresh: () async {
+        _allBookings.clear();
+        _filteredBookings.clear();
+        context.read<BookingsCubit>().getBookings(isPaginated: false);
+      },
       child: BlocConsumer<BookingsCubit, BookingsState>(
         listener: _handleBookingStates,
         builder: (context, state) {
