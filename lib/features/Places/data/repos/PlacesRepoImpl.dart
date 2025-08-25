@@ -54,7 +54,7 @@ class PlacesRepoImpl implements PlacesRepo {
   @override
   Future<Either<Failure, void>> deletePlace({required String placeId}) async {
     try {
-      final deletePlaceResult = await databaseservice.deleteDocs(
+      final deletePlaceResult = await databaseservice.deleteDoc(
         collectionKey: Backendkeys.placesCollection,
         docId: placeId,
       );

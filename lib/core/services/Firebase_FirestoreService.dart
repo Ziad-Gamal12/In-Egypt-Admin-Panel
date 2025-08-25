@@ -113,8 +113,6 @@ class FirebaseFirestoreservice implements Databaseservice {
         return;
       }
 
-      query = query.doc(requirements.docId).collection('');
-
       if (requirements.subCollection == null) {
         await _collectionRef(
           requirements.collection!,
@@ -304,46 +302,28 @@ class FirebaseFirestoreservice implements Databaseservice {
   }
 
   @override
-  Future<void> deleteDocs({
+  Future<void> deleteDoc({
     required String collectionKey,
     required String docId,
-    String? where,
-    String? whereValue,
     String? subCollectionKey,
+    String? subDocId,
   }) async {
-    final batch = firestore.batch();
-    bool hasDeletes = false;
-
-    Future<void> collectDeletes(Query<Map<String, dynamic>> query) async {
-      final snapshot = await query.get();
-      for (final doc in snapshot.docs) {
-        batch.delete(doc.reference);
-        hasDeletes = true;
+    try {
+      if (subCollectionKey != null) {
+        await firestore
+            .collection(collectionKey)
+            .doc(docId)
+            .collection(subCollectionKey)
+            .doc(subDocId)
+            .delete();
+      } else {
+        await firestore.collection(collectionKey).doc(docId).delete();
       }
+    } on FirebaseException catch (e) {
+      throw _getFireStoreCustomException(e: e);
+    } catch (e) {
+      throw CustomException(message: "حدث خطأ ما");
     }
-
-    if (subCollectionKey != null) {
-      Query<Map<String, dynamic>> subQuery = firestore
-          .collection(collectionKey)
-          .doc(docId)
-          .collection(subCollectionKey);
-      if (where != null && whereValue != null) {
-        subQuery = subQuery.where(where, isEqualTo: whereValue);
-      }
-      await collectDeletes(subQuery);
-    }
-
-    if (where != null && whereValue != null) {
-      Query<Map<String, dynamic>> mainQuery = firestore
-          .collection(collectionKey)
-          .where(where, isEqualTo: whereValue);
-      await collectDeletes(mainQuery);
-    } else {
-      batch.delete(firestore.collection(collectionKey).doc(docId));
-      hasDeletes = true;
-    }
-
-    if (hasDeletes) await batch.commit();
   }
 
   @override

@@ -240,7 +240,7 @@ class BookingsRepoImpl implements BookingsRepo {
     required String bookingId,
   }) async {
     try {
-      final deleteBookingResult = await databaseservice.deleteDocs(
+      final deleteBookingResult = await databaseservice.deleteDoc(
         collectionKey: Backendkeys.bookingsCollection,
         docId: bookingId,
       );
