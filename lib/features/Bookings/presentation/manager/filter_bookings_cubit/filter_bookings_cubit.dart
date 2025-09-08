@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:date_picker_plus/date_picker_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:in_egypt_admin_panel/core/Entities/BookingEntity.dart';
 import 'package:in_egypt_admin_panel/core/utils/textStyles.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/domain/Entities/FilterBookingsEntity.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/domain/Entities/GetBookingsResponseEntity.dart';
@@ -70,6 +71,31 @@ class FilterBookingsCubit extends Cubit<FilterBookingsState> {
       },
       (response) {
         emit(FilterBookingsGetFilteredBookingsSuccess(response: response));
+      },
+    );
+  }
+
+  filterBookingsGetBookingByScanQrCode({
+    required FilterBookingsEntity filterBookingsEntity,
+  }) async {
+    emit(FilterBookingsGetBookingByScanQrCodeLoading());
+    final result = await bookingsRepo.getFilteredBookings(
+      filterBookingsEntity: filterBookingsEntity,
+    );
+    result.fold(
+      (failure) {
+        emit(
+          FilterBookingsGetBookingByScanQrCodeFailure(
+            errmessage: failure.message,
+          ),
+        );
+      },
+      (response) {
+        emit(
+          FilterBookingsGetBookingByScanQrCodeSuccess(
+            booking: response.bookings[0],
+          ),
+        );
       },
     );
   }

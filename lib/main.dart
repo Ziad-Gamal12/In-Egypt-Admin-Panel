@@ -23,9 +23,14 @@ void main() async {
   runApp(InEgyptAdminPanel());
 }
 
-class InEgyptAdminPanel extends StatelessWidget {
+class InEgyptAdminPanel extends StatefulWidget {
   const InEgyptAdminPanel({super.key});
 
+  @override
+  State<InEgyptAdminPanel> createState() => _InEgyptAdminPanelState();
+}
+
+class _InEgyptAdminPanelState extends State<InEgyptAdminPanel> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(

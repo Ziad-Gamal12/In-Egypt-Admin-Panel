@@ -18,7 +18,9 @@ class _SplashViewBodyState extends State<SplashViewBody> {
   @override
   void initState() {
     super.initState();
-    initNavigation(context);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      initNavigation();
+    });
   }
 
   @override
@@ -27,7 +29,7 @@ class _SplashViewBodyState extends State<SplashViewBody> {
       padding: EdgeInsets.symmetric(
         horizontal: MediaQuery.sizeOf(context).width / 2.5,
       ),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [CustomAppLogoWidget()],
@@ -35,17 +37,16 @@ class _SplashViewBodyState extends State<SplashViewBody> {
     );
   }
 
-  void initNavigation(BuildContext context) async {
+  void initNavigation() async {
     bool isSignedIn = await firebaseAuthService().isLoggedIn();
-    Future.delayed(Duration(seconds: 2), () {
-      if (!mounted) {
-        return;
+
+    Future.delayed(const Duration(seconds: 2), () {
+      if (!mounted) return;
+
+      if (isSignedIn) {
+        GoRouter.of(context).go(ResponsiveDashBaoardView.routeName);
       } else {
-        if (isSignedIn) {
-          GoRouter.of(context).go(ResponsiveDashBaoardView.routeName);
-        } else {
-          GoRouter.of(context).go(ResponsiveSigninView.routeName);
-        }
+        GoRouter.of(context).go(ResponsiveSigninView.routeName);
       }
     });
   }

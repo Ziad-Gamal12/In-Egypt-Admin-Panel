@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:in_egypt_admin_panel/features/Auth/presentation/Views/ResponsiveSignUpView.dart';
 import 'package:in_egypt_admin_panel/features/Auth/presentation/Views/ResponsiveSigninView.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/ResponsiveBookingsView.dart';
+import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widgets/QrCodeScannerPage.dart';
 import 'package:in_egypt_admin_panel/features/DashBoard/presentation/views/ResponsiveDashBaoardView.dart';
 import 'package:in_egypt_admin_panel/features/Places/presentation/views/ResponsivePlacesView.dart';
 import 'package:in_egypt_admin_panel/features/Splash/presentation/views/SplashView.dart';
@@ -39,6 +40,10 @@ class App_router {
       GoRoute(
         path: SplashView.routeName,
         builder: (context, state) => SplashView(),
+      ),
+      GoRoute(
+        path: QRScannerPage.routeName,
+        builder: (context, state) => QRScannerPage(),
       ),
     ],
   );

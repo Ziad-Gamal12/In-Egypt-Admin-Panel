@@ -31,3 +31,19 @@ final class FilterBookingsGetFilteredBookingsFailure
   final String errmessage;
   const FilterBookingsGetFilteredBookingsFailure({required this.errmessage});
 }
+
+// getbooking by scan qr code states
+final class FilterBookingsGetBookingByScanQrCodeLoading
+    extends FilterBookingsState {}
+
+final class FilterBookingsGetBookingByScanQrCodeSuccess
+    extends FilterBookingsState {
+  final BookingEntity booking;
+  const FilterBookingsGetBookingByScanQrCodeSuccess({required this.booking});
+}
+
+final class FilterBookingsGetBookingByScanQrCodeFailure
+    extends FilterBookingsState {
+  final String errmessage;
+  const FilterBookingsGetBookingByScanQrCodeFailure({required this.errmessage});
+}

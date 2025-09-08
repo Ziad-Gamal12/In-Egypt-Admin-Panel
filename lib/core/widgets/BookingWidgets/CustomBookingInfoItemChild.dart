@@ -26,6 +26,9 @@ class CustomBookingInfoItemChild extends StatelessWidget {
         children: [
           Text(
             value,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
             style: AppTextStyles(
               context,
             ).semiBold14.copyWith(color: Colors.black),

@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:in_egypt_admin_panel/core/Entities/BookingEntity.dart';
 import 'package:in_egypt_admin_panel/core/widgets/CustomTextFields/CustomSearchTextField.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/presentation/manager/bookings_cubit/bookings_cubit.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widgets/FilterBookingsBottomSheetWidgets/FilterBookingsBottomSheet.dart';
+import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widgets/QrCodeScannerPage.dart';
 
 class CustomBookingsSearchAndFilterWidget extends StatefulWidget {
   const CustomBookingsSearchAndFilterWidget({
@@ -64,10 +66,20 @@ class _CustomBookingsSearchAndFilterWidgetState
           child: IconButton(
             iconSize: 30,
             onPressed: () {
+              GoRouter.of(context).push(QRScannerPage.routeName);
+            },
+            icon: Icon(FontAwesomeIcons.qrcode, color: Colors.black),
+          ),
+        ),
+        SizedBox(width: 10),
+
+        FittedBox(
+          child: IconButton(
+            iconSize: 30,
+            onPressed: () {
               showModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
-
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20),
