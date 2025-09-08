@@ -75,12 +75,10 @@ class FilterBookingsCubit extends Cubit<FilterBookingsState> {
     );
   }
 
-  filterBookingsGetBookingByScanQrCode({
-    required FilterBookingsEntity filterBookingsEntity,
-  }) async {
+  filterBookingsGetBookingByScanQrCode({required String bookingId}) async {
     emit(FilterBookingsGetBookingByScanQrCodeLoading());
-    final result = await bookingsRepo.getFilteredBookings(
-      filterBookingsEntity: filterBookingsEntity,
+    final result = await bookingsRepo.getBookingScanedQrCode(
+      booingId: bookingId,
     );
     result.fold(
       (failure) {
@@ -91,11 +89,7 @@ class FilterBookingsCubit extends Cubit<FilterBookingsState> {
         );
       },
       (response) {
-        emit(
-          FilterBookingsGetBookingByScanQrCodeSuccess(
-            booking: response.bookings[0],
-          ),
-        );
+        emit(FilterBookingsGetBookingByScanQrCodeSuccess(booking: response));
       },
     );
   }

@@ -19,4 +19,7 @@ abstract class BookingsRepo {
     required BookingEntity booking,
   });
   Future<Either<Failure, void>> deleteBooking({required String bookingId});
+  Future<Either<Failure, BookingEntity>> getBookingScanedQrCode({
+    required String booingId,
+  });
 }

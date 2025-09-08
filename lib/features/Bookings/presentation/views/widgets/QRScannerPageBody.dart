@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:in_egypt_admin_panel/constant.dart';
 import 'package:in_egypt_admin_panel/core/helpers/ShowSnackBar.dart';
-import 'package:in_egypt_admin_panel/features/Bookings/domain/Entities/FilterBookingsEntity.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/presentation/manager/filter_bookings_cubit/filter_bookings_cubit.dart';
 import 'package:in_egypt_admin_panel/features/Bookings/presentation/views/widgets/BookingDetailsBottomSheetWidgets/BookingDetailsBottomSheet.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -48,11 +47,19 @@ class QRScannerPageBody extends StatelessWidget {
           controller: scannerController,
           onDetect: (capture) {
             for (final barcode in capture.barcodes) {
-              context.read<FilterBookingsCubit>().getFilteredBookings(
-                filterBookingsEntity: FilterBookingsEntity(
-                  bookingID: barcode.rawValue,
-                ),
-              );
+              if (barcode.rawValue != null) {
+                scannerController.stop();
+                context
+                    .read<FilterBookingsCubit>()
+                    .filterBookingsGetBookingByScanQrCode(
+                      bookingId: barcode.rawValue!,
+                    );
+              } else {
+                showErrorSnackBar(
+                  context: context,
+                  message: "لم يتم التعرف على الكود",
+                );
+              }
             }
           },
         );

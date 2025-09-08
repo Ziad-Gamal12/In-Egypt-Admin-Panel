@@ -276,4 +276,29 @@ class BookingsRepoImpl implements BookingsRepo {
       );
     }
   }
+
+  @override
+  Future<Either<Failure, BookingEntity>> getBookingScanedQrCode({
+    required String booingId,
+  }) async {
+    try {
+      final resonse = await databaseservice.getData(
+        requirements: FireStoreRequirmentsEntity(
+          collection: Backendkeys.bookingsCollection,
+          docId: booingId,
+        ),
+      );
+      if (resonse.docData == null) {
+        return left(ServerFailure(message: "لا يوجد حجز بهذا الرقم"));
+      } else {
+        return right(BookingModel.fromJson(resonse.docData!).toEntity());
+      }
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      return left(
+        ServerFailure(message: "حدث خطأ ما يرجي المحاولة في وقت لاحق"),
+      );
+    }
+  }
 }

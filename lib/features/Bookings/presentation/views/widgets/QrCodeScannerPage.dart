@@ -25,7 +25,7 @@ class _QRScannerPageState extends State<QRScannerPage> {
       cameraResolution: const Size(640, 480),
       detectionSpeed: DetectionSpeed.noDuplicates,
       detectionTimeoutMs: 250,
-      formats: [BarcodeFormat.qrCode],
+      formats: [BarcodeFormat.qrCode, BarcodeFormat.all],
       returnImage: false,
       torchEnabled: false,
       invertImage: false,
@@ -47,12 +47,6 @@ class _QRScannerPageState extends State<QRScannerPage> {
       child: Scaffold(
         appBar: CustomAppBar(appBartitle: "مسح الكود"),
         body: QRScannerPageBody(scannerController: scannerController),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            scannerController.toggleTorch();
-          },
-          child: const Icon(Icons.flash_on),
-        ),
       ),
     );
   }
