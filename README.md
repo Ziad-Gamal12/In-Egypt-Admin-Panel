@@ -1,58 +1,186 @@
-# In Egypt – Admin Panel
+<div align="center">
 
-The **In Egypt Admin Panel** is the backend management system for the *In Egypt Tourism Platform*.  
-It empowers administrators to oversee users, manage bookings, and curate listings of destinations, hotels, and cultural experiences across Egypt.  
+<img src="assets/icons/AppIcon.png" alt="In Egypt icon" width="70" />
+<br/>
+  <img src="assets/images/AppLogo.svg" alt="In Egypt" width="150" />
 
-With a bilingual interface (Arabic & English) and a clean design, the admin panel provides efficient tools for travel and hospitality management, ensuring smooth operations for the platform.  
+# In Egypt Admin Panel
 
----
+**A responsive Flutter Web & Mobile management system for overseeing Egyptian tourism operations—featuring real-time destination CRUD, interactive map pinning, booking governance, QR ticket verification, and role-based access control (RBAC).**
 
-## ✨ Key Features
+[https://img.shields.io/badge/Flutter-Web%20%26%20Cross--Platform-02569B?logo=flutter&logoColor=white]
+[https://img.shields.io/badge/Dart-3.8.1%2B-0175C2?logo=dart&logoColor=white]
+[https://img.shields.io/badge/State-BLoC%20%2F%20Cubit-FCD240?logoColor=black]
+[https://img.shields.io/badge/Architecture-Clean%20Architecture-2E7D32]
+[https://img.shields.io/badge/Firebase-Auth%20%7C%20Firestore%20%7C%20Storage-FFCA28?logo=firebase&logoColor=black]
+[https://img.shields.io/badge/Supabase-Edge%20Functions-3ECF8E?logo=supabase&logoColor=white]
+[https://img.shields.io/badge/Deployed%20on-Vercel-000000?logo=vercel&logoColor=white]
 
-### 🔐 Authentication & User Management
-- Secure login system for administrators  
-- Manage registered users (view, edit, remove)  
-- Admin profile management and logout  
+[**Live Demo (Vercel)**](https://inegyptadminpanel.vercel.app/) · [**Companion Mobile App Repo**](https://github.com/Ziad-Gamal12/In_Egypt)
 
-### 📊 Dashboard & Navigation
-- Home dashboard with quick access to system sections  
-- Sidebar navigation for **Users, Bookings, Places, Dashboard**  
+</div>
 
-### 📅 Booking & Reservation Management
-- View detailed booking records (guest info, contact, stay dates, payment)  
-- Approve or reject reservations  
-- Track booking history and payment amounts  
+## 📖 Overview
 
-### 🏨 Destination & Place Management
-- Manage curated list of destinations, hotels, and experiences  
-- Add, update, or remove places with details (name, location, rating, description)  
-- Showcase latest and top-rated places  
+**In Egypt Admin Panel** (`in_egypt_admin_panel`) is the back-office management platform for the [**In Egypt tourism mobile application**](https://github.com/Ziad-Gamal12/In_Egypt). Deployed on Vercel with a responsive sidebar and drawer architecture (`ResponsiveLayout`), it enables administrators, destination managers, and booking coordinators to run tourism operations in real time:
 
-### 👥 User Directory
-- Complete list of registered users with names and emails  
-- Assign and monitor admin roles  
+- **Executive Dashboard & Weekly Trends:** Track total bookings, active destinations, and registered users alongside weekly trend metrics powered by the **`checkWeeklyTrends` Supabase Edge Function**.
+- **Destination & Landmark CRUD (`Places`):** Create, edit, filter, and delete cultural landmarks, resorts, and beaches with multi-image uploads to Firebase Storage and interactive map coordinate previews (`flutter_map` & `latlong2`).
+- **Reservation Oversight & QR Ticket Scanning (`Bookings`):** Search, filter, and paginate traveler bookings by status, date, and order, update booking statuses (`pending`, `accepted`, `upcoming`), and scan traveler QR-code tickets using the built-in **`QRScannerPage` (`mobile_scanner`)**.
+- **Role-Based Access Control (RBAC) & User Governance (`Users`):** Restrict administrative actions across dedicated operational roles (`Admin`, `PlacesManager`, `BookingsManager`), verify staff accounts (`isVerified`), and block/unblock users (`isBlocked`).
 
----
+## 📸 Screenshots
 
-## 🌍 Purpose
-The **Admin Panel** serves as the operational backbone of the *In Egypt Platform*.  
-It allows administrators to:  
-- Moderate and manage user accounts  
-- Oversee booking requests and payments  
-- Maintain and update the catalog of destinations and accommodations  
-- Ensure smooth travel management operations  
+| Analytics Dashboard | Destinations Management (`Places`) |
+| :---: | :---: |
+| <img src="docs/screenshots/dashboard.png" alt="Analytics Dashboard" width="420" /> | <img src="docs/screenshots/places-management.png" alt="Places Management" width="420" /> |
 
----
+| Add / Edit Landmark & Map View | Bookings Management & Filtering |
+| :---: | :---: |
+| <img src="docs/screenshots/place-details-map.png" alt="Place Details and Map" width="420" /> | <img src="docs/screenshots/bookings-management.png" alt="Bookings Management" width="420" /> |
 
-## 🛠️ Tech Stack
-- **Frontend:** Modern web-based dashboard (screenshot-driven design)  
-- **Languages:** Bilingual support (Arabic & English)  
-- **Core Functions:** Authentication, CRUD management for bookings and destinations  
+| Users & Role Verification | On-Site QR Ticket Scanner |
+| :---: | :---: |
+| <img src="docs/screenshots/users-management.png" alt="Users Management" width="420" /> | <img src="docs/screenshots/qr-scanner.png" alt="QR Ticket Scanner" width="420" /> |
 
----
+## ✨ Features by Module
 
-## 👨‍💻 Developer
-**Ziad Gamal**  
-- [GitHub](https://github.com/Ziad-Gamal12)  
-- [LinkedIn](https://www.linkedin.com/in/ziad-gamal-54b052375/)  
+| Module | Key Capabilities |
+| :--- | :--- |
+| **Authentication (`Auth`)** | Responsive desktop/mobile sign-in and staff registration via Firebase Auth, role selection, `isBlocked` / `isVerified` validation, and Hive session persistence. |
+| **Dashboard (`DashBoard`)** | Real-time KPI summary cards for bookings, places, and users, plus weekly trend analytics fetched from the `checkWeeklyTrends` Supabase Edge Function. |
+| **Destinations (`Places`)** | Searchable, filterable landmark directory (category, price, rating) with full add/edit/delete CRUD flows, Firebase Storage image uploads, and interactive `flutter_map` previews. |
+| **Bookings (`Bookings`)** | Paginated booking management with multi-criteria filtering (status, date picker, sort order), reservation detail inspection, status updates, deletion, and QR ticket verification. |
+| **QR Ticket Scanner (`QRScannerPage`)** | Integrated camera scanner (`mobile_scanner`) to scan and validate traveler booking QR codes generated by the In Egypt mobile app. |
+| **Users Management (`Users`)** | Searchable user directory, profile inspection, account verification toggling (`isVerified`), and user block/unblock controls (`isBlocked`). |
+| **Splash (`Splash`)** | Evaluates cached Hive session data at startup and routes staff directly to the dashboard or sign-in view. |
 
+## 🔐 Role-Based Access Control (RBAC) & Security
+
+User roles and account flags are stored in the Firestore `Users` collection (with keys defined in `lib/core/utils/BackEndkeys.dart`) and cached locally in **Hive** (`app_storage` box, key `UserData`).
+
+### Role Permissions Matrix
+
+| Role | Access Level & Permitted Operations |
+| :--- | :--- |
+| **Admin** | Full superuser access across Dashboard analytics, Places CRUD, Bookings management, QR scanning, and Users verification/blocking. |
+| **PlacesManager** | Authorized to view, create, edit, and delete destinations and upload landmark imagery in the `Places` module. |
+| **BookingsManager** | Authorized to inspect reservations, update booking statuses, delete invalid bookings, and verify tickets in the `Bookings` module. |
+| **User** *(Traveler)* | Standard mobile-app traveler role; explicitly rejected at Admin Panel sign-in. |
+
+**Sign-In Eligibility Enforcement (`AuthRepoImpl`):**
+During sign-in, the repository authenticates with Firebase Auth, fetches the user document from Firestore's `Users` collection, and verifies that:
+1. The account role is an authorized staff role (rejects `User`).
+2. `isBlocked` is `false`.
+3. `isVerified` is `true` before persisting the session to Hive and navigating to `/DashBaoardView`.
+
+## 🧭 Declarative Routing (`GoRouter`)
+
+Configured in `lib/core/utils/App_router.dart`, the application defines **8 declarative routes** across **36 responsive view/page files** (adapting between desktop sidebar and mobile drawer layouts via `ResponsiveLayout`):
+
+| Route Path | Screen Widget | Description |
+| :--- | :--- | :--- |
+| `/` | `SplashView` | Startup screen; inspects cached Hive `UserData` and routes accordingly |
+| `/ResponsiveSigninView` | `ResponsiveSigninView` | Adaptive desktop/mobile staff login screen |
+| `/signUp` | `ResponsiveSignUpView` | Adaptive staff registration with role selection |
+| `/DashBaoardView` | `ResponsiveDashBaoardView` | Main analytics overview and weekly trends dashboard |
+| `/PlacesView` | `ResponsivePlacesView` | Destination directory, filters, map preview, and add/edit/delete drawers/dialogs |
+| `/ResponsiveBookingsView` | `ResponsiveBookingsView` | Paginated bookings table/list, date/status filters, and booking detail actions |
+| `/ResponsiveUsersView` | `ResponsiveUsersView` | User directory, search, verification, and block/unblock management |
+| `/QRScannerPage` | `QRScannerPage` | Camera-based QR code scanner for verifying traveler booking tickets |
+
+## 🛠 Tech Stack
+
+| Layer | Packages & Tools |
+| :--- | :--- |
+| **Framework & SDK** | Flutter (Web, Windows, macOS, Linux, Android, iOS), Dart `^3.8.1` |
+| **State Management** | `flutter_bloc ^9.1.1`, `provider ^6.1.5` |
+| **Dependency Injection** | `get_it ^8.0.3` |
+| **Navigation & Routing** | `go_router ^15.1.3` |
+| **Backend & Cloud** | `firebase_core ^3.14.0`, `firebase_auth ^5.6.2`, `cloud_firestore ^5.6.10`, `firebase_storage ^12.4.8`, `supabase_flutter ^2.9.1` |
+| **Networking** | `http ^1.4.0` |
+| **Maps & Geolocation** | `flutter_map ^8.2.1`, `latlong2 ^0.9.1` |
+| **QR Scanning & Media** | `mobile_scanner ^7.0.1`, `image_picker ^1.1.2` (with platform-specific Web/Mobile implementations), `cached_network_image ^3.4.1`, `svg_flutter ^0.0.1` |
+| **UI & Animations** | `flutter_animate ^4.5.2`, `skeletonizer ^2.1.0+1`, `loading_animation_widget ^1.3.0`, `date_picker_plus ^4.2.0`, `flutter_popup ^3.3.9`, `liquid_pull_to_refresh ^3.0.1`, `font_awesome_flutter ^10.8.0` |
+| **Local Persistence** | `hive ^2.2.3`, `hive_flutter ^1.1.0` |
+| **Localization & Functional** | `flutter_localizations`, `intl` (Arabic & English ARB files), `dartz ^0.10.1` |
+| **Dev & Testing** | `flutter_test`, `flutter_lints ^5.0.0`, `flutter_launcher_icons ^0.14.4` |
+
+## 🏗 Architecture
+
+The codebase is organized around **feature-first Clean Architecture** (`data`, `domain`, `presentation` across 258 Dart files in `lib/`) using **BLoC/Cubit** state management and **GetIt** service location.
+
+~~~mermaid
+flowchart LR
+    View[Responsive Views<br/>Desktop & Mobile Layouts] --> Cubit[Feature Cubits<br/>SignIn / Places / Bookings / DashBoard]
+    Cubit --> Repo[Domain Repositories<br/>Abstract Contracts]
+    Repo --> RepoImpl[Data Repositories<br/>AuthRepoImpl / PlacesRepoImpl / DashBoardRepoImp]
+    RepoImpl --> Services[Core Services<br/>FirebaseAuth / Firestore / Storage / Hive / HTTP]
+    Services --> FB[(Firebase<br/>Auth, Firestore & Storage)]
+    Services --> SB[(Supabase Edge Function<br/>checkWeeklyTrends)]
+~~~
+
+### Application Bootstrap Order (`lib/main.dart`)
+1. `WidgetsFlutterBinding.ensureInitialized()`
+2. `Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)`
+3. `Supabase.initialize(url: supaBaseUrl, anonKey: supaBaseAnonKey)`
+4. `Hive.initFlutter()` & `Hive_Services.init()`
+5. `setup_Getit()` (registers singleton services and repositories)
+6. `Bloc.observer = Custom_Blocobserver()`
+7. `runApp(const InEgyptAdminPanel())`
+
+### Folder Structure
+
+~~~text
+lib/
+├── core/
+│   ├── Entities/          # Shared domain entities (Place, Booking, User)
+│   ├── errors/            # Custom Failure classes and exception mappers
+│   ├── helpers/           # UI helpers, dialogs, and responsive utilities
+│   ├── models/            # Shared data models and JSON serialization
+│   ├── services/          # FirebaseAuth_Service, Databaseservice, Storage, Hive_Services, GetIt
+│   ├── utils/             # App_router.dart, BackEndkeys.dart, themes, and text styles
+│   └── widgets/
+│       ├── BookingWidgets/
+│       ├── CustomTextFields/
+│       ├── Drawer/        # Responsive sidebar / navigation drawer components
+│       └── PlaceWidgets/  # CustomFlutterMap, place cards, and form widgets
+├── features/
+│   ├── Auth/
+│   │   ├── data/
+│   │   ├── domain/
+│   │   └── presentation/
+│   ├── Bookings/
+│   │   ├── data/
+│   │   ├── domain/
+│   │   └── presentation/
+│   ├── DashBoard/
+│   │   ├── data/
+│   │   ├── domain/
+│   │   └── presentation/
+│   ├── Places/
+│   │   ├── data/
+│   │   ├── domain/
+│   │   └── presentation/
+│   ├── Splash/
+│   │   └── presentation/
+│   └── Users/
+│       ├── data/
+│       ├── domain/
+│       └── presentation/
+├── generated/             # Auto-generated localization delegates (l10n.dart)
+├── l10n/                  # intl_ar.arb and intl_en.arb localization files
+├── ResponsiveLayout .dart # Breakpoint-driven responsive wrapper (Desktop / Tablet / Mobile)
+├── constant.dart          # Brand color (#FCD240), font family, and Supabase config keys
+├── firebase_options.dart  # Platform-specific Firebase configuration
+└── main.dart              # Application entry point
+~~~
+
+## ☁️ Backend & Serverless Infrastructure
+
+- **Cloud Firestore Collections (`BackEndkeys`):**
+  - `Users` — Traveler and staff accounts, role assignments (`Admin`, `PlacesManager`, `BookingsManager`, `User`), `isVerified`, and `isBlocked` flags.
+  - `Places` — Destination details, categories, pricing, ratings, image URLs, and geographic coordinates (`lat`/`lng`).
+  - `Bookings` — Traveler reservations, dates, guest counts, booking statuses, and QR code metadata.
+- **Firebase Storage:** Stores uploaded destination photos and media assets.
+-
