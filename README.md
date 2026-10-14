@@ -1,22 +1,37 @@
 <div align="center">
 
-<img src="assets/icons/AppIcon.png" alt="In Egypt icon" width="70" />
-<br/>
+  <img src="assets/icons/AppIcon.png" alt="In Egypt Admin Panel icon" width="70" />
+  <br/>
   <img src="assets/images/AppLogo.svg" alt="In Egypt" width="150" />
 
-# In Egypt Admin Panel
+  <h1>In Egypt Admin Panel</h1>
 
-**A responsive Flutter Web & Mobile management system for overseeing Egyptian tourism operations—featuring real-time destination CRUD, interactive map pinning, booking governance, QR ticket verification, and role-based access control (RBAC).**
+  <p>
+    <strong>
+      A responsive Flutter Web & Mobile management system for overseeing Egyptian tourism operations—featuring real-time destination CRUD, interactive map pinning, booking governance, QR ticket verification, and role-based access control (RBAC).
+    </strong>
+  </p>
 
-[https://img.shields.io/badge/Flutter-Web%20%26%20Cross--Platform-02569B?logo=flutter&logoColor=white]
-[https://img.shields.io/badge/Dart-3.8.1%2B-0175C2?logo=dart&logoColor=white]
-[https://img.shields.io/badge/State-BLoC%20%2F%20Cubit-FCD240?logoColor=black]
-[https://img.shields.io/badge/Architecture-Clean%20Architecture-2E7D32]
-[https://img.shields.io/badge/Firebase-Auth%20%7C%20Firestore%20%7C%20Storage-FFCA28?logo=firebase&logoColor=black]
-[https://img.shields.io/badge/Supabase-Edge%20Functions-3ECF8E?logo=supabase&logoColor=white]
-[https://img.shields.io/badge/Deployed%20on-Vercel-000000?logo=vercel&logoColor=white]
+  <p>
+    <img src="https://img.shields.io/badge/Flutter-Web%20%26%20Cross--Platform-02569B?logo=flutter&logoColor=white" alt="Flutter Web and Cross-Platform" />
+    <img src="https://img.shields.io/badge/Dart-3.8.1%2B-0175C2?logo=dart&logoColor=white" alt="Dart" />
+    <img src="https://img.shields.io/badge/State-BLoC%20%2F%20Cubit-FCD240?logoColor=black" alt="BLoC / Cubit" />
+    <img src="https://img.shields.io/badge/Architecture-Clean%20Architecture-2E7D32" alt="Clean Architecture" />
+    <br/>
+    <img src="https://img.shields.io/badge/Firebase-Auth%20%7C%20Firestore%20%7C%20Storage-FFCA28?logo=firebase&logoColor=black" alt="Firebase" />
+    <img src="https://img.shields.io/badge/Supabase-Edge%20Functions-3ECF8E?logo=supabase&logoColor=white" alt="Supabase" />
+    <img src="https://img.shields.io/badge/Deployed%20on-Vercel-000000?logo=vercel&logoColor=white" alt="Deployed on Vercel" />
+  </p>
 
-[**Live Demo (Vercel)**](https://inegyptadminpanel.vercel.app/) · [**Companion Mobile App Repo**](https://github.com/Ziad-Gamal12/In_Egypt)
+  <p>
+    <a href="https://inegyptadminpanel.vercel.app/">
+      <strong>Live Demo (Vercel)</strong>
+    </a>
+    ·
+    <a href="https://github.com/Ziad-Gamal12/In_Egypt">
+      <strong>Companion Mobile App Repo</strong>
+    </a>
+  </p>
 
 </div>
 
